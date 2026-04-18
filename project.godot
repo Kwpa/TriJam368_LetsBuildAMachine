@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="trijam368"
-run/main_scene="uid://c508eihcn3661"
+run/main_scene="uid://dppf85r6tcgpw"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -27,6 +27,13 @@ window/size/viewport_height=1080
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/shipitch/plugin.cfg")
+
+[layer_names]
+
+2d_physics/layer_1="Mouse"
+2d_physics/layer_2="Water"
+2d_physics/layer_3="Nutrients"
+2d_physics/layer_4="Power"
 
 [rendering]
 

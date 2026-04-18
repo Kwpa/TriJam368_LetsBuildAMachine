@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://c4o02g1dva04i"]
+
+[ext_resource type="Script" uid="uid://b5am6rbl5kfw7" path="res://scripts/card.gd" id="1_6u4wf"]
+[ext_resource type="Texture2D" uid="uid://cxwgcyb12v2mg" path="res://textures/tile_atlas.png" id="3_ktuci"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ktuci"]
+size = Vector2(200, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sy11y"]
+atlas = ExtResource("3_ktuci")
+region = Rect2(128, 128, 128.8, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kg30u"]
+size = Vector2(196, 294)
+
+[node name="card" type="Node2D" unique_id=1598945790]
+script = ExtResource("1_6u4wf")
+
+[node name="card_image" type="Sprite2D" parent="." unique_id=1572832865]
+texture = SubResource("PlaceholderTexture2D_ktuci")
+
+[node name="card_description" type="RichTextLabel" parent="card_image" unique_id=2106420985]
+offset_left = -91.0
+offset_top = 20.0
+offset_right = 96.0
+offset_bottom = 60.0
+text = "Here's some card text"
+
+[node name="card_tile_image" type="TextureRect" parent="card_image" unique_id=1964210246]
+offset_left = -67.0
+offset_top = -127.0
+offset_right = 61.0
+offset_bottom = 1.0
+texture = SubResource("AtlasTexture_sy11y")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=802627258]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=974153096]
+position = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_kg30u")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_card_input_event"]

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dppf85r6tcgpw"]
+
+[ext_resource type="PackedScene" uid="uid://cojgw08suiscf" path="res://scenes/machine_scene.tscn" id="1_mlf6e"]
+[ext_resource type="Script" uid="uid://d1gjns3lwlxx1" path="res://game_controller.gd" id="1_po0ka"]
+[ext_resource type="PackedScene" uid="uid://c2crchg6acoqe" path="res://scenes/card_scene.tscn" id="3_v1wow"]
+
+[node name="game_scene" type="Node2D" unique_id=1907655626]
+script = ExtResource("1_po0ka")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1959044846]
+position = Vector2(960, 539)
+
+[node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("3_v1wow")]
+position = Vector2(591, 896)
+
+[node name="machine_scene" parent="." unique_id=1759567159 instance=ExtResource("1_mlf6e")]
+position = Vector2(-1, -2)
+
+[connection signal="changed" from="machine_scene/TileMapLayer" to="." method="_on_tile_map_changed"]
+
+[editable path="machine_scene"]
