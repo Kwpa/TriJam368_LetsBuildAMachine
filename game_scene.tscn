@@ -14,7 +14,7 @@ position = Vector2(960, 539)
 position = Vector2(591, 896)
 
 [node name="machine_scene" parent="." unique_id=1759567159 instance=ExtResource("1_mlf6e")]
-position = Vector2(-1, -2)
+position = Vector2(-3, 8)
 
 [connection signal="changed" from="machine_scene/TileMapLayer" to="." method="_on_tile_map_changed"]
 

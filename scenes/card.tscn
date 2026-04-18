@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c4o02g1dva04i"]
 
 [ext_resource type="Script" uid="uid://b5am6rbl5kfw7" path="res://scripts/card.gd" id="1_6u4wf"]
+[ext_resource type="TileSet" uid="uid://dli7vlje34tbu" path="res://scenes/machine_tileset.tres" id="2_6u4wf"]
 [ext_resource type="Texture2D" uid="uid://cxwgcyb12v2mg" path="res://textures/tile_atlas.png" id="3_ktuci"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ktuci"]
@@ -15,6 +16,7 @@ size = Vector2(196, 294)
 
 [node name="card" type="Node2D" unique_id=1598945790]
 script = ExtResource("1_6u4wf")
+tile_set = ExtResource("2_6u4wf")
 
 [node name="card_image" type="Sprite2D" parent="." unique_id=1572832865]
 texture = SubResource("PlaceholderTexture2D_ktuci")

@@ -1,11 +1,6 @@
 extends HBoxContainer
 
-var card_deck:Array = [
-	Vector2i(0,0), Vector2i(0,1), Vector2i(0,2), Vector2i(0,3), Vector2i(0,4)
-	, Vector2i(1,0), Vector2i(1,1), Vector2i(1,2), Vector2i(1,3), Vector2i(1,4)
-	, Vector2i(2,0), Vector2i(2,1), Vector2i(2,2), Vector2i(2,3), Vector2i(4,4)
-	, Vector2i(3,0), Vector2i(3,1), Vector2i(3,2), Vector2i(3,3), Vector2i(4,4)
-]
+var card_deck:Array = []
 
 
 # Called when the node enters the scene tree for the first time.
@@ -19,8 +14,10 @@ func _process(delta: float) -> void:
 
 func add_card(new_card_coords:Vector2i) -> void:
 	var card = Card.new()
-	card.tile_coords = new_card_coords
-	add_child(card)
+	card.set_tile_coords(new_card_coords)
+	print(card)
+	self.add_child(card)
+	print(self)
 
 
 func _on_deck_pressed() -> void:
