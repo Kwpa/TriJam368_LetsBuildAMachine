@@ -1,6 +1,26 @@
 [gd_scene format=3 uid="uid://dp44c2e6hpixq"]
 
 [ext_resource type="Script" uid="uid://c5m3cwccp562m" path="res://scripts/plant.gd" id="1_fi0kw"]
+[ext_resource type="Script" uid="uid://dgusctygfnt5a" path="res://scripts/vital_tracker.gd" id="2_odjdt"]
+[ext_resource type="Texture2D" uid="uid://dm7q4axclukfy" path="res://textures/plant_test.png" id="3_a88lo"]
 
 [node name="plant" type="Node2D" unique_id=1127051258]
 script = ExtResource("1_fi0kw")
+
+[node name="photosynthesis_vital" type="Node" parent="." unique_id=2061245034]
+script = ExtResource("2_odjdt")
+vital_name = "photosynthesis"
+metadata/_custom_type_script = "uid://dgusctygfnt5a"
+
+[node name="moisture_vital" type="Node" parent="." unique_id=45009676]
+script = ExtResource("2_odjdt")
+vital_name = "moisture"
+metadata/_custom_type_script = "uid://dgusctygfnt5a"
+
+[node name="nutrient_vital" type="Node" parent="." unique_id=1847939457]
+script = ExtResource("2_odjdt")
+vital_name = "nutrients"
+metadata/_custom_type_script = "uid://dgusctygfnt5a"
+
+[node name="plant_stage_1" type="Sprite2D" parent="." unique_id=662476135]
+texture = ExtResource("3_a88lo")
