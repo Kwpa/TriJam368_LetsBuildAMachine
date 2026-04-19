@@ -6,19 +6,46 @@ extends Node
 
 var starting_plant_size : int = 1
 var final_plant_size : int = 3
-
 var current_plant_size : int = 1
+
 var plant_statisfied_round_count : int = 0
 
 var warning_queue : Array = []
-
 var resource_inputs : Array[String] = []
+
+## Some notes on how this works:
+## 
+## A plant is made up on one, two or three tiles.
+## The plant tiles cannot be moved by the player. New plant tiles are added by the game as the plant grows.
+## Each of the plant tiles reports to a plant node, with this script on it.
+## Whenever the player places, rotates, removes or moves another tile, the plant tiles first check for valid inputs,
+## then sends them to this script.
+## Each input gets added/removed as a string to the resources_inputs array. 
+## If a plant is receiving an input resource, the corresponding vital will only increase 
+## and not decrease if the amount of input resource is equal to the size of the plant (e.g. num of tiles).
+##
+## Once the inputs are checked and a turn is completed, the plant node will receive a signa to run the play_turn() function
+## to work out if the plant is outside an optimal vitals range (and in risk of dying), has a vital reached zero
+## (thus has died) or has survived 3 turns at optimal vitals to be able to grow to the next size (note that as 
+## soon as vitals are out of range again the 3 rounds of survival counter will be reset). 
+##
+## order of signals:
+## - clear resource inputs 
+## - send new resource inputs
+## - if action spent, begin new turn
+
 
 func _ready():
 	## sigal for input growth
 	print("hook up signals")
 
-## to hook up to signal for when a tile is placed or moved, and we need to add or remove resources going into the plant 
+
+## also to hook up so the tilemanager can refresh the plant's resource list
+func clear_resource_inputs():
+	resource_inputs.clear()
+
+
+## to hook up to signal for when a tile is placed, moved or rotated, and we need to add or remove resources going into the plant 
 func resource_input(input_name:String, action_type: String):
 	match action_type:
 		"remove": 
@@ -27,6 +54,7 @@ func resource_input(input_name:String, action_type: String):
 				resource_inputs.remove_at(index)
 		"add":
 			resource_inputs.append(input_name)
+
 
 ## check the resource inputs to see if there enough to make the plant grow 
 func check_inputs_for_growth() -> bool:
@@ -49,6 +77,7 @@ func check_inputs_for_growth() -> bool:
 		return true
 	else:
 		return false
+
 
 ## called by the game manager, needs a signal
 func play_turn():
