@@ -15,6 +15,7 @@ func _process(delta: float) -> void:
 	pass
 
 
+
 func _input(event) -> void:
 	# on left click, place the selected tile
 	if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
@@ -58,51 +59,26 @@ func check_if_tile_is_colliding(layer : int, tile1_coords : Vector2i, tile2_coor
 			for i in tile1_poly_count:
 				# get the collision polygon
 				var polygon_1 : PackedVector2Array = tile1.get_collision_polygon_points(layer,i)
-				print("1")
-				for k in polygon_1.size():
-						polygon_1[k] = polygon_1[k]+map_to_local(tile1_coords)
-						print(polygon_1[k])
-				print("2")	
+				## print("1")
+				## for point : Vector2 in polygon_1:
+				## 	print(point)
+				## 	point.x += 0 #tile1_coords.x*128
+				## 	point.y += 0 #tile1_coords.y*128
+				## print("2")
+				
+				# get each collision polygon of the second tile
 				for j in tile2_poly_count:
 					var polygon_2 : PackedVector2Array = tile2.get_collision_polygon_points(layer,j)
-					for l in polygon_2.size():
-						polygon_2[l] = polygon_2[l]+map_to_local(tile2_coords)
-						print(polygon_2[l])
+					## for point : Vector2 in polygon_2:
+					## 	print(point)
+					##	point.x += 10000 #tile2_coords.x*128
+					##	point.y += 10000 #tile2_coords.y*128
 					
 					# check for intersections
 					var intersect_array : Array[PackedVector2Array] = Geometry2D.intersect_polygons(polygon_1, polygon_2)
 					if intersect_array.is_empty() == false:
 						print("hurrah!")
-
+						polys_overlap = true
+						break
+			
 	return polys_overlap
-			
-			
-			
-		 
-	
-func rotate_tile(layer : int, tile : TileData) -> PackedVector2Array:
-	for i in tile.get_collision_polygons_count(layer):
-		for j in tile.get_collision_polygon_points(layer,i).size():
-			if tile.transpose == false:
-				if tile.flip_h && tile.flip_v:
-					#
-					pass
-				if !tile.flip_h && tile.flip_v:
-					pass
-				if !tile.flip_h && !tile.flip_v:
-					#normal
-					pass
-				if tile.flip_h && !tile.flip_v:
-					pass
-			else:
-				if tile.flip_h && tile.flip_v:
-					pass
-				if !tile.flip_h && tile.flip_v:
-					pass
-				if !tile.flip_h && !tile.flip_v:
-					
-					pass
-				if tile.flip_h && !tile.flip_v:
-					pass
-	var a
-	return a 
