@@ -17,7 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="trijam368"
 run/main_scene="uid://dppf85r6tcgpw"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://dyypqsedwqutr"
 
 [display]
 
@@ -27,6 +27,10 @@ window/size/viewport_height=1080
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/shipitch/plugin.cfg")
+
+[gui]
+
+theme/custom="uid://bbyi1xd7xlpdw"
 
 [layer_names]
 

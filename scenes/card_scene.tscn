@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c2crchg6acoqe"]
 
-[ext_resource type="Script" uid="uid://cr2dppi6ribw3" path="res://scenes/hand_controller.gd" id="1_fdxh1"]
+[ext_resource type="Script" uid="uid://cr2dppi6ribw3" path="res://scripts/hand_controller.gd" id="1_fdxh1"]
 [ext_resource type="PackedScene" uid="uid://c4o02g1dva04i" path="res://scenes/card.tscn" id="2_uxo8i"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fdxh1"]
