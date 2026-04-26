@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dppf85r6tcgpw"]
 
 [ext_resource type="PackedScene" uid="uid://cojgw08suiscf" path="res://scenes/machine_scene.tscn" id="1_mlf6e"]
-[ext_resource type="Script" uid="uid://d1gjns3lwlxx1" path="res://game_controller.gd" id="1_po0ka"]
+[ext_resource type="Script" uid="uid://d1gjns3lwlxx1" path="res://scripts/game_controller.gd" id="1_po0ka"]
 [ext_resource type="PackedScene" uid="uid://c2crchg6acoqe" path="res://scenes/card_scene.tscn" id="3_v1wow"]
 
 [node name="game_scene" type="Node2D" unique_id=1907655626]
