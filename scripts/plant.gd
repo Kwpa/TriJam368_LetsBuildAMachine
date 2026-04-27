@@ -24,10 +24,14 @@ var resource_inputs : Array[String] = []
 ## A plant is made up on one, two or three tiles.
 ## The plant tiles cannot be moved by the player. New plant tiles are added by the game as the plant grows.
 
-## Tristan note: The assets currently allow plants to be one or two tiles, with the second tile always being above the first tile.
-## The plant should continue tracking vitals at two tiles, and the game is won when it would have grown to its third tile.
+# Tristan: The assets currently allow plants to be one or two tiles, with the second tile always being above the first tile.
+# The plant should continue tracking vitals at two tiles, and the game is won when it would have grown to its third tile.
 
 ## Each of the plant tiles reports to a plant node, with this script on it.
+
+# Tristan: If each plant tile needs a script to report its values, how do we attach it?
+# It might make more sense to have the machine board save cell coordinates that contain plant.
+
 ## Whenever the player places, rotates, removes or moves another tile, the plant tiles first check for valid inputs,
 ## then sends them to this script.
 ## Each input gets added/removed as a string to the resources_inputs array. 
@@ -81,6 +85,7 @@ func check_inputs_for_growth() -> bool:
 				nutrients_count += 1
 	
 	## show icons signalling inputs contributing to what plant is getting
+	# Tristan: with vital_tracker inheriting from progressbar, it will show in the UI by default.
 	print("send signals to ui here")
 	
 	if photosyn_count >= current_plant_size && moisture_count >= current_plant_size && nutrients_count >= current_plant_size:

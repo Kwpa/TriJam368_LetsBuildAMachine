@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cxwgcyb12v2mg" path="res://textures/tile_atlas.png" id="1_7qfnh"]
 [ext_resource type="Texture2D" uid="uid://jouikhdqym83" path="res://textures/tilemap.png" id="2_jgwhv"]
+[ext_resource type="Texture2D" uid="uid://iecvclpoxfmv" path="res://textures/plant.png" id="3_ohasx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jgwhv"]
 resource_name = "Fake Tiles"
@@ -204,6 +205,13 @@ texture_region_size = Vector2i(128, 128)
 3:7/0 = 0
 3:7/0/custom_data_0 = 20
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tduw8"]
+texture = ExtResource("3_ohasx")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+
 [resource]
 tile_size = Vector2i(128, 128)
 physics_layer_0/collision_layer = 1
@@ -217,3 +225,4 @@ custom_data_layer_0/name = "card_id"
 custom_data_layer_0/type = 2
 sources/0 = SubResource("TileSetAtlasSource_jgwhv")
 sources/1 = SubResource("TileSetAtlasSource_ohasx")
+sources/2 = SubResource("TileSetAtlasSource_tduw8")

@@ -1,11 +1,20 @@
-[gd_scene format=4 uid="uid://cojgw08suiscf"]
+[gd_scene format=3 uid="uid://cojgw08suiscf"]
 
 [ext_resource type="TileSet" uid="uid://dli7vlje34tbu" path="res://scenes/machine_tileset.tres" id="1_r258f"]
+[ext_resource type="Texture2D" uid="uid://ciepnseh4ap23" path="res://textures/background.png" id="1_soh53"]
 [ext_resource type="Script" uid="uid://b1rmvdurkcf8o" path="res://scripts/machine_board_controller.gd" id="2_soh53"]
+[ext_resource type="Script" uid="uid://c5m3cwccp562m" path="res://scripts/plant.gd" id="4_mo44r"]
 
 [node name="machine_scene" type="Node2D" unique_id=1759567159]
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1811384295]
-tile_map_data = PackedByteArray("AAAFAAAAAAADAAEAAAAJAAAAAAADAAEAAAAFAAQAAAADAAEAAAAHAAQAAAAAAAIAAAAHAAEAAAAAAAEAAAAHAAAAAAACAAEAAAAIAAAAAAACAAEAAQAIAAIAAAABAAAABAAIAAEAAAACAAMAAAAJAAIAAQADAAQAAAAJAAMAAQADAAUAAAAKAAMAAQADAAQAAAAKAAIAAQADAAUAADA=")
+[node name="background" type="Sprite2D" parent="." unique_id=365795777]
+position = Vector2(320, 320)
+texture = ExtResource("1_soh53")
+
+[node name="tile_map" type="TileMapLayer" parent="." unique_id=1811384295]
+tile_map_data = PackedByteArray(0, 0, 2, 0, 4, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0, 1, 0, 3, 0, 4, 0, 0, 0)
 tile_set = ExtResource("1_r258f")
 script = ExtResource("2_soh53")
+
+[node name="plant_manager" type="Node2D" parent="." unique_id=1324938813]
+script = ExtResource("4_mo44r")
