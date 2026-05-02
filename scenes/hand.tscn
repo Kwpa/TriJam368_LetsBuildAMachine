@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://c2crchg6acoqe"]
 
-[ext_resource type="Script" uid="uid://cr2dppi6ribw3" path="res://scripts/hand_controller.gd" id="1_fdxh1"]
-[ext_resource type="PackedScene" uid="uid://c4o02g1dva04i" path="res://scenes/card.tscn" id="2_uxo8i"]
+[ext_resource type="PackedScene" uid="uid://c4o02g1dva04i" path="res://scenes/card.tscn" id="1_eyfoh"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fdxh1"]
 size = Vector2(100, 200)
@@ -16,9 +15,8 @@ custom_minimum_size = Vector2(400, 600)
 offset_right = 40.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
-script = ExtResource("1_fdxh1")
 
-[node name="Card" parent="hand" unique_id=762482903 instance=ExtResource("2_uxo8i")]
+[node name="Card" parent="hand" unique_id=762482903 instance=ExtResource("1_eyfoh")]
 
 [node name="Deck" type="TextureButton" parent="." unique_id=1535633427]
 offset_left = -536.0

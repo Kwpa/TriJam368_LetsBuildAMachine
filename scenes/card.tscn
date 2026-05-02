@@ -1,10 +1,59 @@
 [gd_scene format=3 uid="uid://c4o02g1dva04i"]
 
-[ext_resource type="Script" uid="uid://b5am6rbl5kfw7" path="res://scripts/card.gd" id="1_6u4wf"]
 [ext_resource type="TileSet" uid="uid://dli7vlje34tbu" path="res://scenes/machine_tileset.tres" id="2_6u4wf"]
 [ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="3_kg30u"]
 [ext_resource type="StyleBox" uid="uid://cin64uf17xxab" path="res://theme/style_box_card.tres" id="3_sy11y"]
 [ext_resource type="Texture2D" uid="uid://jouikhdqym83" path="res://textures/tilemap.png" id="4_sy11y"]
+
+[sub_resource type="GDScript" id="GDScript_kg30u"]
+script/source = "class_name Card
+extends Node2D
+
+# tile set
+@export var tile_set:TileSet = load(\"res://scenes/machine_tileset.tres\")
+
+# coords of tile within tileset
+@export var tile_coords:Vector2i = Vector2i(1,1)
+
+# tile description
+@export var tile_type:String = 'This is the description of the card type.'
+
+# constructor
+func _init(
+	# placeholder values
+	p_tile_set_path = \"res://scenes/machine_tileset.tres\"
+	, p_tile_coords = Vector2i(1,1)
+	, p_tile_type = 'This is the description of the card type.'
+	):
+		# assign passed-in values to this object
+		tile_set = load(p_tile_set_path)
+		tile_coords = p_tile_coords
+		tile_type = p_tile_type
+	
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	# init with no parameters uses the placeholder values
+	_init()
+	pass # Replace with function body.
+
+func set_tile_coords(new_coords:Vector2i):
+	tile_coords = new_coords
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func _input(event) -> void:
+	pass
+
+# connected to the Area2D child of the card
+func _on_card_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	# viewport and shape_idx are parameters from collisionobject2d and may not be needed
+	# if any mouse button was pressed...
+	if event is InputEventMouseButton && event.is_pressed():
+		print('card was pressed')
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kg30u"]
 size = Vector2(159, 299)
@@ -14,7 +63,7 @@ atlas = ExtResource("4_sy11y")
 region = Rect2(0, 0, 128, 128)
 
 [node name="card" type="Node2D" unique_id=1598945790]
-script = ExtResource("1_6u4wf")
+script = SubResource("GDScript_kg30u")
 tile_set = ExtResource("2_6u4wf")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=802627258]
