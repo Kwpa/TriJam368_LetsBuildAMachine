@@ -1,0 +1,133 @@
+[gd_scene format=3 uid="uid://c4o02g1dva04i"]
+
+[ext_resource type="TileSet" uid="uid://dli7vlje34tbu" path="res://scenes/machine_tileset.tres" id="2_6u4wf"]
+[ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="3_kg30u"]
+[ext_resource type="StyleBox" uid="uid://cin64uf17xxab" path="res://theme/style_box_card.tres" id="3_sy11y"]
+[ext_resource type="Texture2D" uid="uid://jouikhdqym83" path="res://textures/tilemap.png" id="4_sy11y"]
+
+[sub_resource type="GDScript" id="GDScript_kg30u"]
+script/source = "class_name Card
+extends Node2D
+
+# tile set
+@export var tile_set:TileSet = load(\"res://scenes/machine_tileset.tres\")
+
+# coords of tile within tileset
+@export var tile_coords:Vector2i = Vector2i(1,1)
+
+# tile description
+@export var tile_type:String = 'This is the description of the card type.'
+
+# constructor
+func _init(
+	# placeholder values
+	p_tile_set_path = \"res://scenes/machine_tileset.tres\"
+	, p_tile_coords = Vector2i(1,1)
+	, p_tile_type = 'This is the description of the card type.'
+	):
+		# assign passed-in values to this object
+		tile_set = load(p_tile_set_path)
+		tile_coords = p_tile_coords
+		tile_type = p_tile_type
+	
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	# init with no parameters uses the placeholder values
+	_init()
+	pass # Replace with function body.
+
+func set_tile_coords(new_coords:Vector2i):
+	tile_coords = new_coords
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func _input(event) -> void:
+	pass
+
+# connected to the Area2D child of the card
+func _on_card_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	# viewport and shape_idx are parameters from collisionobject2d and may not be needed
+	# if any mouse button was pressed...
+	if event is InputEventMouseButton && event.is_pressed():
+		print('card was pressed')
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kg30u"]
+size = Vector2(159, 299)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ligt"]
+atlas = ExtResource("4_sy11y")
+region = Rect2(0, 0, 128, 128)
+
+[node name="card" type="Node2D" unique_id=1598945790]
+script = SubResource("GDScript_kg30u")
+tile_set = ExtResource("2_6u4wf")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=802627258]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=974153096]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_kg30u")
+
+[node name="card_image" type="Panel" parent="." unique_id=1885423706]
+custom_minimum_size = Vector2(160, 300)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -150.0
+offset_right = 80.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("3_sy11y")
+
+[node name="card_title" type="RichTextLabel" parent="card_image" unique_id=235435582]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 146.0
+offset_right = 150.0
+offset_bottom = 216.0
+theme = ExtResource("3_kg30u")
+theme_override_font_sizes/normal_font_size = 20
+text = "TITLE"
+
+[node name="card_description" type="RichTextLabel" parent="card_image" unique_id=2106420985]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 191.0
+offset_right = 146.0
+offset_bottom = 290.0
+theme = ExtResource("3_kg30u")
+text = "Here's some card text"
+
+[node name="card_tile_background" type="ColorRect" parent="card_image" unique_id=219692284]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_top = 16.0
+offset_right = 64.0
+offset_bottom = 144.0
+grow_horizontal = 2
+color = Color(0.28627452, 0.22352941, 0.12941177, 1)
+
+[node name="card_tile_image" type="TextureRect" parent="card_image" unique_id=1964210246]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_top = 16.0
+offset_right = 64.0
+offset_bottom = 144.0
+grow_horizontal = 2
+texture = SubResource("AtlasTexture_6ligt")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_card_input_event"]

@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://c3808ydkkxk0m"]
+
+[ext_resource type="Script" uid="uid://dgusctygfnt5a" path="res://scripts/vital_tracker.gd" id="1_2vyjv"]
+[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="1_i3bhb"]
+
+[node name="level" type="ProgressBar" unique_id=1132438125]
+custom_minimum_size = Vector2(30, 200)
+offset_right = 30.0
+offset_bottom = 200.0
+max_value = 10.0
+step = 1.0
+value = 5.0
+rounded = true
+fill_mode = 3
+show_percentage = false
+script = ExtResource("1_2vyjv")
+vital_lower_optimal = 5
+vital_upper_optimal = 10
+
+[node name="icon" type="TextureRect" parent="." unique_id=1802059518]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 0
+offset_left = 2.0
+offset_top = 205.0
+offset_right = 130.0
+offset_bottom = 333.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_i3bhb")

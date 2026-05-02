@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://c2crchg6acoqe"]
+
+[ext_resource type="PackedScene" uid="uid://c4o02g1dva04i" path="res://scenes/card.tscn" id="1_eyfoh"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fdxh1"]
+size = Vector2(100, 200)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_uxo8i"]
+size = Vector2(100, 200)
+
+[node name="card_scene" type="Node2D" unique_id=730185003]
+
+[node name="hand" type="HBoxContainer" parent="." unique_id=576792922]
+custom_minimum_size = Vector2(400, 600)
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="Card" parent="hand" unique_id=762482903 instance=ExtResource("1_eyfoh")]
+
+[node name="Deck" type="TextureButton" parent="." unique_id=1535633427]
+offset_left = -536.0
+offset_top = -63.0
+offset_right = -436.0
+offset_bottom = 137.0
+texture_normal = SubResource("PlaceholderTexture2D_fdxh1")
+texture_pressed = SubResource("PlaceholderTexture2D_uxo8i")
+
+[connection signal="pressed" from="Deck" to="hand" method="_on_deck_pressed"]

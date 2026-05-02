@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://dppf85r6tcgpw"]
+
+[ext_resource type="PackedScene" uid="uid://cojgw08suiscf" path="res://scenes/machine_scene.tscn" id="1_mlf6e"]
+[ext_resource type="Script" uid="uid://d1gjns3lwlxx1" path="res://scripts/game_controller.gd" id="1_po0ka"]
+[ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="3_mixcd"]
+[ext_resource type="PackedScene" uid="uid://c3808ydkkxk0m" path="res://scenes/vital_tracker.tscn" id="3_v1wow"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mixcd"]
+bg_color = Color(0.91764706, 0.827451, 0.5529412, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.95686275, 0.9019608, 0.7372549, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mj2jn"]
+bg_color = Color(0.50980395, 0.3647059, 0.28235295, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.95686275, 0.9019608, 0.7372549, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="game_scene" type="Node2D" unique_id=1907655626]
+script = ExtResource("1_po0ka")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1959044846]
+position = Vector2(960, 539)
+
+[node name="machine_scene" parent="." unique_id=1759567159 instance=ExtResource("1_mlf6e")]
+position = Vector2(650, 20)
+
+[node name="plant_manager" parent="machine_scene" index="2" unique_id=1324938813 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
+photosynthesis_vital = NodePath("../../vitals/light_tracker")
+moisture_vital = NodePath("../../vitals/water_tracker")
+nutrients_vital = NodePath("../../vitals/nutrients_tracker")
+
+[node name="vitals" type="HBoxContainer" parent="." unique_id=1895602416]
+offset_left = 1323.0
+offset_top = 19.0
+offset_right = 1443.0
+offset_bottom = 269.0
+theme = ExtResource("3_mixcd")
+
+[node name="light_tracker" parent="vitals" unique_id=1664745285 instance=ExtResource("3_v1wow")]
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_mixcd")
+vital_name = "Light"
+
+[node name="water_tracker" parent="vitals" unique_id=1754369271 instance=ExtResource("3_v1wow")]
+layout_mode = 2
+vital_name = "water"
+
+[node name="nutrients_tracker" parent="vitals" unique_id=896476958 instance=ExtResource("3_v1wow")]
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_mj2jn")
+vital_name = "nutrients"
+
+[connection signal="changed" from="machine_scene/tile_map" to="." method="_on_tile_map_changed"]
+
+[editable path="machine_scene"]

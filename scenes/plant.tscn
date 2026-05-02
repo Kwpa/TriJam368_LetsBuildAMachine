@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dp44c2e6hpixq"]
+
+[ext_resource type="Script" uid="uid://c5m3cwccp562m" path="res://scripts/plant.gd" id="1_fi0kw"]
+[ext_resource type="Script" uid="uid://dgusctygfnt5a" path="res://scripts/vital_tracker.gd" id="2_odjdt"]
+
+[node name="plant" type="Node2D" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
+script = ExtResource("1_fi0kw")
+photosynthesis_vital = NodePath("photosynthesis_vital")
+moisture_vital = NodePath("moisture_vital")
+nutrients_vital = NodePath("nutrient_vital")
+
+[node name="photosynthesis_vital" type="Node" parent="." unique_id=2061245034]
+script = ExtResource("2_odjdt")
+vital_name = "photosynthesis"
+metadata/_custom_type_script = "uid://dgusctygfnt5a"
+
+[node name="moisture_vital" type="Node" parent="." unique_id=45009676]
+script = ExtResource("2_odjdt")
+vital_name = "moisture"
+metadata/_custom_type_script = "uid://dgusctygfnt5a"
+
+[node name="nutrient_vital" type="Node" parent="." unique_id=1847939457]
+script = ExtResource("2_odjdt")
+vital_name = "nutrients"
+metadata/_custom_type_script = "uid://dgusctygfnt5a"
