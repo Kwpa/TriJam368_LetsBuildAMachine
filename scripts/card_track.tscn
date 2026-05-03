@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://dlhgxfl7sfejh"]
+
+[ext_resource type="PackedScene" uid="uid://c4o02g1dva04i" path="res://scenes/card.tscn" id="1_jnpc8"]
+[ext_resource type="Script" uid="uid://c57nin31i4b67" path="res://scripts/card_track.gd" id="1_tlgv2"]
+
+[node name="Control" type="Control" unique_id=594688062]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 160.0
+offset_bottom = 428.0
+script = ExtResource("1_tlgv2")
+
+[node name="card" parent="." unique_id=521924898 instance=ExtResource("1_jnpc8")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -300.0
+offset_right = 80.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
+tile_set = null
+tile_coords = null
+tile_description = null
