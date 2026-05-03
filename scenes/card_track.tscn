@@ -3,7 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://c4o02g1dva04i" path="res://scenes/card.tscn" id="1_jnpc8"]
 [ext_resource type="Script" uid="uid://c57nin31i4b67" path="res://scripts/card_track.gd" id="1_tlgv2"]
 
-[node name="Control" type="Control" unique_id=594688062]
+[node name="CardTrack" type="Control" unique_id=594688062]
+custom_minimum_size = Vector2(160, 428)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 160.0

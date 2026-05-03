@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c2crchg6acoqe"]
 
 [ext_resource type="Script" uid="uid://bs6wntxi4j18q" path="res://scripts/hand_controller.gd" id="1_cmdsa"]
-[ext_resource type="PackedScene" uid="uid://c4o02g1dva04i" path="res://scenes/card.tscn" id="1_eyfoh"]
+[ext_resource type="PackedScene" uid="uid://dlhgxfl7sfejh" path="res://scenes/card_track.tscn" id="2_cmdsa"]
 
 [node name="card_scene" type="Node2D" unique_id=730185003]
 script = ExtResource("1_cmdsa")
@@ -14,7 +14,7 @@ offset_bottom = 633.0
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="Card" parent="HandContainer" unique_id=762482903 instance=ExtResource("1_eyfoh")]
+[node name="CardTrack" parent="HandContainer" unique_id=594688062 instance=ExtResource("2_cmdsa")]
 layout_mode = 2
 
 [node name="Deck" type="Button" parent="." unique_id=280409354]

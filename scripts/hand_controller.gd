@@ -1,6 +1,7 @@
 extends Node2D
 
 var card_scene = preload("res://scenes/card.tscn")
+var card_track = preload("res://scenes/card_track.tscn")
 var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
@@ -31,11 +32,11 @@ func _on_deck_pressed() -> void:
 	# check whether hand size limit is reached
 	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
 		# if hand is small enough, create a new card
-		var new_card = card_scene.instantiate()
-		new_card.set_data(get_random_card_data())
-		print_debug(new_card.custom_to_string())
+		var new_card_track = card_track.instantiate()
+		new_card_track.set_card_data(get_random_card_data())
+		print_debug(new_card_track.get_child(0).custom_to_string())
 		# add the card to the hand
-		$HandContainer.add_child(new_card)
+		$HandContainer.add_child(new_card_track)
 	
 	else:
 		# maybe we'll make a UI warning

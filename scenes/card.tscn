@@ -9,7 +9,7 @@
 atlas = ExtResource("4_sy11y")
 region = Rect2(0, 0, 128, 128)
 
-[node name="card" type="Control" unique_id=521924898]
+[node name="Card" type="Control" unique_id=521924898]
 custom_minimum_size = Vector2(160, 300)
 layout_mode = 3
 anchors_preset = 0
