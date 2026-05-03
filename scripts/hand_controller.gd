@@ -26,20 +26,22 @@ func get_random_card_data() -> CardData:
 	return random_card
 
 func _on_deck_pressed() -> void:
-	# check whether hand size limit is reached
 	print_debug("hand size is " + str($HandContainer.get_child_count()))
 	
+	# check whether hand size limit is reached
 	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
-		# generate card according to weighted probability
+		# if hand is small enough, create a new card
 		var new_card = card_scene.instantiate()
 		new_card.set_data(get_random_card_data())
 		print_debug(new_card.custom_to_string())
-		#add card to the hand
+		# add the card to the hand
 		$HandContainer.add_child(new_card)
 	
 	else:
+		# maybe we'll make a UI warning
 		print("Hand is too large. You must first discard a card.")
 
 func _on_card_selected(card) -> void:
 	SignalBus.card_selected.emit(card)
 	print_debug("card '%' selected" % card)
+	# this will be responsible for deselecting other card

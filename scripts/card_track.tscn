@@ -8,6 +8,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 160.0
 offset_bottom = 428.0
+mouse_filter = 2
 script = ExtResource("1_tlgv2")
 
 [node name="card" parent="." unique_id=521924898 instance=ExtResource("1_jnpc8")]
@@ -23,6 +24,7 @@ offset_right = 80.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 0
-tile_set = null
-tile_coords = null
-tile_description = null
+
+[connection signal="gui_input" from="card" to="." method="_card_input_handler"]
+[connection signal="mouse_entered" from="card" to="." method="_on_card_mouse_entered"]
+[connection signal="mouse_exited" from="card" to="." method="_on_card_mouse_exited"]

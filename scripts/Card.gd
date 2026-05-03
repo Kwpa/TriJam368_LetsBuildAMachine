@@ -12,3 +12,10 @@ func custom_to_string() -> String:
 func set_data(data : CardData) -> void:
 	card_data = data 
 	# set the UI parts
+
+func on_selected_changed(is_selected : bool) -> void:
+	if is_selected == true:
+		$VBoxContainer/card_tile_background/card_tile_image.self_modulate = Color(1,1,1,.5)
+	else:
+		$VBoxContainer/card_tile_background/card_tile_image.self_modulate = Color(1,1,1,1)
+	

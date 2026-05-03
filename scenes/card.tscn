@@ -15,6 +15,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 160.0
 offset_bottom = 300.0
+mouse_filter = 1
 theme = ExtResource("3_kg30u")
 script = ExtResource("1_sy11y")
 
@@ -25,6 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("3_kg30u")
 theme_override_styles/panel = ExtResource("3_sy11y")
 
@@ -38,10 +40,12 @@ offset_top = 16.0
 offset_right = 64.0
 offset_bottom = 226.0
 grow_horizontal = 2
+mouse_filter = 2
 
 [node name="card_tile_background" type="ColorRect" parent="VBoxContainer" unique_id=219692284]
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
+mouse_filter = 2
 color = Color(0.28627452, 0.22352941, 0.12941177, 1)
 
 [node name="card_tile_image" type="TextureRect" parent="VBoxContainer/card_tile_background" unique_id=1964210246]
@@ -52,10 +56,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = SubResource("AtlasTexture_6ligt")
 
 [node name="card_title" type="RichTextLabel" parent="VBoxContainer" unique_id=235435582]
 layout_mode = 2
+mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 20
 text = "TITLE"
 fit_content = true
@@ -63,5 +69,6 @@ horizontal_alignment = 1
 
 [node name="card_description" type="RichTextLabel" parent="VBoxContainer" unique_id=2106420985]
 layout_mode = 2
+mouse_filter = 2
 text = "Here's some card text"
 fit_content = true
