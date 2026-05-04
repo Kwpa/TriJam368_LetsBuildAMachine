@@ -1,29 +1,27 @@
 [gd_scene format=3 uid="uid://c2crchg6acoqe"]
 
-[ext_resource type="PackedScene" uid="uid://c4o02g1dva04i" path="res://scenes/card.tscn" id="1_eyfoh"]
+[ext_resource type="Script" uid="uid://bs6wntxi4j18q" path="res://scripts/hand_controller.gd" id="1_cmdsa"]
+[ext_resource type="PackedScene" uid="uid://dlhgxfl7sfejh" path="res://scenes/card_track.tscn" id="2_cmdsa"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fdxh1"]
-size = Vector2(100, 200)
+[node name="hand" type="Node2D" unique_id=730185003]
+script = ExtResource("1_cmdsa")
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_uxo8i"]
-size = Vector2(100, 200)
-
-[node name="card_scene" type="Node2D" unique_id=730185003]
-
-[node name="hand" type="HBoxContainer" parent="." unique_id=576792922]
-custom_minimum_size = Vector2(400, 600)
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="HandContainer" type="HBoxContainer" parent="." unique_id=576792922]
+offset_left = 641.0
+offset_top = 70.0
+offset_right = 801.0
+offset_bottom = 498.0
 size_flags_horizontal = 3
+alignment = 1
 
-[node name="Card" parent="hand" unique_id=762482903 instance=ExtResource("1_eyfoh")]
+[node name="CardTrack" parent="HandContainer" unique_id=594688062 instance=ExtResource("2_cmdsa")]
+layout_mode = 2
 
-[node name="Deck" type="TextureButton" parent="." unique_id=1535633427]
-offset_left = -536.0
-offset_top = -63.0
-offset_right = -436.0
-offset_bottom = 137.0
-texture_normal = SubResource("PlaceholderTexture2D_fdxh1")
-texture_pressed = SubResource("PlaceholderTexture2D_uxo8i")
+[node name="Deck" type="Button" parent="." unique_id=280409354]
+offset_left = 162.0
+offset_top = 159.0
+offset_right = 283.0
+offset_bottom = 359.0
+text = "Draw a card"
 
-[connection signal="pressed" from="Deck" to="hand" method="_on_deck_pressed"]
+[connection signal="pressed" from="Deck" to="." method="_on_deck_pressed"]
