@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="The Growing Machine"
-run/main_scene="uid://dppf85r6tcgpw"
+run/main_scene="uid://c2crchg6acoqe"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="uid://dyypqsedwqutr"
 

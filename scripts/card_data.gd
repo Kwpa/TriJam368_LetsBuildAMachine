@@ -4,7 +4,7 @@ class_name card_data
 
 @export var title : String
 @export var description: String
-@export var coords : Vector2
+@export var coords : Vector2i
 @export var resource : Constants.resource
 @export var when_receiving_input : Dictionary
 

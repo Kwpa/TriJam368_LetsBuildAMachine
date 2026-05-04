@@ -77,74 +77,74 @@ var all_cards : Dictionary = {
 	card_id.elbow: CardData.new(
 		"Elbow",
 		"Connects two adjacent tiles at a right angle.",
-		Vector2(1, 0),
+		Vector2i(1, 0),
 		Constants.resource.none
 	),
 	card_id.straight: CardData.new(
 		"Straight",
 		"Connects two adjacent tiles across from each other.",
-		Vector2(0, 0),
+		Vector2i(0, 0),
 		Constants.resource.none
 	),
 	card_id.cross: CardData.new(
 		"Cross",
 		"Connects four adjacent tiles.",
-		Vector2(0, 1),
+		Vector2i(0, 1),
 		Constants.resource.none
 	),
 	card_id.tee: CardData.new(
 		"Tee",
 		"Connects three adjacent tiles.",
-		Vector2(1, 1),
+		Vector2i(1, 1),
 		Constants.resource.none
 	),
 	card_id.sprinkler: CardData.new(
 		"Sprinkler",
 		"When attached to water, distributes it in a cone.",
-		Vector2(2, 1),
+		Vector2i(2, 1),
 		Constants.resource.none,
 		{
-			Constants.resource.water: Vector2(3, 2),
-			Constants.resource.nutrients: Vector2(3, 0)
+			Constants.resource.water: Vector2i(3, 2),
+			Constants.resource.nutrients: Vector2i(3, 0)
 		}
 	),
 	card_id.water_straight: CardData.new(
 		"Water (Straight)",
 		"When attached to electricity, generates water.",
-		Vector2(2, 2),
+		Vector2i(2, 2),
 		Constants.resource.water
 	),
 	card_id.water_tee: CardData.new(
 		"Water (Tee)",
 		"When attached to electricity, generates water.",
-		Vector2(1, 2),
+		Vector2i(1, 2),
 		Constants.resource.water
 	),
 	card_id.compost_straight: CardData.new(
 		"Compost (Straight)",
 		"When attached to electricity, generates nutrients.",
-		Vector2(2, 5),
+		Vector2i(2, 5),
 		Constants.resource.nutrients
 	),
 	card_id.compost_tee: CardData.new(
 		"Compost (Tee)",
 		"When attached to electricity, generates nutrients.",
-		Vector2(1, 5),
+		Vector2i(1, 5),
 		Constants.resource.nutrients
 	),
 	card_id.lamp: CardData.new(
 		"Lamp",
 		"When attached to electricity, distributes light in a cone.",
-		Vector2(3, 5),
+		Vector2i(3, 5),
 		Constants.resource.light,
 		{
-			Constants.resource.electricity: Vector2(3, 6)
+			Constants.resource.electricity: Vector2i(3, 6)
 		}
 	),
 	card_id.generator: CardData.new(
 		"Generator",
 		"Generates electricity",
-		Vector2(3, 4),
+		Vector2i(3, 4),
 		Constants.resource.electricity
 	)
 	}

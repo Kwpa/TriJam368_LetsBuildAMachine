@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://d1gjns3lwlxx1" path="res://scripts/game_controller.gd" id="1_po0ka"]
 [ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="3_mixcd"]
 [ext_resource type="PackedScene" uid="uid://c3808ydkkxk0m" path="res://scenes/vital_tracker.tscn" id="3_v1wow"]
+[ext_resource type="PackedScene" uid="uid://c2crchg6acoqe" path="res://scenes/hand.tscn" id="5_y3j0m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mixcd"]
 bg_color = Color(0.91764706, 0.827451, 0.5529412, 1)
@@ -63,6 +64,9 @@ vital_name = "water"
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_mj2jn")
 vital_name = "nutrients"
+
+[node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
+position = Vector2(-1, 701)
 
 [connection signal="changed" from="machine_scene/tile_map" to="." method="_on_tile_map_changed"]
 

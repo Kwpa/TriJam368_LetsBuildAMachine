@@ -3,14 +3,14 @@
 [ext_resource type="Script" uid="uid://bs6wntxi4j18q" path="res://scripts/hand_controller.gd" id="1_cmdsa"]
 [ext_resource type="PackedScene" uid="uid://dlhgxfl7sfejh" path="res://scenes/card_track.tscn" id="2_cmdsa"]
 
-[node name="card_scene" type="Node2D" unique_id=730185003]
+[node name="hand" type="Node2D" unique_id=730185003]
 script = ExtResource("1_cmdsa")
 
 [node name="HandContainer" type="HBoxContainer" parent="." unique_id=576792922]
-offset_left = 770.0
-offset_top = 333.0
-offset_right = 930.0
-offset_bottom = 633.0
+offset_left = 641.0
+offset_top = 70.0
+offset_right = 801.0
+offset_bottom = 498.0
 size_flags_horizontal = 3
 alignment = 1
 
@@ -18,10 +18,10 @@ alignment = 1
 layout_mode = 2
 
 [node name="Deck" type="Button" parent="." unique_id=280409354]
-offset_left = 302.0
-offset_top = 227.0
-offset_right = 423.0
-offset_bottom = 427.0
+offset_left = 162.0
+offset_top = 159.0
+offset_right = 283.0
+offset_bottom = 359.0
 text = "Draw a card"
 
 [connection signal="pressed" from="Deck" to="." method="_on_deck_pressed"]
