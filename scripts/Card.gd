@@ -26,6 +26,7 @@ func set_data(data : CardData) -> void:
 	
 
 func on_selected_changed(is_selected : bool) -> void:
+	
 	if is_selected == true:
 		$Container/card_tile_background/card_tile_image.self_modulate = Color(1,1,1,.5)
 	else:

@@ -1,6 +1,6 @@
 extends Node
 
-class_name card_data
+class_name cardData
 
 @export var title : String
 @export var description: String
