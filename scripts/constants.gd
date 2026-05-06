@@ -20,6 +20,7 @@ enum card_id {
 	compost_tee = 8,
 	lamp = 9,
 	generator = 10,
+	plant = 11,
 	not_card = 20
 }
 
@@ -100,5 +101,11 @@ var all_cards : Dictionary = {
 		"Generates electricity",
 		Vector2(3, 4),
 		Constants.resource.electricity
+	),
+	card_id.plant: card_data.new(
+		"Plant",
+		"Needs to receive light, water, and nutrients to grow.",
+		Vector2(0, 2),
+		Constants.resource.none
 	)
 	}
