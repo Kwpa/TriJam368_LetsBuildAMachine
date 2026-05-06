@@ -10,18 +10,48 @@ signal card_selected(card_data)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$HandContainer.size.x = 160 * Constants.HAND_SIZE_LIMIT
-	print(Constants.card_id.values())
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	deal_opening_hand()
 	
-func get_random_card_data() -> CardData:
+func add_card_to_hand(card : CardData) -> void:
+	var new_card_track = card_track.instantiate()
+	new_card_track.set_card_data(card)
+	$HandContainer.add_child(new_card_track)
+	new_card_track.connect('track_selected', _on_card_track_selection_changed)
+
+func deal_opening_hand() -> void:
+	# let the player begin with a hand of cards containing at least one generator or each kind
+	for res in [Constants.resource.water, Constants.resource.nutrients]: 
+		add_card_to_hand(get_random_by_resource(res))
+	
+	# also give them a lamp and a sprinkler?
+	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp))
+	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler))
+	return
+
+func get_random_by_resource(type : int) -> CardData:
+	# returns a random card that generates the specified resource
+	# create an array of card_ids whose cards generate that resource
+	var card_ids = []
+	for id in Constants.all_cards.keys():
+		if Constants.all_cards.get(id).get("resource") == type:
+			card_ids.append(id)
+			
+	## pick a random card_id from that array
+	var random_card_id = card_ids.pick_random()
+	
+	## get CardData from all_card dict with that card_id
+	var random_card = Constants.all_cards[random_card_id]
+	
+	return random_card
+	
+
+func get_random_card_data() -> CardData: 
+	# maybe we can refactor this to take an optional param and then we can combine it with get_random_by_resource
 	# get random weighted int
 	var index = rng.rand_weighted(Constants.card_weights)
 	
 	# get the card_id at that index
-	var card_id_values = Constants.card_id.values()
+	var card_id_values = Constants.card_id.values() # -> array 
 	var random_card_id = card_id_values[index]
 	
 	# get CardData from all_card dict with that card_id
@@ -30,34 +60,20 @@ func get_random_card_data() -> CardData:
 	return random_card
 
 func _on_deck_pressed() -> void:
-	print_debug("hand size is " + str($HandContainer.get_child_count()))
 	
 	# check whether hand size limit is reached
 	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
 		
-		# if hand is small enough, create a new card
-		var new_card_track = card_track.instantiate()
-		new_card_track.set_card_data(get_random_card_data())
-		print_debug(new_card_track.get_child(0).custom_to_string())
-		
-		# add the card to the hand
-		$HandContainer.add_child(new_card_track)
-		
-		# hook up the track's signal to the appropriate function
-		new_card_track.connect('track_selected', _on_card_track_selection_changed)
+		# if hand is small enough, add a new card to the hand
+		add_card_to_hand(get_random_card_data())
 	
 	else:
 		# maybe we'll make a UI warning
 		print("Hand is too large. You must first discard a card.")
 
-func _on_card_selected(card) -> void:
-	SignalBus.card_selected.emit(card)
-	print_debug("card % selected" % card.custom_to_string())
-	# this will be responsible for deselecting other card
-		
-
 
 func _on_card_track_selection_changed(track) -> void:
+	# this is hooked up to a card track's 'track_selected' signal when the track is created
 	if track.is_selected:
 		# if the selection changed to 'true'
 		selected_card_track = card_track # I'm not sure we'll need this variable
@@ -68,4 +84,4 @@ func _on_card_track_selection_changed(track) -> void:
 	for card_track in $HandContainer.get_children():
 		if card_track != track && card_track.is_selected:
 			card_track.toggle_selection()
-			print_debug("%s's selected is %s" % [card_track.get_child(0).custom_to_string(), str(card_track.is_selected)])
+			#print_debug("%s's selected is %s" % [card_track.get_child(0).custom_to_string(), str(card_track.is_selected)])

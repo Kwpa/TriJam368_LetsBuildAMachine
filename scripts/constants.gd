@@ -1,12 +1,7 @@
 extends Node
 
 var HAND_SIZE_LIMIT = 6
-#enum card_freq {
-	#common = 1,
-	#frequent = 2,
-	#rare = 3,
-	#very_rare = 4
-#}
+var OPENING_HAND_SIZE = 4
 
 # We are not using the two-tile objects.
 # The enum all_cards contains possible cards and the generator.
@@ -33,15 +28,15 @@ enum card_id {
 
 var card_weights = [
 	1, # straight probability
-	1, # elbow probability
-	1, # cross probability
-	1, # tee  probability
-	1, # sprinkler probability
-	1, # water_straight probability
-	1, # water_tee probability
-	1, # compost_straight probability
-	1, # compost_tee probability
-	1, # lamp probability
+	.75, # elbow probability
+	.5, # cross probability
+	.75, # tee  probability
+	.5, # sprinkler probability
+	.25, # water_straight probability
+	.25, # water_tee probability
+	.25, # compost_straight probability
+	.25, # compost_tee probability
+	.5, # lamp probability
 	0, # generator probability
 	0, # not_card probability
 ]
@@ -50,28 +45,12 @@ enum resource {
 	none, water, light, nutrients, electricity
 }
 
-#var card_info : Dictionary = {
-	#'STRAIGHT' = {
-		#title = "Straight",
-		#description = "Connects two tiles on opposite sides of this tile.",
-		#atlas_coords = Vector2i(0,0),
-		#resources = []
-	#},
-	#'ELBOW' = {
-		#title = "Elbow",
-		#description = "Connects two adjacent tiles at a right angle.",
-		#atlas_coords = Vector2i(1,0),
-		#resources = []
-		#}
-		#
-	#
-#}
-#
-#enum card_names {
-	#STRAIGHT, 
-	#ELBOW
-#}
-
+#CardData definition repeated for convenience
+#var title : String
+#var description: String
+#var coords : Vector2i
+#var resource : Constants.resource
+#var when_receiving_input : Dictionary
 
 var all_cards : Dictionary = { 
 	card_id.elbow: CardData.new(
