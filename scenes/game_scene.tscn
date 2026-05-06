@@ -110,6 +110,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "View Rules"
 
+[node name="menu_button" type="Button" parent="ui/summary_layout" unique_id=849614171]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Return to Menu"
+
 [node name="hand_placeholder" type="ColorRect" parent="ui" unique_id=820933180]
 layout_mode = 0
 offset_left = 632.0

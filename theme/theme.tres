@@ -3,6 +3,7 @@
 [ext_resource type="StyleBox" uid="uid://cin64uf17xxab" path="res://theme/style_box_card.tres" id="1_110ce"]
 [ext_resource type="FontFile" uid="uid://dx211ilryvrk7" path="res://theme/fonts/Philosopher-Regular.ttf" id="2_4ytkp"]
 [ext_resource type="StyleBox" uid="uid://b4hklvvn488jp" path="res://theme/style_box_button_disabled.tres" id="2_05tig"]
+[ext_resource type="StyleBox" uid="uid://d4l3l680bcjmp" path="res://theme/style_box_popup.tres" id="2_rucdj"]
 [ext_resource type="StyleBox" uid="uid://bpjbemwaghi18" path="res://theme/style_box_button_light.tres" id="3_1rmny"]
 [ext_resource type="StyleBox" uid="uid://hs612xfuptq7" path="res://theme/style_box_button_normal.tres" id="4_mihib"]
 [ext_resource type="FontFile" uid="uid://dxg7jpeqw02j2" path="res://theme/fonts/Philosopher-Bold.ttf" id="6_rucdj"]
@@ -1524,6 +1525,7 @@ expand_margin_right = 5.0
 /font_sizes/body = 16
 /font_sizes/header = 24
 /styles/card = ExtResource("1_110ce")
+/styles/popup = ExtResource("2_rucdj")
 Button/colors/font_color = Color(0.91764706, 0.827451, 0.5529412, 1)
 Button/colors/font_disabled_color = Color(0.55027044, 0.44373456, 0.27779207, 1)
 Button/colors/font_focus_color = Color(0.9577835, 0.90280014, 0.73595446, 1)
@@ -1561,6 +1563,7 @@ Label/font_sizes/font_size = 16
 Label/fonts/font = ExtResource("6_rucdj")
 Label/styles/focus = SubResource("StyleBoxFlat_504p6")
 Label/styles/normal = SubResource("StyleBoxEmpty_howt0")
+Panel/styles/panel = ExtResource("2_rucdj")
 ProgressBar/colors/font_color = Color(0.95, 0.95, 0.95, 1)
 ProgressBar/colors/font_outline_color = Color(0, 0, 0, 1)
 ProgressBar/constants/outline_size = 0
