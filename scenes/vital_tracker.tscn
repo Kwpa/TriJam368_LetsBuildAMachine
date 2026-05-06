@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c3808ydkkxk0m"]
 
 [ext_resource type="Script" uid="uid://dgusctygfnt5a" path="res://scripts/vital_tracker.gd" id="1_2vyjv"]
-[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="1_i3bhb"]
+[ext_resource type="Texture2D" uid="uid://bc7on2n2stbip" path="res://textures/atlas_texture_water.tres" id="2_2vyjv"]
 
 [node name="level" type="ProgressBar" unique_id=1132438125]
 custom_minimum_size = Vector2(40, 240)
@@ -18,11 +18,19 @@ vital_lower_optimal = 5
 vital_upper_optimal = 10
 
 [node name="icon" type="TextureRect" parent="." unique_id=1802059518]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 0
-offset_left = 3.0
-offset_top = 246.0
-offset_right = 131.0
-offset_bottom = 374.0
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("1_i3bhb")
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = 5.0
+offset_right = 25.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("2_2vyjv")
+expand_mode = 2
+stretch_mode = 4

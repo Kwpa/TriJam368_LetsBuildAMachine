@@ -4,7 +4,10 @@
 [ext_resource type="Script" uid="uid://d1gjns3lwlxx1" path="res://scripts/game_controller.gd" id="1_po0ka"]
 [ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="3_mixcd"]
 [ext_resource type="PackedScene" uid="uid://c3808ydkkxk0m" path="res://scenes/vital_tracker.tscn" id="3_v1wow"]
-[ext_resource type="Texture2D" uid="uid://4q335xxs2p" path="res://icon.svg" id="5_y3j0m"]
+[ext_resource type="Texture2D" uid="uid://3hgcufsgvbvi" path="res://textures/mode-icons.png" id="5_rurhu"]
+[ext_resource type="Texture2D" uid="uid://ler6vvo00s0s" path="res://textures/atlas_texture_light.tres" id="5_utbpp"]
+[ext_resource type="Texture2D" uid="uid://5c348f7eo4ks" path="res://textures/atlas_texture_soil.tres" id="7_tcjrq"]
+[ext_resource type="Texture2D" uid="uid://cglnpdnmxl8nf" path="res://textures/atlas_texture_turn.tres" id="9_rvs2r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mixcd"]
 bg_color = Color(0.91764706, 0.827451, 0.5529412, 1)
@@ -29,6 +32,18 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5spy"]
+atlas = ExtResource("5_rurhu")
+region = Rect2(14, 161, 140, 140)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_utbpp"]
+atlas = ExtResource("5_rurhu")
+region = Rect2(19, 18, 140, 140)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mw25s"]
+atlas = ExtResource("5_rurhu")
+region = Rect2(187, 155, 140, 140)
 
 [node name="game_scene" type="Node2D" unique_id=1907655626]
 script = ExtResource("1_po0ka")
@@ -73,14 +88,25 @@ layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_mixcd")
 vital_name = "Light"
 
+[node name="icon" parent="ui/vitals/light_tracker" index="0" unique_id=1802059518]
+texture = ExtResource("5_utbpp")
+expand_mode = 3
+
 [node name="water_tracker" parent="ui/vitals" unique_id=1754369271 instance=ExtResource("3_v1wow")]
 layout_mode = 2
 vital_name = "water"
+
+[node name="icon" parent="ui/vitals/water_tracker" index="0" unique_id=1802059518]
+expand_mode = 3
 
 [node name="nutrients_tracker" parent="ui/vitals" unique_id=896476958 instance=ExtResource("3_v1wow")]
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_mj2jn")
 vital_name = "nutrients"
+
+[node name="icon" parent="ui/vitals/nutrients_tracker" index="0" unique_id=1802059518]
+texture = ExtResource("7_tcjrq")
+expand_mode = 3
 
 [node name="summary_layout" type="VBoxContainer" parent="ui" unique_id=1612679543]
 layout_mode = 0
@@ -134,42 +160,38 @@ alignment = 1
 
 [node name="hand_mode_button" type="TextureButton" parent="ui/modes_layout" unique_id=1137310200]
 layout_mode = 2
-texture_normal = ExtResource("5_y3j0m")
+texture_normal = SubResource("AtlasTexture_b5spy")
 
 [node name="rotate_mode_button" type="TextureButton" parent="ui/modes_layout" unique_id=246337742]
 layout_mode = 2
-texture_normal = ExtResource("5_y3j0m")
+texture_normal = SubResource("AtlasTexture_utbpp")
 
 [node name="remove_mode_button" type="TextureButton" parent="ui/modes_layout" unique_id=1156051295]
 layout_mode = 2
-texture_normal = ExtResource("5_y3j0m")
+texture_normal = SubResource("AtlasTexture_mw25s")
 
-[node name="actions_layout" type="Control" parent="ui" unique_id=932284355]
+[node name="actions_layout" type="HBoxContainer" parent="ui" unique_id=165024751]
 custom_minimum_size = Vector2(0, 40)
-anchors_preset = 0
+layout_mode = 0
 offset_left = 647.0
 offset_top = 668.0
 offset_right = 847.0
 offset_bottom = 716.0
 
 [node name="actions_icon" type="TextureRect" parent="ui/actions_layout" unique_id=1954693142]
-visible = false
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("5_y3j0m")
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("9_rvs2r")
 expand_mode = 1
 
 [node name="actions_label" type="Label" parent="ui/actions_layout" unique_id=316075006]
-layout_mode = 0
-offset_left = 46.0
-offset_top = 4.0
-offset_right = 186.0
-offset_bottom = 41.0
+layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Actions: 2"
 
 [connection signal="changed" from="ui/machine_scene/tile_map" to="." method="_on_tile_map_changed"]
 
 [editable path="ui/machine_scene"]
+[editable path="ui/vitals/light_tracker"]
+[editable path="ui/vitals/water_tracker"]
+[editable path="ui/vitals/nutrients_tracker"]
