@@ -7,7 +7,6 @@ signal track_selected(track)
 
 # controls mouse-card-handcontainer interactions
 
-
 func set_card_data(data: CardData) -> void:
 	$card.set_data(data)
 	
@@ -48,5 +47,4 @@ func toggle_selection() -> void:
 	print("toggle_selection called. new state for %s is %s" % [$card.custom_to_string(), str(is_selected)])
 	if not is_selected:
 		lower_card()
-	
 	

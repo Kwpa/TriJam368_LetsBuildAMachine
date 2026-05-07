@@ -1,8 +1,7 @@
 extends Node2D
 
-var card_scene = preload("res://scenes/card.tscn")
-var card_track = preload("res://scenes/card_track.tscn")
 var rng = RandomNumberGenerator.new()
+var card_track_scene = preload("res://scenes/card_track.tscn")
 var selected_card_track
 
 signal card_selected(card_data)
@@ -11,22 +10,22 @@ signal card_selected(card_data)
 func _ready() -> void:
 	$HandContainer.size.x = 160 * Constants.HAND_SIZE_LIMIT
 	deal_opening_hand()
-	
-func add_card_to_hand(card : CardData) -> void:
-	var new_card_track = card_track.instantiate()
-	new_card_track.set_card_data(card)
-	$HandContainer.add_child(new_card_track)
-	new_card_track.connect('track_selected', _on_card_track_selection_changed)
 
 func deal_opening_hand() -> void:
-	# let the player begin with a hand of cards containing at least one generator or each kind
+	# let the player begin with a hand of cards containing at least one generator of each kind
 	for res in [Constants.resource.water, Constants.resource.nutrients]: 
 		add_card_to_hand(get_random_by_resource(res))
 	
-	# also give them a lamp and a sprinkler?
+	# also give them a lamp and a sprinkler for easy testing
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp))
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler))
 	return
+
+func add_card_to_hand(card : CardData) -> void:
+	var new_card_track = card_track_scene.instantiate()
+	new_card_track.set_card_data(card)
+	$HandContainer.add_child(new_card_track)
+	new_card_track.connect('track_selected', _on_card_track_selection_changed)
 
 func get_random_by_resource(type : int) -> CardData:
 	# returns a random card that generates the specified resource
@@ -44,7 +43,6 @@ func get_random_by_resource(type : int) -> CardData:
 	
 	return random_card
 	
-
 func get_random_card_data() -> CardData: 
 	# maybe we can refactor this to take an optional param and then we can combine it with get_random_by_resource
 	# get random weighted int
@@ -59,24 +57,20 @@ func get_random_card_data() -> CardData:
 	
 	return random_card
 
+
 func _on_deck_pressed() -> void:
-	
 	# check whether hand size limit is reached
 	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
-		
 		# if hand is small enough, add a new card to the hand
 		add_card_to_hand(get_random_card_data())
-	
 	else:
-		# maybe we'll make a UI warning
-		print("Hand is too large. You must first discard a card.")
-
+		$MaxHandWarning.show()
 
 func _on_card_track_selection_changed(track) -> void:
 	# this is hooked up to a card track's 'track_selected' signal when the track is created
 	if track.is_selected:
 		# if the selection changed to 'true'
-		selected_card_track = card_track # I'm not sure we'll need this variable
+		selected_card_track = track # I'm not sure we'll need this variable
 		# emit a signal with data from the selected card
 		# the game controller can use this to enter placement mode
 		card_selected.emit(track.get_card_data())
@@ -85,3 +79,9 @@ func _on_card_track_selection_changed(track) -> void:
 		if card_track != track && card_track.is_selected:
 			card_track.toggle_selection()
 			#print_debug("%s's selected is %s" % [card_track.get_child(0).custom_to_string(), str(card_track.is_selected)])
+
+func recycle_selected_card() -> void:
+	for track in $HandContainer.get_children():
+		if track.is_selected:
+			track.queue_free()
+	return

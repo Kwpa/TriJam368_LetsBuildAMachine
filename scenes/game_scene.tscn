@@ -66,7 +66,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_mj2jn")
 vital_name = "nutrients"
 
 [node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
-position = Vector2(-1, 701)
+position = Vector2(0, 760)
 
 [connection signal="changed" from="machine_scene/tile_map" to="." method="_on_tile_map_changed"]
 

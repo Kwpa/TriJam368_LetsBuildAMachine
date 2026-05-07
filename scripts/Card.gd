@@ -6,7 +6,7 @@ var tile_source : TileSetSource = tile_set.get_source(1)
 
 var card_data : CardData = Constants.all_cards[Constants.card_id.straight]
 
-	
+
 func custom_to_string() -> String:
 	return card_data["title"]
 
@@ -23,12 +23,10 @@ func set_data(data : CardData) -> void:
 	var tile_image = atlas_image.get_region(tile_region) # -> Image
 	var tile_texture = ImageTexture.create_from_image(tile_image) # -> ImageTexture
 	$Container/card_tile_background/card_tile_image.texture = tile_texture
-	
 
 func on_selected_changed(is_selected : bool) -> void:
-	
-	if is_selected == true:
+	# format the card based on whether it's selected
+	if is_selected:
 		$Container/card_tile_background/card_tile_image.self_modulate = Color(1,1,1,.5)
 	else:
 		$Container/card_tile_background/card_tile_image.self_modulate = Color(1,1,1,1)
-	
