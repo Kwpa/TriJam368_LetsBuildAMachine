@@ -7,6 +7,9 @@
 [ext_resource type="StyleBox" uid="uid://bpjbemwaghi18" path="res://theme/style_box_button_light.tres" id="3_1rmny"]
 [ext_resource type="StyleBox" uid="uid://hs612xfuptq7" path="res://theme/style_box_button_normal.tres" id="4_mihib"]
 [ext_resource type="FontFile" uid="uid://dxg7jpeqw02j2" path="res://theme/fonts/Philosopher-Bold.ttf" id="6_rucdj"]
+[ext_resource type="StyleBox" uid="uid://dctpxuleji67y" path="res://theme/style_box_mode_green.tres" id="8_fppmr"]
+[ext_resource type="StyleBox" uid="uid://dvvwphgai2gqn" path="res://theme/new_style_mode_light.tres" id="9_yw8fc"]
+[ext_resource type="StyleBox" uid="uid://btf7q3vk7sbyd" path="res://theme/style_box_mode_normal.tres" id="10_hj1r4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_504p6"]
 content_margin_left = 4.0
@@ -1668,6 +1671,20 @@ Label/font_sizes/font_size = 16
 Label/fonts/font = ExtResource("6_rucdj")
 Label/styles/focus = SubResource("StyleBoxFlat_504p6")
 Label/styles/normal = SubResource("StyleBoxEmpty_howt0")
+ModeButton/base_type = &"Button"
+ModeButton/styles/disabled = ExtResource("8_fppmr")
+ModeButton/styles/focus = ExtResource("9_yw8fc")
+ModeButton/styles/hover = ExtResource("9_yw8fc")
+ModeButton/styles/hover_pressed = null
+ModeButton/styles/normal = ExtResource("10_hj1r4")
+ModeButton/styles/pressed = ExtResource("9_yw8fc")
+ModeLabel/base_type = &"Label"
+ModeLabel/colors/font_color = Color(0.09411765, 0.07058824, 0.043137256, 1)
+ModeLabel/colors/font_outline_color = Color(0.91764706, 0.827451, 0.5529412, 1)
+ModeLabel/colors/font_shadow_color = Color(0.91764706, 0.827451, 0.5529412, 1)
+ModeLabel/constants/shadow_offset_x = 0
+ModeLabel/constants/shadow_offset_y = 0
+ModeLabel/constants/shadow_outline_size = 3
 Panel/styles/panel = ExtResource("2_rucdj")
 ProgressBar/colors/font_color = Color(0.95, 0.95, 0.95, 1)
 ProgressBar/colors/font_outline_color = Color(0, 0, 0, 1)

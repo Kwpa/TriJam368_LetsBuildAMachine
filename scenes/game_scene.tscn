@@ -4,9 +4,11 @@
 [ext_resource type="Script" uid="uid://d1gjns3lwlxx1" path="res://scripts/game_controller.gd" id="1_po0ka"]
 [ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="3_mixcd"]
 [ext_resource type="PackedScene" uid="uid://c3808ydkkxk0m" path="res://scenes/vital_tracker.tscn" id="3_v1wow"]
-[ext_resource type="Texture2D" uid="uid://3hgcufsgvbvi" path="res://textures/mode-icons.png" id="5_rurhu"]
 [ext_resource type="Texture2D" uid="uid://ler6vvo00s0s" path="res://textures/atlas_texture_light.tres" id="5_utbpp"]
+[ext_resource type="Texture2D" uid="uid://dk627sfd26gj4" path="res://textures/atlas_texture_hand.tres" id="7_mw25s"]
 [ext_resource type="Texture2D" uid="uid://5c348f7eo4ks" path="res://textures/atlas_texture_soil.tres" id="7_tcjrq"]
+[ext_resource type="Texture2D" uid="uid://b4ogmvxwo0nna" path="res://textures/atlas_texture_rotate.tres" id="8_tcjrq"]
+[ext_resource type="PackedScene" uid="uid://byh1wumvbepca" path="res://scenes/mode_button.tscn" id="9_mw25s"]
 [ext_resource type="Texture2D" uid="uid://cglnpdnmxl8nf" path="res://textures/atlas_texture_turn.tres" id="9_rvs2r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mixcd"]
@@ -32,18 +34,6 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b5spy"]
-atlas = ExtResource("5_rurhu")
-region = Rect2(14, 161, 140, 140)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_utbpp"]
-atlas = ExtResource("5_rurhu")
-region = Rect2(19, 18, 140, 140)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mw25s"]
-atlas = ExtResource("5_rurhu")
-region = Rect2(187, 155, 140, 140)
 
 [node name="game_scene" type="Node2D" unique_id=1907655626]
 script = ExtResource("1_po0ka")
@@ -153,22 +143,30 @@ color = Color(0.19607843, 0.14509805, 0.09019608, 1)
 [node name="modes_layout" type="HBoxContainer" parent="ui" unique_id=150288547]
 layout_mode = 0
 offset_left = 1325.0
-offset_top = 541.0
-offset_right = 1760.0
-offset_bottom = 669.0
+offset_top = 511.0
+offset_right = 1771.0
+offset_bottom = 665.0
 alignment = 1
 
-[node name="hand_mode_button" type="TextureButton" parent="ui/modes_layout" unique_id=1137310200]
+[node name="mode_button_hand" parent="ui/modes_layout" unique_id=213637895 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-texture_normal = SubResource("AtlasTexture_b5spy")
+icon = ExtResource("7_mw25s")
 
-[node name="rotate_mode_button" type="TextureButton" parent="ui/modes_layout" unique_id=246337742]
-layout_mode = 2
-texture_normal = SubResource("AtlasTexture_utbpp")
+[node name="mode_label" parent="ui/modes_layout/mode_button_hand" index="0" unique_id=665516849]
+text = "Hand Mode"
 
-[node name="remove_mode_button" type="TextureButton" parent="ui/modes_layout" unique_id=1156051295]
+[node name="mode_button_rotate" parent="ui/modes_layout" unique_id=861217784 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-texture_normal = SubResource("AtlasTexture_mw25s")
+icon = ExtResource("8_tcjrq")
+
+[node name="mode_label" parent="ui/modes_layout/mode_button_rotate" index="0" unique_id=665516849]
+text = "Rotate Mode"
+
+[node name="mode_button_remove" parent="ui/modes_layout" unique_id=701026513 instance=ExtResource("9_mw25s")]
+layout_mode = 2
+
+[node name="mode_label" parent="ui/modes_layout/mode_button_remove" index="0" unique_id=665516849]
+text = "Remove Mode"
 
 [node name="actions_layout" type="HBoxContainer" parent="ui" unique_id=165024751]
 custom_minimum_size = Vector2(0, 40)
@@ -195,3 +193,6 @@ text = "Actions: 2"
 [editable path="ui/vitals/light_tracker"]
 [editable path="ui/vitals/water_tracker"]
 [editable path="ui/vitals/nutrients_tracker"]
+[editable path="ui/modes_layout/mode_button_hand"]
+[editable path="ui/modes_layout/mode_button_rotate"]
+[editable path="ui/modes_layout/mode_button_remove"]
