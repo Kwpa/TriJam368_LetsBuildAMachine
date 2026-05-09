@@ -127,7 +127,7 @@ var all_cards : Dictionary = {
 		Vector2i(3, 4),
 		Constants.resource.electricity
 	),
-	card_id.plant: card_data.new(
+	card_id.plant: CardData.new(
 		"Plant",
 		"Needs to receive light, water, and nutrients to grow.",
 		Vector2(0, 2),
