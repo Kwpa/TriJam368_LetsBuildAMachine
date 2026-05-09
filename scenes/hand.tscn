@@ -1,29 +1,42 @@
 [gd_scene format=3 uid="uid://c2crchg6acoqe"]
 
-[ext_resource type="PackedScene" uid="uid://c4o02g1dva04i" path="res://scenes/card.tscn" id="1_eyfoh"]
+[ext_resource type="Script" uid="uid://bs6wntxi4j18q" path="res://scripts/hand_controller.gd" id="1_cmdsa"]
+[ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="2_cmdsa"]
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_fdxh1"]
-size = Vector2(100, 200)
+[node name="hand" type="Node2D" unique_id=730185003]
+script = ExtResource("1_cmdsa")
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_uxo8i"]
-size = Vector2(100, 200)
-
-[node name="card_scene" type="Node2D" unique_id=730185003]
-
-[node name="hand" type="HBoxContainer" parent="." unique_id=576792922]
-custom_minimum_size = Vector2(400, 600)
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="HandContainer" type="HBoxContainer" parent="." unique_id=576792922]
+offset_left = 511.0
+offset_top = 8.0
+offset_right = 671.0
+offset_bottom = 436.0
 size_flags_horizontal = 3
+alignment = 1
 
-[node name="Card" parent="hand" unique_id=762482903 instance=ExtResource("1_eyfoh")]
+[node name="Deck" type="Button" parent="." unique_id=280409354]
+offset_left = 32.0
+offset_top = 97.0
+offset_right = 153.0
+offset_bottom = 297.0
+text = "Draw a card"
 
-[node name="Deck" type="TextureButton" parent="." unique_id=1535633427]
-offset_left = -536.0
-offset_top = -63.0
-offset_right = -436.0
-offset_bottom = 137.0
-texture_normal = SubResource("PlaceholderTexture2D_fdxh1")
-texture_pressed = SubResource("PlaceholderTexture2D_uxo8i")
+[node name="Recycle" type="Button" parent="." unique_id=202439191]
+offset_left = 1659.0
+offset_top = 110.0
+offset_right = 1780.0
+offset_bottom = 310.0
+text = "Recycle a card"
 
-[connection signal="pressed" from="Deck" to="hand" method="_on_deck_pressed"]
+[node name="MaxHandWarning" type="AcceptDialog" parent="." unique_id=37605625]
+oversampling_override = 1.0
+title = ""
+initial_position = 2
+size = Vector2i(466, 104)
+keep_title_visible = false
+theme = ExtResource("2_cmdsa")
+dialog_text = "You have reached the maximum hand size. 
+You must recycle a card before you can draw another one."
+
+[connection signal="pressed" from="Deck" to="." method="_on_deck_pressed"]
+[connection signal="pressed" from="Recycle" to="." method="recycle_selected_card"]
