@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://bu6qty2on1ff3"]
+
+[ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="1_3spy8"]
+
+[node name="rules" type="Control" unique_id=1634946171]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="background" type="Panel" parent="." unique_id=1622434171]
+layout_mode = 0
+offset_right = 508.0
+offset_bottom = 518.0
+theme = ExtResource("1_3spy8")
+
+[node name="title" type="Label" parent="." unique_id=209641859]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 501.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 24
+text = "Rules"
+horizontal_alignment = 1
+
+[node name="rules" type="RichTextLabel" parent="." unique_id=878142177]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 33.0
+offset_right = 495.0
+offset_bottom = 472.0
+theme = ExtResource("1_3spy8")
+text = "A plant needs three resources: water, light, and nutrients. Each one has levels from 0 to 10. The resource levels decrease during each turn where the plant's needs are not met. The resource levels increase if the amount of inputs is equal to or greater than the plant's size.
+
+The game is turn-based. On each turn, the plant's resource levels change.
+
+Rules need to be written for the player; document only contains rules for development."
+
+[node name="close_button" type="Button" parent="." unique_id=1188268794]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 478.0
+offset_right = 329.0
+offset_bottom = 507.0
+text = "Close"

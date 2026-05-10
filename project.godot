@@ -22,11 +22,16 @@ config/icon="uid://dyypqsedwqutr"
 [autoload]
 
 Constants="*uid://bekiir5s2sbg1"
+SignalBus="*uid://cckybqtiytcfr"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+
+[dotnet]
+
+project/assembly_name="The Growing Machine"
 
 [editor_plugins]
 

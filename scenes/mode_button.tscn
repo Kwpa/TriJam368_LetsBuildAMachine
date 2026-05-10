@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://byh1wumvbepca"]
+
+[ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="1_3t1qo"]
+[ext_resource type="Texture2D" uid="uid://c2bpamkharxpy" path="res://textures/atlas_texture_remove.tres" id="1_xu6lg"]
+
+[node name="mode_button" type="Button" unique_id=213637895]
+custom_minimum_size = Vector2(142, 160)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1778.0
+offset_bottom = -926.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_3t1qo")
+theme_type_variation = &"ModeButton"
+icon = ExtResource("1_xu6lg")
+vertical_icon_alignment = 0
+
+[node name="mode_label" type="Label" parent="." unique_id=665516849]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -25.0
+offset_right = 20.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("1_3t1qo")
+theme_type_variation = &"ModeLabel"
+text = "Mode"
