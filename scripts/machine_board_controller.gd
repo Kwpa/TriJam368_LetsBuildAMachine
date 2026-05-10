@@ -15,9 +15,9 @@ var t_transpose = TileSetAtlasSource.TRANSFORM_TRANSPOSE
 
 var tile_transformations := {
 	Vector2i(0,-1) : 0,
-	Vector2i(1,0) : flip_h | t_transpose,
-	Vector2i(0,1) : flip_v | flip_h,
-	Vector2i(-1,0) : flip_v  | t_transpose
+	Vector2i(1,0) : 1,
+	Vector2i(0,1) : 2,
+	Vector2i(-1,0) : 3
 }
 
 var tile_direction := Vector2i(0,-1)
@@ -27,8 +27,10 @@ var applied_transform : int
 func rotate_cw():
 	rotate_tile("cw")
 
+
 func rotate_ccw():
 	rotate_tile("ccw")
+
 
 func rotate_tile(dir):
 	if dir == "cw":
@@ -76,37 +78,47 @@ func _input(event) -> void:
 		"remove":
 			# on left click, set the clicked tile to the pot..?
 			if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
-				print("cell was left-clicked" || local_to_map(get_global_mouse_position()))
 				erase_cell(local_to_map(get_global_mouse_position()))
 		"hand":
 			if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
-				print("cell was left-clicked" || local_to_map(get_global_mouse_position()))
 				set_cell(local_to_map(get_global_mouse_position()), 1, Vector2i(0,0),0)
-
+			
+			## rotating with right click
 			elif event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_RIGHT && event.pressed:
-				print("cell was right-clicked" || local_to_map(get_global_mouse_position()))
 				var pos = local_to_map(get_global_mouse_position())
 				var cell_coords = get_cell_atlas_coords(pos)
 				var cell_data = get_cell_tile_data(pos)
+				var cell_alt_id = get_cell_alternative_tile(pos)
 				
-				if cell_data != null:
-					selected_tile = cell_coords
-					if is_cell_flipped_h(pos) && is_cell_transposed(pos):
-						tile_direction = Vector2i(1,0)
-					elif is_cell_flipped_h(pos) && is_cell_flipped_v(pos):
-						tile_direction = Vector2i(0,1)
-					elif is_cell_flipped_v(pos) && is_cell_transposed(pos):
-						tile_direction = Vector2i(-1,0)
-					else:
-						tile_direction = Vector2i(0,-1) 
-					print(tile_direction)
-					rotate_cw()
+				match cell_alt_id:
+					0:
+						applied_transform = 1
+					1:
+						applied_transform = 2
+					2:
+						applied_transform = 3
+					3:
+						applied_transform = 0
+				
+				selected_tile = cell_coords
+				
+				#if cell_data != null:
+					#selected_tile = cell_coords
+					#if is_cell_flipped_h(pos) && is_cell_transposed(pos):
+						#tile_direction = Vector2i(1,0)
+					#elif is_cell_flipped_h(pos) && is_cell_flipped_v(pos):
+						#tile_direction = Vector2i(0,1)
+					#elif is_cell_flipped_v(pos) && is_cell_transposed(pos):
+						#tile_direction = Vector2i(-1,0)
+					#else:
+						#tile_direction = Vector2i(0,-1) 
+					#print(tile_direction)
+					#rotate_cw()
+					#
+					#print("Rotate using " + str(selected_tile) + " & " + str(applied_transform))
 					
-					print("Rotate using " + str(selected_tile) + " & " + str(applied_transform))
-					set_cell(pos, 1, selected_tile,applied_transform)
-				
-				
-		
+				set_cell(pos, 1, selected_tile, applied_transform)
+
 
 	## on left click, place the selected tile
 	#if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
