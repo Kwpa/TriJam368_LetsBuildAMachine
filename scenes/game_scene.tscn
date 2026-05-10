@@ -68,10 +68,11 @@ nutrients_vital = NodePath("../../vitals/nutrients_tracker")
 
 [node name="vitals" type="HBoxContainer" parent="ui" unique_id=1895602416]
 layout_mode = 0
-offset_left = 1323.0
-offset_top = 20.0
-offset_right = 1443.0
-offset_bottom = 270.0
+offset_left = 1721.0
+offset_top = 84.0
+offset_right = 1861.0
+offset_bottom = 334.0
+rotation = 1.5707964
 theme = ExtResource("3_mixcd")
 
 [node name="light_tracker" parent="ui/vitals" unique_id=1664745285 instance=ExtResource("3_v1wow")]
@@ -100,6 +101,7 @@ texture = ExtResource("7_tcjrq")
 expand_mode = 3
 
 [node name="summary_layout" type="VBoxContainer" parent="ui" unique_id=1612679543]
+visible = false
 layout_mode = 0
 offset_left = 87.0
 offset_top = 44.0
@@ -142,12 +144,12 @@ offset_right = 1893.0
 offset_bottom = 1047.0
 color = Color(0.19607843, 0.14509805, 0.09019608, 1)
 
-[node name="modes_layout" type="HBoxContainer" parent="ui" unique_id=150288547]
+[node name="modes_layout" type="VBoxContainer" parent="ui" unique_id=1697580729]
 layout_mode = 0
-offset_left = 1325.0
-offset_top = 511.0
-offset_right = 1771.0
-offset_bottom = 665.0
+offset_left = 431.0
+offset_top = 31.0
+offset_right = 573.0
+offset_bottom = 519.0
 alignment = 1
 
 [node name="mode_button_hand" parent="ui/modes_layout" unique_id=213637895 instance=ExtResource("9_mw25s")]
@@ -173,10 +175,10 @@ text = "Remove Mode"
 [node name="actions_layout" type="HBoxContainer" parent="ui" unique_id=165024751]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 0
-offset_left = 647.0
-offset_top = 668.0
-offset_right = 847.0
-offset_bottom = 716.0
+offset_left = 1428.0
+offset_top = 239.0
+offset_right = 1628.0
+offset_bottom = 289.0
 
 [node name="actions_icon" type="TextureRect" parent="ui/actions_layout" unique_id=1954693142]
 custom_minimum_size = Vector2(50, 50)
