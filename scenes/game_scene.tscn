@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cojgw08suiscf" path="res://scenes/machine_scene.tscn" id="1_mlf6e"]
 [ext_resource type="Script" uid="uid://d1gjns3lwlxx1" path="res://scripts/game_controller.gd" id="1_po0ka"]
+[ext_resource type="Texture2D" uid="uid://cckwrqguiuh0e" path="res://textures/background-big.png" id="2_rvs2r"]
 [ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="3_mixcd"]
 [ext_resource type="PackedScene" uid="uid://c3808ydkkxk0m" path="res://scenes/vital_tracker.tscn" id="3_v1wow"]
 [ext_resource type="Texture2D" uid="uid://ler6vvo00s0s" path="res://textures/atlas_texture_light.tres" id="5_utbpp"]
@@ -49,14 +50,14 @@ offset_top = -1.0
 offset_right = 1920.0
 offset_bottom = 1079.0
 
-[node name="background" type="ColorRect" parent="ui" unique_id=437880129]
+[node name="background" type="TextureRect" parent="ui" unique_id=188767401]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.15473524, 0.13965452, 0.09923465, 1)
+texture = ExtResource("2_rvs2r")
 
 [node name="machine_scene" parent="ui" unique_id=1759567159 instance=ExtResource("1_mlf6e")]
 position = Vector2(650, 21)
