@@ -1,5 +1,6 @@
 extends Node2D
 
+@onready var base_tilemap_layer = $machine_scene/tile_map 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -7,7 +8,15 @@ func _ready() -> void:
 		# pot in default position
 		# generator in random position
 	# create a new plant (it will handle its resource levels)
-	pass # Replace with function body.
+	
+	get_level_def(0)
+
+
+
+func get_level_def(id : int):
+	for def in Constants.level_definitions:
+		if def.level_id == id:
+			base_tilemap_layer.load_level(def)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

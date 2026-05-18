@@ -42,14 +42,16 @@ script = ExtResource("1_po0ka")
 [node name="camera" type="Camera2D" parent="." unique_id=1959044846]
 position = Vector2(960, 539)
 
-[node name="ui" type="Control" parent="." unique_id=294635476]
+[node name="machine_scene" parent="." unique_id=1759567159 instance=ExtResource("1_mlf6e")]
+position = Vector2(650, 21)
+
+[node name="ui" type="Control" parent="." unique_id=1629544419]
+custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 3
 anchors_preset = 0
-offset_top = -1.0
-offset_right = 1920.0
-offset_bottom = 1079.0
 
 [node name="background" type="ColorRect" parent="ui" unique_id=437880129]
+z_index = -1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,14 +59,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.15473524, 0.13965452, 0.09923465, 1)
-
-[node name="machine_scene" parent="ui" unique_id=1759567159 instance=ExtResource("1_mlf6e")]
-position = Vector2(650, 21)
-
-[node name="plant_manager" parent="ui/machine_scene" index="2" unique_id=1324938813 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
-photosynthesis_vital = NodePath("../../vitals/light_tracker")
-moisture_vital = NodePath("../../vitals/water_tracker")
-nutrients_vital = NodePath("../../vitals/nutrients_tracker")
 
 [node name="vitals" type="HBoxContainer" parent="ui" unique_id=1895602416]
 layout_mode = 0
@@ -192,9 +186,6 @@ text = "Actions: 2"
 [node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
 position = Vector2(0, 760)
 
-[connection signal="changed" from="ui/machine_scene/tile_map" to="." method="_on_tile_map_changed"]
-
-[editable path="ui/machine_scene"]
 [editable path="ui/vitals/light_tracker"]
 [editable path="ui/vitals/water_tracker"]
 [editable path="ui/vitals/nutrients_tracker"]

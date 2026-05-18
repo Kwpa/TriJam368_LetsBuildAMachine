@@ -46,6 +46,47 @@ enum resource {
 	none, water, light, nutrients, electricity
 }
 
+var level_definitions = [
+	LevelData.new(
+		0,
+		[
+			{
+				## generator 1 
+				"tilemap_coords": Vector2i(0,2),
+				"atlas_coords": Vector2i(3,4),
+				"source_id": 1,
+				"alternative_id": 0 
+				## 0 = 0deg; 1 = 90deg; 2 = 180deg; 3 = 270deg  
+			},
+			{
+				## plant 1
+				"tilemap_coords": Vector2i(2,4),
+				"atlas_coords": Vector2i(0,2),
+				"source_id": 2,
+				"alternative_id": 0
+			}
+		]
+	),
+	LevelData.new(
+		1,
+		[
+			{
+				"tilemap_coords": Vector2i(0,0),
+				"atlas_coords": Vector2i(0,0),
+				"source_id": 1,
+				"alternative_id": 0 
+				## 0 = 0deg; 1 = 90deg; 2 = 180deg; 3 = 270deg  
+			},
+			{
+				"tilemap_coords": Vector2i(0,0),
+				"atlas_coords": Vector2i(0,0),
+				"source_id": 2,
+				"alternative_id": 0
+			},
+		]
+	)
+]
+
 #CardData definition repeated for convenience
 #var title : String
 #var description: String

@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cxwgcyb12v2mg" path="res://textures/tile_atlas.png" id="1_7qfnh"]
 [ext_resource type="Texture2D" uid="uid://cbp4vyn6806ee" path="res://textures/tile_map_dots.png" id="2_ohasx"]
 [ext_resource type="Texture2D" uid="uid://iecvclpoxfmv" path="res://textures/plant.png" id="3_ohasx"]
+[ext_resource type="Texture2D" uid="uid://e5xn8l7ufy7a" path="res://textures/tile_placement_ui.png" id="4_tduw8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jgwhv"]
 resource_name = "Fake Tiles"
@@ -515,6 +516,20 @@ texture_region_size = Vector2i(128, 128)
 0:2/0 = 0
 0:2/0/custom_data_0 = 11
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sncmt"]
+texture = ExtResource("4_tduw8")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/modulate = Color(0.5019608, 1, 0.2509804, 0.61960787)
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+0:1/0/modulate = Color(1, 0.28627452, 0.36862746, 0.8039216)
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+
 [resource]
 tile_size = Vector2i(128, 128)
 physics_layer_0/collision_layer = 1
@@ -529,3 +544,4 @@ custom_data_layer_0/type = 2
 sources/0 = SubResource("TileSetAtlasSource_jgwhv")
 sources/1 = SubResource("TileSetAtlasSource_ohasx")
 sources/2 = SubResource("TileSetAtlasSource_tduw8")
+sources/3 = SubResource("TileSetAtlasSource_sncmt")

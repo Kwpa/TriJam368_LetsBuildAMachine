@@ -7,6 +7,9 @@ signal track_selected(track)
 
 # controls mouse-card-handcontainer interactions
 
+func _ready() -> void:
+	SignalBus.connect("use_card", use_card)
+
 func set_card_data(data: CardData) -> void:
 	$card.set_data(data)
 	
@@ -37,6 +40,7 @@ func _card_input_handler(event : InputEvent) -> void:
 		toggle_selection()
 		track_selected.emit(self)
 		print_debug('card track for %s has been selected' % $card.custom_to_string())
+		
 	# we can expand this for non-mouse inputs
 	
 func toggle_selection() -> void:
@@ -45,6 +49,22 @@ func toggle_selection() -> void:
 	# tell the card how to style itself in its new state 
 	$card.on_selected_changed(is_selected)
 	print("toggle_selection called. new state for %s is %s" % [$card.custom_to_string(), str(is_selected)])
-	if not is_selected:
-		lower_card()
-	
+	if is_selected:
+		activate_place_mode()
+	else:
+		deactivate_place_mode()
+		#lower_card() we do this in entering hand mode
+
+
+func activate_place_mode():
+	var card_data : CardData = $card.card_data
+	SignalBus.emit_signal("enter_place_mode",card_data.coords,0)
+
+func deactivate_place_mode():
+	SignalBus.emit_signal("enter_hand_mode")
+	lower_card()
+	is_selected = false
+
+func use_card(): ## need to put card in use pile, retrieve later!
+	lower_card()
+	is_selected = false
