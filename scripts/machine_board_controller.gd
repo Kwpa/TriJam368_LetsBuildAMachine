@@ -72,6 +72,7 @@ func enter_remove_mode():
 
 func enter_place_mode(a,b):
 	mode = "place"
+	selected_tile = a
 
 
 func enter_rotate_mode():
@@ -107,10 +108,11 @@ func _input(event) -> void:
 		"place":
 			if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
 				var pos = local_to_map(to_local(get_global_mouse_position()))
-				if pos.x >= 0 and pos.x < 4 and pos.y >= 0 and pos.y < 4:
+				if pos.x >= 0 and pos.x < 5 and pos.y >= 0 and pos.y < 5:
 					var atlas_coords = get_cell_atlas_coords(pos)
 					if atlas_coords == Vector2i(-1,-1):
-						set_cell(local_to_map(to_local(get_global_mouse_position())), 1, Vector2i(0,0),0)
+						set_cell(local_to_map(to_local(get_global_mouse_position())), 1, selected_tile,0)
+						SignalBus.emit_signal("use_card")
 						SignalBus.emit_signal("enter_hand_mode")
 				
 			if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_RIGHT && event.pressed:
@@ -222,30 +224,3 @@ func check_if_tile_is_colliding(layer : int, tile1_coords : Vector2i, tile2_coor
 			
 			
 		 
-	
-#func rotate_tile(layer : int, tile : TileData) -> PackedVector2Array:
-	#for i in tile.get_collision_polygons_count(layer):
-		#for j in tile.get_collision_polygon_points(layer,i).size():
-			#if tile.transpose == false:
-				#if tile.flip_h && tile.flip_v:
-					##
-					#pass
-				#if !tile.flip_h && tile.flip_v:
-					#pass
-				#if !tile.flip_h && !tile.flip_v:
-					##normal
-					#pass
-				#if tile.flip_h && !tile.flip_v:
-					#pass
-			#else:
-				#if tile.flip_h && tile.flip_v:
-					#pass
-				#if !tile.flip_h && tile.flip_v:
-					#pass
-				#if !tile.flip_h && !tile.flip_v:
-					#
-					#pass
-				#if tile.flip_h && !tile.flip_v:
-					#pass
-	#var a
-	#return a 

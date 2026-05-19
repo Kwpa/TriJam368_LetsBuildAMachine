@@ -9,8 +9,7 @@ func _ready() -> void:
 		# generator in random position
 	# create a new plant (it will handle its resource levels)
 	
-	get_level_def(0)
-
+	get_level_def(1)
 
 
 func get_level_def(id : int):

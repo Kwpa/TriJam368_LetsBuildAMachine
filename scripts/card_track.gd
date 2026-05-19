@@ -7,9 +7,6 @@ signal track_selected(track)
 
 # controls mouse-card-handcontainer interactions
 
-func _ready() -> void:
-	SignalBus.connect("use_card", use_card)
-
 func set_card_data(data: CardData) -> void:
 	$card.set_data(data)
 	
@@ -62,9 +59,5 @@ func activate_place_mode():
 
 func deactivate_place_mode():
 	SignalBus.emit_signal("enter_hand_mode")
-	lower_card()
-	is_selected = false
-
-func use_card(): ## need to put card in use pile, retrieve later!
 	lower_card()
 	is_selected = false
