@@ -6,6 +6,7 @@ extends TileMapLayer
 # if flipv and transpose: 270 degrees clockwise 
 
 var selected_tile:Vector2i = Vector2i(-1,-1)
+var currently_selected_alt_id : int = 0
 
 var mode = "hand"
 
@@ -22,6 +23,11 @@ var tile_transformations := {
 
 var tile_direction := Vector2i(0,-1)
 var applied_transform : int
+
+
+func load_level(level_def : LevelData):
+	for tile in level_def.tiles:
+		set_cell(tile.tilemap_coords, tile.source_id, tile.atlas_coords, tile.alternative_id) 
 
 
 func rotate_cw():
@@ -47,6 +53,8 @@ func _ready() -> void:
 	SignalBus.connect("enter_remove_mode", enter_remove_mode)
 	SignalBus.connect("enter_rotate_mode", enter_remove_mode)
 	SignalBus.connect("enter_hand_mode", enter_remove_mode)
+	SignalBus.connect("enter_place_mode", enter_place_mode)
+
 
 # find out if certain tiles connect with each other based on tile colliders
 func test_check():
@@ -61,7 +69,13 @@ func test_check():
 
 func enter_remove_mode():
 	mode = "remove"
-	
+
+
+func enter_place_mode(a,b):
+	mode = "place"
+	selected_tile = a
+	currently_selected_alt_id = 0
+
 
 func enter_rotate_mode():
 	mode = "rotate"
@@ -71,62 +85,79 @@ func enter_hand_mode():
 	mode = "hand"
 
 
+func removal_check(card_id : int) -> bool:
+	if card_id == Constants.card_id.plant or card_id == Constants.card_id.generator:
+		return false
+	else:
+		return true 
+
+
 func _input(event) -> void:
 	
 	## remove mode
 	match mode:
 		"remove":
-			# on left click, set the clicked tile to the pot..?
+			# on left click, remove the tile if it is removeable
 			if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
-				erase_cell(local_to_map(get_global_mouse_position()))
+				var pos = local_to_map(to_local(get_global_mouse_position()))
+				var atlas_coords = get_cell_atlas_coords(pos)
+				if atlas_coords != Vector2i(-1,-1):
+					var card_id = get_cell_tile_data(pos).get_custom_data("card_id")
+					if removal_check(card_id):
+						erase_cell(local_to_map(to_local(get_global_mouse_position())))
+						SignalBus.emit_signal("propogate_resources")
 		"hand":
+			currently_selected_alt_id = 0
+			pass
+		"place":
 			if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
-				set_cell(local_to_map(get_global_mouse_position()), 1, Vector2i(0,0),0)
-			
-			## rotating with right click
-			elif event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_RIGHT && event.pressed:
-				var pos = local_to_map(get_global_mouse_position())
-				var cell_coords = get_cell_atlas_coords(pos)
-				var cell_data = get_cell_tile_data(pos)
-				var cell_alt_id = get_cell_alternative_tile(pos)
+				var pos = local_to_map(to_local(get_global_mouse_position()))
+				if pos.x >= 0 and pos.x < 5 and pos.y >= 0 and pos.y < 5:
+					var atlas_coords = get_cell_atlas_coords(pos)
+					if atlas_coords == Vector2i(-1,-1):
+						set_cell(local_to_map(to_local(get_global_mouse_position())), 1, selected_tile,currently_selected_alt_id)
+						SignalBus.emit_signal("use_card")
+						SignalBus.emit_signal("enter_hand_mode")
+						SignalBus.emit_signal("propogate_resources")
 				
-				match cell_alt_id:
+			if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_RIGHT && event.pressed:
+				match currently_selected_alt_id:
 					0:
-						applied_transform = 1
+						currently_selected_alt_id = 1
 					1:
-						applied_transform = 2
+						currently_selected_alt_id = 2
 					2:
-						applied_transform = 3
+						currently_selected_alt_id = 3
 					3:
-						applied_transform = 0
+						currently_selected_alt_id = 0
+						
+				SignalBus.emit_signal("rotate_preview_tile", currently_selected_alt_id)
 				
-				selected_tile = cell_coords
 				
-				#if cell_data != null:
-					#selected_tile = cell_coords
-					#if is_cell_flipped_h(pos) && is_cell_transposed(pos):
-						#tile_direction = Vector2i(1,0)
-					#elif is_cell_flipped_h(pos) && is_cell_flipped_v(pos):
-						#tile_direction = Vector2i(0,1)
-					#elif is_cell_flipped_v(pos) && is_cell_transposed(pos):
-						#tile_direction = Vector2i(-1,0)
-					#else:
-						#tile_direction = Vector2i(0,-1) 
-					#print(tile_direction)
-					#rotate_cw()
-					#
-					#print("Rotate using " + str(selected_tile) + " & " + str(applied_transform))
-					
-				set_cell(pos, 1, selected_tile, applied_transform)
-
-
-	## on left click, place the selected tile
-	#if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
-		#print("cell was left-clicked at ")
-		#print(local_to_map(get_global_mouse_position()))
-		##set_cell(pos.x, pos.y)
-		## set the tile: at the clicked coordinates, using tile source index 0, to the selected tile within that atlas
-		#set_cell(local_to_map(get_global_mouse_position()), 0, selected_tile)
+				
+		"rotate":
+			## rotating with right click
+			if event is InputEventMouseButton && event.pressed: #&& event.button_index == MOUSE_BUTTON_RIGHT
+				var pos = local_to_map(to_local(get_global_mouse_position()))
+				var cell_coords = get_cell_atlas_coords(pos)
+				if cell_coords != Vector2i(-1,-1):
+					var card_id = get_cell_tile_data(pos).get_custom_data("card_id")
+					if removal_check(card_id):
+						var cell_alt_id = get_cell_alternative_tile(pos)
+						match cell_alt_id:
+							0:
+								applied_transform = 1
+							1:
+								applied_transform = 2
+							2:
+								applied_transform = 3
+							3:
+								applied_transform = 0
+						
+						selected_tile = cell_coords
+						
+						set_cell(pos, 1, selected_tile, applied_transform)
+						SignalBus.emit_signal("propogate_resources")
 
 	# a button press to test a number of predetermined tiles and if they are connected
 	if event is InputEventKey && event.keycode == KEY_T && event.pressed:
@@ -148,12 +179,12 @@ func _input(event) -> void:
 			
 func remove_tile() -> void:
 	# remove tile by setting its tile source index to -1
-	set_cell(local_to_map(get_global_mouse_position()), -1)
+	set_cell(local_to_map(to_local(get_global_mouse_position())), -1)
 	print("Tile was removed")
 	# emit a signal so the hand manager can add the card to the hand
 	
 
-func check_if_tile_is_colliding(layer : int, tile1_coords : Vector2i, tile2_coords : Vector2i):
+func check_if_tile_is_colliding(layer : int, tile1_coords : Vector2i, tile2_coords : Vector2i) -> bool:
 	
 	# get the tiles at the coordinates
 	var tile1 = get_cell_tile_data(tile1_coords)
@@ -193,36 +224,6 @@ func check_if_tile_is_colliding(layer : int, tile1_coords : Vector2i, tile2_coor
 					if intersect_array.is_empty() == false:
 						print("hurrah!")
 						polys_overlap += 1
+						break
 
 	return polys_overlap > 0
-			
-			
-			
-		 
-	
-#func rotate_tile(layer : int, tile : TileData) -> PackedVector2Array:
-	#for i in tile.get_collision_polygons_count(layer):
-		#for j in tile.get_collision_polygon_points(layer,i).size():
-			#if tile.transpose == false:
-				#if tile.flip_h && tile.flip_v:
-					##
-					#pass
-				#if !tile.flip_h && tile.flip_v:
-					#pass
-				#if !tile.flip_h && !tile.flip_v:
-					##normal
-					#pass
-				#if tile.flip_h && !tile.flip_v:
-					#pass
-			#else:
-				#if tile.flip_h && tile.flip_v:
-					#pass
-				#if !tile.flip_h && tile.flip_v:
-					#pass
-				#if !tile.flip_h && !tile.flip_v:
-					#
-					#pass
-				#if tile.flip_h && !tile.flip_v:
-					#pass
-	#var a
-	#return a 

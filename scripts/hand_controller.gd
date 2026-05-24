@@ -10,6 +10,7 @@ signal card_selected(card_data)
 func _ready() -> void:
 	$HandContainer.size.x = 160 * Constants.HAND_SIZE_LIMIT
 	deal_opening_hand()
+	SignalBus.connect("use_card",use_selected_card)
 
 func deal_opening_hand() -> void:
 	# let the player begin with a hand of cards containing at least one generator of each kind
@@ -81,6 +82,12 @@ func _on_card_track_selection_changed(track) -> void:
 			#print_debug("%s's selected is %s" % [card_track.get_child(0).custom_to_string(), str(card_track.is_selected)])
 
 func recycle_selected_card() -> void:
+	for track in $HandContainer.get_children():
+		if track.is_selected:
+			track.queue_free()
+	return
+
+func use_selected_card() -> void:
 	for track in $HandContainer.get_children():
 		if track.is_selected:
 			track.queue_free()
