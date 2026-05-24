@@ -91,9 +91,9 @@ var level_definitions = [
 			{
 				## pipe 1
 				"tilemap_coords": Vector2i(1,1),
-				"atlas_coords": Vector2i(0,0),
+				"atlas_coords": Vector2i(0,1),
 				"source_id": 1,
-				"alternative_id": 1
+				"alternative_id": 0
 			},
 			{
 				## water 1

@@ -40,7 +40,7 @@ func _process(delta: float) -> void:
 	if preview_mode:
 		var cell_selected_coords = local_to_map(to_local(get_global_mouse_position()))
 		if cell_selected_coords.x >= 0 and cell_selected_coords.x < 5 and cell_selected_coords.y >= 0 and cell_selected_coords.y < 5:
-			if cell_selected_coords != last_cell_coords:
+			# if cell_selected_coords != last_cell_coords:
 				erase_cell(last_cell_coords)
 				last_cell_coords = cell_selected_coords
 				if check_if_tile_is_free():

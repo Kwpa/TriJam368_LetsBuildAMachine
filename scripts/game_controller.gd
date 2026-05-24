@@ -9,7 +9,11 @@ func _ready() -> void:
 		# generator in random position
 	# create a new plant (it will handle its resource levels)
 	
+	# start the level
 	get_level_def(1)
+	
+	# check resources + update tiles in the machine_scene
+	SignalBus.emit_signal("propogate_resources")
 
 
 func get_level_def(id : int):

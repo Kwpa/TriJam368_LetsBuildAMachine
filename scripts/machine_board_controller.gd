@@ -6,6 +6,7 @@ extends TileMapLayer
 # if flipv and transpose: 270 degrees clockwise 
 
 var selected_tile:Vector2i = Vector2i(-1,-1)
+var currently_selected_alt_id : int = 0
 
 var mode = "hand"
 
@@ -73,6 +74,7 @@ func enter_remove_mode():
 func enter_place_mode(a,b):
 	mode = "place"
 	selected_tile = a
+	currently_selected_alt_id = 0
 
 
 func enter_rotate_mode():
@@ -103,7 +105,9 @@ func _input(event) -> void:
 					var card_id = get_cell_tile_data(pos).get_custom_data("card_id")
 					if removal_check(card_id):
 						erase_cell(local_to_map(to_local(get_global_mouse_position())))
+						SignalBus.emit_signal("propogate_resources")
 		"hand":
+			currently_selected_alt_id = 0
 			pass
 		"place":
 			if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_LEFT && event.pressed:
@@ -111,12 +115,12 @@ func _input(event) -> void:
 				if pos.x >= 0 and pos.x < 5 and pos.y >= 0 and pos.y < 5:
 					var atlas_coords = get_cell_atlas_coords(pos)
 					if atlas_coords == Vector2i(-1,-1):
-						set_cell(local_to_map(to_local(get_global_mouse_position())), 1, selected_tile,0)
+						set_cell(local_to_map(to_local(get_global_mouse_position())), 1, selected_tile,currently_selected_alt_id)
 						SignalBus.emit_signal("use_card")
 						SignalBus.emit_signal("enter_hand_mode")
+						SignalBus.emit_signal("propogate_resources")
 				
 			if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_RIGHT && event.pressed:
-				var currently_selected_alt_id = 0
 				match currently_selected_alt_id:
 					0:
 						currently_selected_alt_id = 1
@@ -130,9 +134,10 @@ func _input(event) -> void:
 				SignalBus.emit_signal("rotate_preview_tile", currently_selected_alt_id)
 				
 				
+				
 		"rotate":
 			## rotating with right click
-			if event is InputEventMouseButton && event.button_index == MOUSE_BUTTON_RIGHT && event.pressed:
+			if event is InputEventMouseButton && event.pressed: #&& event.button_index == MOUSE_BUTTON_RIGHT
 				var pos = local_to_map(to_local(get_global_mouse_position()))
 				var cell_coords = get_cell_atlas_coords(pos)
 				if cell_coords != Vector2i(-1,-1):
@@ -152,6 +157,7 @@ func _input(event) -> void:
 						selected_tile = cell_coords
 						
 						set_cell(pos, 1, selected_tile, applied_transform)
+						SignalBus.emit_signal("propogate_resources")
 
 	# a button press to test a number of predetermined tiles and if they are connected
 	if event is InputEventKey && event.keycode == KEY_T && event.pressed:
@@ -178,7 +184,7 @@ func remove_tile() -> void:
 	# emit a signal so the hand manager can add the card to the hand
 	
 
-func check_if_tile_is_colliding(layer : int, tile1_coords : Vector2i, tile2_coords : Vector2i):
+func check_if_tile_is_colliding(layer : int, tile1_coords : Vector2i, tile2_coords : Vector2i) -> bool:
 	
 	# get the tiles at the coordinates
 	var tile1 = get_cell_tile_data(tile1_coords)
@@ -218,9 +224,6 @@ func check_if_tile_is_colliding(layer : int, tile1_coords : Vector2i, tile2_coor
 					if intersect_array.is_empty() == false:
 						print("hurrah!")
 						polys_overlap += 1
+						break
 
 	return polys_overlap > 0
-			
-			
-			
-		 

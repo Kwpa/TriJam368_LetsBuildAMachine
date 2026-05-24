@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b2qw1k55e55kb"]
+
+[node name="coords" type="Label" unique_id=1785065707]
+offset_left = 337.0
+offset_top = 357.0
+offset_right = 377.0
+offset_bottom = 376.0
+text = "2,2"
