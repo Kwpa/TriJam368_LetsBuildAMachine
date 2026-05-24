@@ -154,12 +154,14 @@ text = "Hand Mode"
 [node name="mode_button_rotate" parent="ui/modes_layout" unique_id=861217784 instance=ExtResource("9_mw25s")]
 layout_mode = 2
 icon = ExtResource("8_tcjrq")
+mode = "rotate"
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_rotate" index="0" unique_id=665516849]
 text = "Rotate Mode"
 
 [node name="mode_button_remove" parent="ui/modes_layout" unique_id=701026513 instance=ExtResource("9_mw25s")]
 layout_mode = 2
+mode = "remove"
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_remove" index="0" unique_id=665516849]
 text = "Remove Mode"

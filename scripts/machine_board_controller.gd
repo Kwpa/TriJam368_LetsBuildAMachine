@@ -51,7 +51,7 @@ func rotate_tile(dir):
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SignalBus.connect("enter_remove_mode", enter_remove_mode)
-	SignalBus.connect("enter_rotate_mode", enter_remove_mode)
+	SignalBus.connect("enter_rotate_mode", enter_rotate_mode)
 	SignalBus.connect("enter_hand_mode", enter_remove_mode)
 	SignalBus.connect("enter_place_mode", enter_place_mode)
 
@@ -165,16 +165,15 @@ func _input(event) -> void:
 	
 	# swap to hand mode
 	if event is InputEventKey && event.keycode == KEY_1 && event.pressed:
-		mode = "hand"
-		print("hand mode")
+		SignalBus.emit_signal("enter_hand_mode")
+
 	# swap to rotate mode
 	if event is InputEventKey && event.keycode == KEY_2 && event.pressed:
-		mode = "rotate"
-		print("rotate mode")
+		SignalBus.emit_signal("enter_rotate_mode")
+
 	# swap to remove mode
 	if event is InputEventKey && event.keycode == KEY_3 && event.pressed:
-		mode = "remove"
-		print("remove mode")
+		SignalBus.emit_signal("enter_remove_mode")
 
 			
 func remove_tile() -> void:
