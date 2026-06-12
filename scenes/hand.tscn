@@ -7,9 +7,10 @@
 script = ExtResource("1_cmdsa")
 
 [node name="HandContainer" type="HBoxContainer" parent="." unique_id=576792922]
-offset_left = 511.0
+layout_direction = 3
+offset_left = -671.0
 offset_top = 8.0
-offset_right = 671.0
+offset_right = -511.0
 offset_bottom = 436.0
 size_flags_horizontal = 3
 alignment = 1

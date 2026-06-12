@@ -16,17 +16,35 @@ func deal_opening_hand() -> void:
 	# let the player begin with a hand of cards containing at least one generator of each kind
 	for res in [Constants.resource.water, Constants.resource.nutrients]: 
 		add_card_to_hand(get_random_by_resource(res))
+		await get_tree().create_timer(1).timeout
 	
 	# also give them a lamp and a sprinkler for easy testing
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp))
+	await get_tree().create_timer(1).timeout
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler))
+	await get_tree().create_timer(1).timeout
 	return
 
 func add_card_to_hand(card : CardData) -> void:
+	var tween = create_tween()
+	#tween.set_trans(Tween.TRANS_BACK)
+
 	var new_card_track = card_track_scene.instantiate()
+	new_card_track.connect('track_selected', _on_card_track_selection_changed)
 	new_card_track.set_card_data(card)
 	$HandContainer.add_child(new_card_track)
-	new_card_track.connect('track_selected', _on_card_track_selection_changed)
+	
+	# for aesthetics
+	new_card_track.modulate.a = .25
+	tween.tween_property(new_card_track, "custom_minimum_size:x", 160, .5)
+	tween.parallel().tween_property(new_card_track, "modulate:a", 1, .5)
+
+	await tween.finished
+	print_debug('custom minimum size = %s, size = %s' %[new_card_track.custom_minimum_size.x, new_card_track.size.x])
+
+func remove_card_from_hand(track) -> void:
+	#this method is called by either placing or recyling a card. We can change it to return a Card if we want to store those
+	pass
 
 func get_random_by_resource(type : int) -> CardData:
 	# returns a random card that generates the specified resource
@@ -92,3 +110,4 @@ func use_selected_card() -> void:
 		if track.is_selected:
 			track.queue_free()
 	return
+	

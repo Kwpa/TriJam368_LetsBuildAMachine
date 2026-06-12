@@ -1,4 +1,5 @@
-extends Control
+class_name CardTrack extends Control
+
 
 var is_raised : bool = false
 var is_selected : bool = false
