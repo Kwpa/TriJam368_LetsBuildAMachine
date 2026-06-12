@@ -14,11 +14,15 @@ func get_card_data() -> CardData:
 	return $card.card_data
 
 func raise_card() -> void:
-	$card.position.y = 0
+	var tween = create_tween()
+	tween.tween_property($card, "position:y", 0, .2)
+	#$card.position.y = 0
 	is_raised = true
 	
 func lower_card() -> void:
-	$card.position.y = 128 
+	var tween = create_tween()
+	tween.tween_property($card, "position:y", 128, .2)
+	#$card.position.y = 128 
 	is_raised = false
 
 func _on_card_mouse_entered() -> void:
