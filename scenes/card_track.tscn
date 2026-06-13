@@ -12,6 +12,7 @@ mouse_filter = 2
 script = ExtResource("1_tlgv2")
 
 [node name="card" parent="." unique_id=521924898 instance=ExtResource("1_jnpc8")]
+custom_minimum_size = Vector2(0, 300)
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
