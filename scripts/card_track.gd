@@ -17,13 +17,13 @@ func get_card_data() -> CardData:
 func raise_card() -> void:
 	var tween = create_tween()
 	tween.tween_property($card, "position:y", 0, .2)
-	#$card.position.y = 0
+	await tween.finished
 	is_raised = true
 	
 func lower_card() -> void:
 	var tween = create_tween()
 	tween.tween_property($card, "position:y", 128, .2)
-	#$card.position.y = 128 
+	await tween.finished
 	is_raised = false
 
 func _on_card_mouse_entered() -> void:

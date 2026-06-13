@@ -18,16 +18,10 @@ alignment = 1
 [node name="Deck" type="Button" parent="." unique_id=280409354]
 offset_left = 32.0
 offset_top = 97.0
-offset_right = 153.0
-offset_bottom = 297.0
+offset_right = 192.0
+offset_bottom = 397.0
+scale = Vector2(0.66, 0.66)
 text = "Draw a card"
-
-[node name="Recycle" type="Button" parent="." unique_id=202439191]
-offset_left = 1659.0
-offset_top = 110.0
-offset_right = 1780.0
-offset_bottom = 310.0
-text = "Recycle a card"
 
 [node name="MaxHandWarning" type="AcceptDialog" parent="." unique_id=37605625]
 oversampling_override = 1.0
@@ -39,5 +33,26 @@ theme = ExtResource("2_cmdsa")
 dialog_text = "You have reached the maximum hand size. 
 You must recycle a card before you can draw another one."
 
+[node name="DiscardParent" type="Control" parent="." unique_id=896565905]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1659.0
+offset_top = 110.0
+offset_right = 1659.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Recycle" type="Button" parent="DiscardParent" unique_id=202439191]
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 300.0
+scale = Vector2(0.66, 0.66)
+text = "Recycle a card"
+
 [connection signal="pressed" from="Deck" to="." method="_on_deck_pressed"]
-[connection signal="pressed" from="Recycle" to="." method="recycle_selected_card"]
+[connection signal="pressed" from="DiscardParent/Recycle" to="." method="recycle_selected_card"]

@@ -16,13 +16,13 @@ func deal_opening_hand() -> void:
 	# let the player begin with a hand of cards containing at least one generator of each kind
 	for res in [Constants.resource.water, Constants.resource.nutrients]: 
 		add_card_to_hand(get_random_by_resource(res))
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 	
 	# also give them a lamp and a sprinkler for easy testing
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp))
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.5).timeout
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler))
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.5).timeout
 	return
 
 func add_card_to_hand(card : CardData) -> void:
@@ -35,16 +35,40 @@ func add_card_to_hand(card : CardData) -> void:
 	$HandContainer.add_child(new_card_track)
 	
 	# for aesthetics
-	new_card_track.modulate.a = .25
+	new_card_track.modulate.a = .5
 	tween.tween_property(new_card_track, "custom_minimum_size:x", 160, .5)
 	tween.parallel().tween_property(new_card_track, "modulate:a", 1, .5)
 
 	await tween.finished
 	print_debug('custom minimum size = %s, size = %s' %[new_card_track.custom_minimum_size.x, new_card_track.size.x])
 
-func remove_card_from_hand(track) -> void:
+func remove_card_from_hand(track : CardTrack) -> void:
 	#this method is called by either placing or recyling a card. We can change it to return a Card if we want to store those
-	pass
+
+	var tween = get_tree().create_tween()
+	var second_tween = create_tween()
+	
+	var discard_position = $DiscardParent/Recycle.position + Vector2(50, 0)#this is a Vector2
+	var discard_interval = 2
+	print_debug("The position of the discard deck is %s" %discard_position)
+	
+	
+	if track.is_selected:
+		tween.tween_property(track, "custom_minimum_size:x", 0, 2) #shrink it down
+		tween.parallel().tween_property(track, "modulate:a", 0.5, 2) #make it partially transparent
+		tween.chain().tween_callback(track.reparent.bind($DiscardParent)) #reparent it so we're allowed to change its position
+		tween.parallel().tween_property(track, "global_position", Vector2.UP*100, discard_interval).as_relative() #raise the card up
+		tween.chain().tween_property(track, "position", discard_position, discard_interval) #move it to the discard pile
+		tween.parallel().tween_property(track, "scale", Vector2(0.66, 0.66), discard_interval) #scale it to the discard pile
+		tween.tween_callback(track.queue_free) #after everything, delete it
+		
+		
+		#track.position.y = track.position.y - 600
+		#tween.parallel().tween_property(track, "position:y", -100, 2).as_relative() #raise the card up
+		#tween.chain().tween_property(track, "position", discard_position, discard_interval) #move it to the recycle button
+		#tween.parallel().tween_property(track, "scale", .66, discard_interval)
+		#tween.tween_callback(track.toggle_selection) #deselect the track so that we can't place the tile
+		
 
 func get_random_by_resource(type : int) -> CardData:
 	# returns a random card that generates the specified resource
@@ -86,6 +110,7 @@ func _on_deck_pressed() -> void:
 		$MaxHandWarning.show()
 
 func _on_card_track_selection_changed(track) -> void:
+	# TODO: decide if we want to keep handling this in the CardTrack class or move it up to the game controller
 	# this is hooked up to a card track's 'track_selected' signal when the track is created
 	if track.is_selected:
 		# if the selection changed to 'true'
@@ -102,12 +127,12 @@ func _on_card_track_selection_changed(track) -> void:
 func recycle_selected_card() -> void:
 	for track in $HandContainer.get_children():
 		if track.is_selected:
-			track.queue_free()
+			remove_card_from_hand(track)
 	return
 
 func use_selected_card() -> void:
 	for track in $HandContainer.get_children():
 		if track.is_selected:
-			track.queue_free()
+			remove_card_from_hand(track)
 	return
 	
