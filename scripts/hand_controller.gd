@@ -43,31 +43,38 @@ func add_card_to_hand(card : CardData) -> void:
 	print_debug('custom minimum size = %s, size = %s' %[new_card_track.custom_minimum_size.x, new_card_track.size.x])
 
 func remove_card_from_hand(track : CardTrack) -> void:
+	SignalBus.emit_signal("enter_hand_mode")
 	#this method is called by either placing or recyling a card. We can change it to return a Card if we want to store those
 
 	var tween = get_tree().create_tween()
-	var second_tween = create_tween()
 	
-	var discard_position = $DiscardParent/Recycle.position + Vector2(50, 0)#this is a Vector2
-	var discard_interval = 2
+	var discard_position = $DiscardParent/Recycle.position #this is a Vector2
+	var discard_interval = .75
 	print_debug("The position of the discard deck is %s" %discard_position)
 	
+	# create a dummy track to take the place of the card we're discarding
+	var track_index = track.get_index() # need this to insert the dummy at the correct place
+	var dummy_track = card_track_scene.instantiate()
+	dummy_track.custom_minimum_size.x = 160
+	dummy_track.modulate.a = 0
+	# reparent the real card so we can move it outside the container
+	track.reparent($DiscardParent)
+	# add the dummy track into the place the real track was
+	$HandContainer.add_child(dummy_track)
+	$HandContainer.move_child(dummy_track, track_index)
 	
-	if track.is_selected:
-		tween.tween_property(track, "custom_minimum_size:x", 0, 2) #shrink it down
-		tween.parallel().tween_property(track, "modulate:a", 0.5, 2) #make it partially transparent
-		tween.chain().tween_callback(track.reparent.bind($DiscardParent)) #reparent it so we're allowed to change its position
-		tween.parallel().tween_property(track, "global_position", Vector2.UP*100, discard_interval).as_relative() #raise the card up
-		tween.chain().tween_property(track, "position", discard_position, discard_interval) #move it to the discard pile
-		tween.parallel().tween_property(track, "scale", Vector2(0.66, 0.66), discard_interval) #scale it to the discard pile
-		tween.tween_callback(track.queue_free) #after everything, delete it
-		
-		
-		#track.position.y = track.position.y - 600
-		#tween.parallel().tween_property(track, "position:y", -100, 2).as_relative() #raise the card up
-		#tween.chain().tween_property(track, "position", discard_position, discard_interval) #move it to the recycle button
-		#tween.parallel().tween_property(track, "scale", .66, discard_interval)
-		#tween.tween_callback(track.toggle_selection) #deselect the track so that we can't place the tile
+	# shrink the size of the dummy so the hand resizes smoothly
+	tween.tween_property(dummy_track, "custom_minimum_size:x", 0, .3) #shrink it down
+	
+	# move the real card over to the discard spot
+	tween.parallel().tween_property(track, "modulate:a", 0.5, .3) #make it partially transparent
+	tween.parallel().tween_property(track, "global_position", Vector2.UP*100, .3).as_relative() #raise it up
+	tween.tween_callback(dummy_track.queue_free) #and delete the dummy
+	tween.chain().tween_property(track, "position", discard_position, discard_interval) #move it to the discard pile
+	tween.parallel().tween_property(track, "scale", Vector2(0.66, 0.66), discard_interval) #scale it to the discard scale
+	tween.parallel().tween_property(track, "modulate:a", 0, discard_interval) #make it fully transparent
+	tween.tween_callback(track.queue_free) #after everything, delete it
+
 		
 
 func get_random_by_resource(type : int) -> CardData:
