@@ -16,17 +16,86 @@ func deal_opening_hand() -> void:
 	# let the player begin with a hand of cards containing at least one generator of each kind
 	for res in [Constants.resource.water, Constants.resource.nutrients]: 
 		add_card_to_hand(get_random_by_resource(res))
+		await get_tree().create_timer(1.5).timeout
 	
 	# also give them a lamp and a sprinkler for easy testing
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp))
+	await get_tree().create_timer(1.5).timeout
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler))
+	await get_tree().create_timer(1.5).timeout
 	return
 
 func add_card_to_hand(card : CardData) -> void:
+	#TODO: disable the deck until this card is added. Do I have to do it with signals? 
+	
+	var add_tween = create_tween()
+	var draw_interval = 1
+	
+	# create a real card
 	var new_card_track = card_track_scene.instantiate()
-	new_card_track.set_card_data(card)
-	$HandContainer.add_child(new_card_track)
 	new_card_track.connect('track_selected', _on_card_track_selection_changed)
+	new_card_track.set_card_data(card)
+	new_card_track.scale = Vector2(0.25, 0.25)
+	new_card_track.position = Vector2(150,-60)
+	new_card_track.modulate.a = .5
+	$DeckParent.add_child(new_card_track) # add the real card to the deck parent for transform inheritance
+	
+	# create a dummy card track and add it to the hand
+	var dummy_track = card_track_scene.instantiate()
+	dummy_track.modulate.a = 0
+	$HandContainer.add_child(dummy_track)
+	var dummy_pos_x = dummy_track.position.x - 87.25 * $HandContainer.get_child_count() #this is currently approximating a kind of back-transition, but it's an accident
+	var dummy_pos_y = dummy_track.position.y - 120
+
+	# grow the dummy to make room 
+	add_tween.tween_property(dummy_track, "custom_minimum_size:x", 160, draw_interval).set_delay(draw_interval/3).set_ease(Tween.EASE_IN)
+	
+	# and move the real card into place
+	add_tween.parallel().tween_property(new_card_track, "custom_minimum_size:x", 160, draw_interval)
+	add_tween.parallel().tween_property(new_card_track, "position", Vector2(dummy_pos_x, dummy_pos_y - 100), draw_interval)
+	add_tween.parallel().tween_property(new_card_track, "scale", Vector2(1,1), draw_interval)
+	# delay the card growing for a bit so the animation looks better
+	
+	# let the real card drop gracefully into place
+	add_tween.chain().tween_property(new_card_track, "position", Vector2.DOWN * 100, 0.3).as_relative()
+	add_tween.parallel().tween_property(new_card_track, "modulate:a", 1, 0.3)
+	
+	# add the real card to the hand and delete the dummy at the same time
+	add_tween.chain().tween_callback(new_card_track.reparent.bind($HandContainer))
+	add_tween.parallel().tween_callback(dummy_track.queue_free)
+
+func remove_card_from_hand(track : CardTrack) -> void:
+	#TODO: make it take an endpoint so that when you use it card it moves to the clicked tile
+	SignalBus.emit_signal("enter_hand_mode")
+	#this method is called by either placing or recyling a card. We can change it to return a Card if we want to store those
+	var tween = get_tree().create_tween()
+	
+	var discard_position = $DiscardParent/Recycle.position #this is a Vector2
+	var discard_interval = .75
+	print_debug("The position of the discard deck is %s" %discard_position)
+	
+	# create a dummy track to take the place of the card we're discarding
+	var track_index = track.get_index() # need this to insert the dummy at the correct place
+	var dummy_track = card_track_scene.instantiate()
+	dummy_track.custom_minimum_size.x = 160
+	dummy_track.modulate.a = 0
+	# reparent the real card so we can move it outside the container
+	track.reparent($DiscardParent)
+	# add the dummy track into the place the real track was
+	$HandContainer.add_child(dummy_track)
+	$HandContainer.move_child(dummy_track, track_index)
+	
+	# shrink the size of the dummy so the hand resizes smoothly
+	tween.tween_property(dummy_track, "custom_minimum_size:x", 0, .3) #shrink it down
+	
+	# move the real card over to the discard spot
+	tween.parallel().tween_property(track, "modulate:a", 0.5, .3) #make it partially transparent
+	tween.parallel().tween_property(track, "global_position", Vector2.UP*100, .3).as_relative() #raise it up
+	tween.tween_callback(dummy_track.queue_free) #and delete the dummy
+	tween.chain().tween_property(track, "position", discard_position, discard_interval) #move it to the discard pile
+	tween.parallel().tween_property(track, "scale", Vector2(0.66, 0.66), discard_interval) #scale it to the discard scale
+	tween.parallel().tween_property(track, "modulate:a", 0, discard_interval) #make it fully transparent
+	tween.tween_callback(track.queue_free) #after everything, delete it
 
 func get_random_by_resource(type : int) -> CardData:
 	# returns a random card that generates the specified resource
@@ -68,6 +137,7 @@ func _on_deck_pressed() -> void:
 		$MaxHandWarning.show()
 
 func _on_card_track_selection_changed(track) -> void:
+	# TODO: decide if we want to keep handling this in the CardTrack class or move it up to the game controller
 	# this is hooked up to a card track's 'track_selected' signal when the track is created
 	if track.is_selected:
 		# if the selection changed to 'true'
@@ -84,11 +154,12 @@ func _on_card_track_selection_changed(track) -> void:
 func recycle_selected_card() -> void:
 	for track in $HandContainer.get_children():
 		if track.is_selected:
-			track.queue_free()
+			remove_card_from_hand(track)
 	return
 
 func use_selected_card() -> void:
 	for track in $HandContainer.get_children():
 		if track.is_selected:
-			track.queue_free()
+			remove_card_from_hand(track)
 	return
+	

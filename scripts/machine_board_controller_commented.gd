@@ -77,7 +77,7 @@ func check_if_tile_is_colliding(layer : int, tile1_coords : Vector2i, tile2_coor
 					# check for intersections
 					var intersect_array : Array[PackedVector2Array] = Geometry2D.intersect_polygons(polygon_1, polygon_2)
 					if intersect_array.is_empty() == false:
-						print("hurrah!")
+						print_debug("hurrah!")
 						polys_overlap = true
 						break
 			
