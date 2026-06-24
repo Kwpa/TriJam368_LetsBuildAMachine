@@ -7,26 +7,20 @@
 script = ExtResource("1_cmdsa")
 
 [node name="HandContainer" type="HBoxContainer" parent="." unique_id=576792922]
-offset_left = 511.0
+layout_direction = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -660.0
 offset_top = 8.0
-offset_right = 671.0
+offset_right = -500.0
 offset_bottom = 436.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 alignment = 1
-
-[node name="Deck" type="Button" parent="." unique_id=280409354]
-offset_left = 32.0
-offset_top = 97.0
-offset_right = 153.0
-offset_bottom = 297.0
-text = "Draw a card"
-
-[node name="Recycle" type="Button" parent="." unique_id=202439191]
-offset_left = 1659.0
-offset_top = 110.0
-offset_right = 1780.0
-offset_bottom = 310.0
-text = "Recycle a card"
 
 [node name="MaxHandWarning" type="AcceptDialog" parent="." unique_id=37605625]
 oversampling_override = 1.0
@@ -38,5 +32,44 @@ theme = ExtResource("2_cmdsa")
 dialog_text = "You have reached the maximum hand size. 
 You must recycle a card before you can draw another one."
 
-[connection signal="pressed" from="Deck" to="." method="_on_deck_pressed"]
-[connection signal="pressed" from="Recycle" to="." method="recycle_selected_card"]
+[node name="DiscardParent" type="Control" parent="." unique_id=896565905]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1659.0
+offset_top = 110.0
+offset_right = 1659.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Recycle" type="Button" parent="DiscardParent" unique_id=202439191]
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 300.0
+scale = Vector2(0.66, 0.66)
+text = "Recycle a card"
+
+[node name="DeckParent" type="Control" parent="." unique_id=1932289334]
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = 97.0
+offset_right = 32.0
+offset_bottom = 97.0
+grow_vertical = 2
+
+[node name="Deck" type="Button" parent="DeckParent" unique_id=280409354]
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 300.0
+scale = Vector2(0.66, 0.66)
+text = "Draw a card"
+
+[connection signal="pressed" from="DiscardParent/Recycle" to="." method="recycle_selected_card"]
+[connection signal="pressed" from="DeckParent/Deck" to="." method="_on_deck_pressed"]

@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="1_3t1qo"]
 [ext_resource type="Texture2D" uid="uid://c2bpamkharxpy" path="res://textures/atlas_texture_remove.tres" id="1_xu6lg"]
+[ext_resource type="Script" uid="uid://dajogkh7bk1py" path="res://scripts/mode_button.gd" id="3_nbmg6"]
 
 [node name="mode_button" type="Button" unique_id=213637895]
 custom_minimum_size = Vector2(142, 160)
@@ -16,6 +17,7 @@ theme = ExtResource("1_3t1qo")
 theme_type_variation = &"ModeButton"
 icon = ExtResource("1_xu6lg")
 vertical_icon_alignment = 0
+script = ExtResource("3_nbmg6")
 
 [node name="mode_label" type="Label" parent="." unique_id=665516849]
 layout_mode = 1
@@ -33,3 +35,5 @@ grow_vertical = 0
 theme = ExtResource("1_3t1qo")
 theme_type_variation = &"ModeLabel"
 text = "Mode"
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

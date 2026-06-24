@@ -43,8 +43,75 @@ var card_weights = [
 ]
 
 enum resource {
-	none, water, light, nutrients, electricity
+	none = 0, 
+	electricity = 1,
+	water = 2,
+	light = 3, 
+	nutrients = 4, 
 }
+
+var level_definitions = [
+	LevelData.new(
+		0,
+		[
+			{
+				## generator 1 
+				"tilemap_coords": Vector2i(0,2),
+				"atlas_coords": Vector2i(3,4),
+				"source_id": 1,
+				"alternative_id": 0 
+				## 0 = 0deg; 1 = 90deg; 2 = 180deg; 3 = 270deg  
+			},
+			{
+				## plant 1
+				"tilemap_coords": Vector2i(2,4),
+				"atlas_coords": Vector2i(0,2),
+				"source_id": 2,
+				"alternative_id": 0
+			}
+		]
+	),
+	LevelData.new(
+		1,
+		[
+			{
+				## generator 1 
+				"tilemap_coords": Vector2i(0,1),
+				"atlas_coords": Vector2i(3,4),
+				"source_id": 1,
+				"alternative_id": 0 
+			},
+			{
+				## plant 1
+				"tilemap_coords": Vector2i(2,4),
+				"atlas_coords": Vector2i(0,2),
+				"source_id": 2,
+				"alternative_id": 0
+			},
+			{
+				## pipe 1
+				"tilemap_coords": Vector2i(1,1),
+				"atlas_coords": Vector2i(0,1),
+				"source_id": 1,
+				"alternative_id": 0
+			},
+			{
+				## water 1
+				"tilemap_coords": Vector2i(2,1),
+				"atlas_coords": Vector2i(1,2),
+				"source_id": 1,
+				"alternative_id": 3
+			},
+			{
+				## dispenser 1
+				"tilemap_coords": Vector2i(2,2),
+				"atlas_coords": Vector2i(2,1),
+				"source_id": 1,
+				"alternative_id": 0
+			}
+		]
+	)
+]
 
 #CardData definition repeated for convenience
 #var title : String

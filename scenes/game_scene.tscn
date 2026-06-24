@@ -43,12 +43,13 @@ script = ExtResource("1_po0ka")
 [node name="camera" type="Camera2D" parent="." unique_id=1959044846]
 position = Vector2(960, 539)
 
-[node name="ui" type="Control" parent="." unique_id=294635476]
+[node name="machine_scene" parent="." unique_id=1759567159 instance=ExtResource("1_mlf6e")]
+position = Vector2(650, 21)
+
+[node name="ui" type="Control" parent="." unique_id=1629544419]
+custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 3
 anchors_preset = 0
-offset_top = -1.0
-offset_right = 1920.0
-offset_bottom = 1079.0
 
 [node name="background" type="TextureRect" parent="ui" unique_id=188767401]
 layout_mode = 1
@@ -163,12 +164,14 @@ text = "Hand Mode"
 [node name="mode_button_rotate" parent="ui/modes_layout" unique_id=861217784 instance=ExtResource("9_mw25s")]
 layout_mode = 2
 icon = ExtResource("8_tcjrq")
+mode = "rotate"
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_rotate" index="0" unique_id=665516849]
 text = "Rotate Mode"
 
 [node name="mode_button_remove" parent="ui/modes_layout" unique_id=701026513 instance=ExtResource("9_mw25s")]
 layout_mode = 2
+mode = "remove"
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_remove" index="0" unique_id=665516849]
 text = "Remove Mode"
@@ -195,9 +198,6 @@ text = "Actions: 2"
 [node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
 position = Vector2(0, 760)
 
-[connection signal="changed" from="ui/machine_scene/tile_map" to="." method="_on_tile_map_changed"]
-
-[editable path="ui/machine_scene"]
 [editable path="ui/vitals/light_tracker"]
 [editable path="ui/vitals/water_tracker"]
 [editable path="ui/vitals/nutrients_tracker"]

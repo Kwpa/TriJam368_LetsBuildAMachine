@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://crsanr73m4tf7"]
+
+[ext_resource type="Texture2D" uid="uid://bt64atn37rswu" path="res://textures/atlas_texture_electricity.tres" id="1_703ns"]
+[ext_resource type="Script" uid="uid://cd120xulaoat4" path="res://scripts/resource_icon_on_tile.gd" id="1_r83qf"]
+[ext_resource type="Texture2D" uid="uid://bc7on2n2stbip" path="res://textures/atlas_texture_water.tres" id="2_r83qf"]
+[ext_resource type="Texture2D" uid="uid://5c348f7eo4ks" path="res://textures/atlas_texture_soil.tres" id="3_fn4lh"]
+[ext_resource type="Texture2D" uid="uid://ler6vvo00s0s" path="res://textures/atlas_texture_light.tres" id="4_khatn"]
+
+[node name="resource_icon_debug" type="Node2D" unique_id=1954688350]
+script = ExtResource("1_r83qf")
+
+[node name="control" type="Control" parent="." unique_id=1684857753]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+
+[node name="hbox" type="HBoxContainer" parent="control" unique_id=1366416677]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -130.0
+offset_top = -26.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = -2
+alignment = 2
+
+[node name="electricity_resource" type="TextureRect" parent="control/hbox" unique_id=86252459]
+custom_minimum_size = Vector2(25, 10)
+layout_mode = 2
+texture = ExtResource("1_703ns")
+expand_mode = 1
+
+[node name="water_resource" type="TextureRect" parent="control/hbox" unique_id=697958183]
+custom_minimum_size = Vector2(25, 20)
+layout_mode = 2
+texture = ExtResource("2_r83qf")
+expand_mode = 1
+
+[node name="nutrient_resource" type="TextureRect" parent="control/hbox" unique_id=1004094214]
+custom_minimum_size = Vector2(25, 20)
+layout_mode = 2
+texture = ExtResource("3_fn4lh")
+expand_mode = 1
+
+[node name="light_resource" type="TextureRect" parent="control/hbox" unique_id=735262747]
+custom_minimum_size = Vector2(25, 20)
+layout_mode = 2
+texture = ExtResource("4_khatn")
+expand_mode = 1
