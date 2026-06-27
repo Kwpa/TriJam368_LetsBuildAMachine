@@ -32,3 +32,5 @@ func _on_pressed() -> void:
 			SignalBus.emit_signal("enter_rotate_mode")
 		"remove":
 			SignalBus.emit_signal("enter_remove_mode")
+		"turn":
+			SignalBus.emit_signal("end_turn")

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dp44c2e6hpixq"]
+
+[ext_resource type="Script" uid="uid://c5m3cwccp562m" path="res://scripts/plant.gd" id="1_67yln"]
+
+[node name="plant-manager" type="Node2D" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
+script = ExtResource("1_67yln")
+photosynthesis_vital = NodePath("")
+moisture_vital = NodePath("")
+nutrients_vital = NodePath("")

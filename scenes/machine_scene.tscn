@@ -6,8 +6,8 @@
 [ext_resource type="Script" uid="uid://b1rmvdurkcf8o" path="res://scripts/machine_board_controller.gd" id="2_soh53"]
 [ext_resource type="Script" uid="uid://0foxuwia42c8" path="res://scripts/preview_tile_layer.gd" id="3_hx6b6"]
 [ext_resource type="Script" uid="uid://bv6awvop72kht" path="res://scripts/preview_placement_check_layer.gd" id="4_1kqo0"]
-[ext_resource type="Script" uid="uid://c5m3cwccp562m" path="res://scripts/plant.gd" id="4_mo44r"]
 [ext_resource type="Script" uid="uid://cbjs03nuo30yc" path="res://scripts/resource_icon_layer.gd" id="8_c23yc"]
+[ext_resource type="PackedScene" uid="uid://dp44c2e6hpixq" path="res://scenes/plant_manager.tscn" id="8_sbcyb"]
 
 [node name="machine_scene" type="Node2D" unique_id=1759567159]
 script = ExtResource("1_swje1")
@@ -30,8 +30,8 @@ script = ExtResource("3_hx6b6")
 tile_set = ExtResource("1_r258f")
 script = ExtResource("2_soh53")
 
-[node name="plant_manager" type="Node2D" parent="." unique_id=1324938813]
-script = ExtResource("4_mo44r")
-
 [node name="resource_icon_layer" type="Node2D" parent="." unique_id=1079726954]
 script = ExtResource("8_c23yc")
+
+[node name="plant_manager" parent="." unique_id=1127051258 instance=ExtResource("8_sbcyb")]
+position = Vector2(320, 576)
