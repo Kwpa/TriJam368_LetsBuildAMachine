@@ -26,8 +26,24 @@ var applied_transform : int
 
 
 func load_level(level_def : LevelData):
+	var plant_count: int = 0
 	for tile in level_def.tiles:
-		set_cell(tile.tilemap_coords, tile.source_id, tile.atlas_coords, tile.alternative_id) 
+		set_cell(tile.tilemap_coords, tile.source_id, tile.atlas_coords, tile.alternative_id)
+		#var tile_data = get_cell_tile_data(tile.atlas_coords)
+		#if tile_data != null:
+			#var card_id = tile_data.get_custom_data("card_id")
+			#if card_id == 11:
+				#print("that's a plant")
+				#SignalBus.set_plant_id.emit(plant_count)
+				#plant_count = plant_count + 1
+
+
+func grow_plant(plant_id: int):
+	var plant_location = get_node("../machine_scene").get_plant_by_id(plant_id)
+	set_cell(plant_location, 2, Vector2i(0, 1), 0)
+	var second_plant_tile = plant_location + Vector2i.UP
+	set_cell(plant_location, 2, Vector2i(0, 0), 0)
+	pass
 
 
 func rotate_cw():
@@ -54,6 +70,7 @@ func _ready() -> void:
 	SignalBus.connect("enter_rotate_mode", enter_rotate_mode)
 	SignalBus.connect("enter_hand_mode", enter_remove_mode)
 	SignalBus.connect("enter_place_mode", enter_place_mode)
+	SignalBus.connect("grow_plant", grow_plant)
 
 
 # find out if certain tiles connect with each other based on tile colliders
@@ -188,8 +205,6 @@ func check_if_tile_is_colliding(layer : int, tile1_coords : Vector2i, tile2_coor
 	# get the tiles at the coordinates
 	var tile1 = get_cell_tile_data(tile1_coords)
 	var tile2 = get_cell_tile_data(tile2_coords)
-	print("tile1 " + str(get_cell_alternative_tile(tile1_coords)))
-	print("tile2 " + str(get_cell_alternative_tile(tile2_coords)))
 	
 	var polys_overlap = 0
 	
@@ -221,7 +236,6 @@ func check_if_tile_is_colliding(layer : int, tile1_coords : Vector2i, tile2_coor
 					# check for intersections
 					var intersect_array : Array[PackedVector2Array] = Geometry2D.intersect_polygons(polygon_1, polygon_2)
 					if intersect_array.is_empty() == false:
-						print_debug("hurrah!")
 						polys_overlap += 1
 						break
 

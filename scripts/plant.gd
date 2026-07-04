@@ -10,6 +10,8 @@ var starting_plant_size : int = 1
 var final_plant_size : int = 3
 var current_plant_size : int = 1
 
+var plant_id : int
+
 # for how long has the plant been at optimal levels?
 var plant_statisfied_round_count : int = 0
 
@@ -51,27 +53,38 @@ var resource_inputs : Array[String] = []
 
 func _ready():
 	## sigal for input growth
-	print("hook up signals")
+	
+	# Note that this will set the highest id for all plants. 
+	# In order to set a plant manager for each plant, 
+	# we would need to have the machine board controller instantiate the plant manager.
+	SignalBus.connect("set_plant_id", set_id)
+	SignalBus.connect("add_resource_input_to_plant", resource_input)
+	SignalBus.connect("end_turn", end_turn)
+	SignalBus.connect("reset_resource_inputs_on_plant", clear_resource_inputs)
 
+func set_id(_id: int):
+	plant_id = _id
 
 ## also to hook up so the tilemanager can refresh the plant's resource list
-func clear_resource_inputs():
-	resource_inputs.clear()
+func clear_resource_inputs(_id: int):
+	if _id == plant_id:
+		resource_inputs.clear()
 
 
 ## to hook up to signal for when a tile is placed, moved or rotated, and we need to add or remove resources going into the plant 
-func resource_input(input_name:String, action_type: String):
-	match action_type:
-		"remove": 
-			if resource_inputs.has(input_name):
-				var index = resource_inputs.find(input_name)
-				resource_inputs.remove_at(index)
-		"add":
-			resource_inputs.append(input_name)
+func resource_input(_id: int, input_name:String, action_type: String):
+	if _id == plant_id:
+		match action_type:
+			"remove": 
+				if resource_inputs.has(input_name):
+					var index = resource_inputs.find(input_name)
+					resource_inputs.remove_at(index)
+			"add":
+				resource_inputs.append(input_name)
 
 
 ## check the resource inputs to see if they're enough to make the plant grow 
-func check_inputs_for_growth() -> bool:
+func check_inputs_for_growth():
 	var photosyn_count = 0
 	var moisture_count = 0
 	var nutrients_count = 0
@@ -85,22 +98,38 @@ func check_inputs_for_growth() -> bool:
 				nutrients_count += 1
 	
 	## show icons signalling inputs contributing to what plant is getting
-	# Tristan: with vital_tracker inheriting from progressbar, it will show in the UI by default.
-	print("send signals to ui here")
 	
-	if photosyn_count >= current_plant_size && moisture_count >= current_plant_size && nutrients_count >= current_plant_size:
-		return true
+	## Update the vitals
+	if (photosyn_count >= current_plant_size):
+		photosynthesis_vital.value += 1
 	else:
-		return false
+		photosynthesis_vital.value -= 1
+		
+	if (moisture_count >= current_plant_size):
+		moisture_vital.value += 1
+	else:
+		moisture_vital.value -= 1
+		
+	if (nutrients_count >= current_plant_size):
+		nutrients_vital.value += 1
+	else:
+		nutrients_vital.value -= 1
+	
+	#if photosyn_count >= current_plant_size && moisture_count >= current_plant_size && nutrients_count >= current_plant_size:
+		#return true
+	#else:
+		#return false
 
 
 ## called by the game manager, needs a signal
-func play_turn():
+func end_turn():
 	
-	if check_if_plant_is_fully_grown() == false:
-		photosynthesis_vital.current_vital_level -= 1
-		moisture_vital.current_vital_level -= 1
-		nutrients_vital.current_vital_level -= 1
+	check_inputs_for_growth()
+	
+	#if check_if_plant_is_fully_grown() == false:
+		#photosynthesis_vital.current_vital_level -= 1
+		#moisture_vital.current_vital_level -= 1
+		#nutrients_vital.current_vital_level -= 1
 	
 	if photosynthesis_vital.check_if_level_is_zero() || moisture_vital.check_if_level_is_zero() || nutrients_vital.check_if_level_is_zero():
 		## lose!
@@ -137,12 +166,13 @@ func play_turn():
 func grow_plant():
 	current_plant_size += 1
 	## send signal to add new tile / change tile images
-	print("plant is grown!")
+	SignalBus.grow_plant.emit(plant_id)
+	print("The plant has grown one tile.")
 	
 	if current_plant_size == final_plant_size:
 		## plant grown success!
 		# game win condition
-		print("plant is grown!")
+		print("The plant is fully grown! You win!")
 
 
 func check_if_plant_tile_has_enough_inputs() -> bool:

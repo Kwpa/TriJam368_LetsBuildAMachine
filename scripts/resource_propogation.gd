@@ -11,6 +11,7 @@ var nutrient_generators : Array[Vector2i] = []
 var water_dispenser : Array[Vector2i] = []
 var nutrient_dispenser : Array[Vector2i] = []
 var light_dispenser : Array[Vector2i] = []
+var plants : Array[Vector2i] = []
 
 # cells that are being used in the tilemaplayer
 var used_cells = []
@@ -29,6 +30,10 @@ func _ready():
 	create_initial_resource_tile_icons()
 
 
+func get_plant_by_id(plant_id: int) -> Vector2i:
+	return plants[plant_id]
+
+
 func create_blank_grid():
 	for j in 5:
 		for i in 5:
@@ -43,8 +48,7 @@ func update_grid():
 
 
 func check_tile_has_resource(tile_coordinates : Vector2i, resource : Constants.resource):
-	return queued_active_tiles[tile_coordinates].has_resource(resource
-)
+	return queued_active_tiles[tile_coordinates].has_resource(resource)
 
 
 func create_initial_resource_tile_icons():
@@ -52,6 +56,7 @@ func create_initial_resource_tile_icons():
 
 
 func propogate_resources():
+	print("propogating")
 	create_blank_grid()
 	used_cells = layer.get_used_cells()
 	
@@ -67,8 +72,16 @@ func propogate_resources():
 			flood_fill(tile, Constants.resource.nutrients)
 	
 	# then dispense resources ?
-	#
-	#
+	print(plants.size())
+	for n in plants.size():
+		SignalBus.reset_resource_inputs_on_plant.emit(n)
+		if check_tile_has_resource(plants[n], Constants.resource.water):
+			SignalBus.add_resource_input_to_plant.emit(n, "water", "add")
+		if check_tile_has_resource(plants[n], Constants.resource.light):
+			SignalBus.add_resource_input_to_plant.emit(n, "light", "add")
+		if check_tile_has_resource(plants[n], Constants.resource.nutrients):
+			SignalBus.add_resource_input_to_plant.emit(n, "fertilizer", "add")
+	
 	
 	# now update the grid
 	update_grid()
@@ -111,6 +124,8 @@ func find_generators():
 					nutrient_generators.append(tile)
 				8:
 					nutrient_generators.append(tile)
+				11: 
+					plants.append(tile)
 
 func flood_fill(start_pos, resource : int):
 	
