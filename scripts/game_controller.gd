@@ -11,14 +11,19 @@ func _ready() -> void:
 	# create a new plant (it will handle its resource levels)
 	
 	# start the level
-	get_level_def(1)
+	initialize(1)
 	
 	# check resources + update tiles in the machine_scene
 	SignalBus.connect("enter_hand_mode",enter_hand_mode)
 	SignalBus.connect("enter_rotate_mode",exit_hand_mode)
 	SignalBus.connect("enter_remove_mode",exit_hand_mode)
+	SignalBus.connect("end_game", end_game)
+	
 	SignalBus.emit_signal("propogate_resources")
 	SignalBus.emit_signal("enter_hand_mode")
+
+func initialize(level: int):
+	get_level_def(level)
 
 
 func get_level_def(id : int):
@@ -49,3 +54,12 @@ func enter_hand_mode():
 func exit_hand_mode():
 	mode = "not_hand"
 	$card_scene.modulate = Color(1,1,1,0.5)
+
+
+func end_game(win: bool):
+	if win:
+		$ui/win_screen.visible = true
+		$ui/win_screen/background/layout/close_button.pressed.connect(initialize, 1)
+	else:
+		$ui/lose_screen.visible = true
+		$ui/lose_screen/background/layout/close_button.pressed.connect(initialize, 1)

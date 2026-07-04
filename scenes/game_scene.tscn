@@ -12,6 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://b4ogmvxwo0nna" path="res://textures/atlas_texture_rotate.tres" id="8_tcjrq"]
 [ext_resource type="PackedScene" uid="uid://byh1wumvbepca" path="res://scenes/mode_button.tscn" id="9_mw25s"]
 [ext_resource type="Texture2D" uid="uid://cglnpdnmxl8nf" path="res://textures/atlas_texture_turn.tres" id="9_rvs2r"]
+[ext_resource type="PackedScene" uid="uid://bu6qty2on1ff3" path="res://scenes/rules.tscn" id="12_ldkr4"]
+[ext_resource type="PackedScene" uid="uid://cg8f0s5npuhn2" path="res://scenes/win.tscn" id="14_ldkr4"]
+[ext_resource type="PackedScene" uid="uid://dhjoob0tweysx" path="res://scenes/lose.tscn" id="15_liy57"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mixcd"]
 bg_color = Color(0.91764706, 0.827451, 0.5529412, 1)
@@ -46,19 +49,22 @@ script = ExtResource("1_po0ka")
 [node name="camera" type="Camera2D" parent="." unique_id=1959044846]
 position = Vector2(960, 539)
 
+[node name="background" type="TextureRect" parent="." unique_id=188767401]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_rvs2r")
+
 [node name="ui" type="Control" parent="." unique_id=1629544419]
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 3
 anchors_preset = 0
-
-[node name="background" type="TextureRect" parent="ui" unique_id=188767401]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_rvs2r")
+offset_right = 1920.0
+offset_bottom = 1080.0
 
 [node name="vitals" type="HBoxContainer" parent="ui" unique_id=1895602416]
 layout_mode = 0
@@ -93,6 +99,16 @@ vital_name = "nutrients"
 [node name="icon" parent="ui/vitals/nutrients_tracker" index="0" unique_id=1802059518]
 texture = ExtResource("7_tcjrq")
 expand_mode = 3
+
+[node name="rules_button" type="Button" parent="ui" unique_id=2067589643]
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 0
+offset_left = 113.0
+offset_top = 51.0
+offset_right = 313.0
+offset_bottom = 91.0
+size_flags_horizontal = 4
+text = "View Rules"
 
 [node name="summary_layout" type="VBoxContainer" parent="ui" unique_id=1612679543]
 visible = false
@@ -195,8 +211,20 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Actions: 2"
 
-[node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
-position = Vector2(0, 760)
+[node name="rules" parent="ui" unique_id=1634946171 instance=ExtResource("12_ldkr4")]
+visible = false
+z_index = 10
+layout_mode = 1
+
+[node name="win_screen" parent="ui" unique_id=826724394 instance=ExtResource("14_ldkr4")]
+visible = false
+z_index = 10
+layout_mode = 1
+
+[node name="lose_screen" parent="ui" unique_id=1495373877 instance=ExtResource("15_liy57")]
+visible = false
+z_index = 10
+layout_mode = 1
 
 [node name="machine_scene" parent="." unique_id=1380407925 instance=ExtResource("1_mlf6e")]
 position = Vector2(650, 21)
@@ -206,6 +234,11 @@ photosynthesis_vital = NodePath("../../ui/vitals/light_tracker")
 moisture_vital = NodePath("../../ui/vitals/water_tracker")
 nutrients_vital = NodePath("../../ui/vitals/nutrients_tracker")
 
+[node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
+position = Vector2(0, 760)
+
+[connection signal="pressed" from="ui/rules_button" to="ui/rules" method="on_open"]
+
 [editable path="ui/vitals/light_tracker"]
 [editable path="ui/vitals/water_tracker"]
 [editable path="ui/vitals/nutrients_tracker"]
@@ -213,4 +246,6 @@ nutrients_vital = NodePath("../../ui/vitals/nutrients_tracker")
 [editable path="ui/modes_layout/mode_button_rotate"]
 [editable path="ui/modes_layout/mode_button_remove"]
 [editable path="ui/modes_layout/mode_button_remove2"]
+[editable path="ui/win_screen"]
+[editable path="ui/lose_screen"]
 [editable path="machine_scene"]

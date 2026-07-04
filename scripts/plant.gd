@@ -134,6 +134,7 @@ func end_turn():
 	if photosynthesis_vital.check_if_level_is_zero() || moisture_vital.check_if_level_is_zero() || nutrients_vital.check_if_level_is_zero():
 		## lose!
 		print("Pass event to gamemanger")
+		SignalBus.end_game.emit(false)
 	
 	var vitals_optimal_count = 0
 	
@@ -173,6 +174,7 @@ func grow_plant():
 	if current_plant_size == final_plant_size:
 		## plant grown success!
 		# game win condition
+		SignalBus.end_game.emit(true)
 		print("The plant is fully grown! You win!")
 
 

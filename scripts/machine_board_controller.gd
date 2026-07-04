@@ -27,6 +27,7 @@ var applied_transform : int
 
 
 func load_level(level_def : LevelData):
+	clear()
 	var plant_count: int = 0
 	for tile in level_def.tiles:
 		set_cell(tile.tilemap_coords, Constants.tile_card_mapping[tile.tile].source_id, Constants.tile_card_mapping[tile.tile].atlas_coords, tile.rotation)
