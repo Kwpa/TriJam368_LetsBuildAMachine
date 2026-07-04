@@ -30,6 +30,10 @@ func _ready():
 	create_initial_resource_tile_icons()
 
 
+func get_plant_by_id(plant_id: int) -> Vector2i:
+	return plants[plant_id]
+
+
 func create_blank_grid():
 	for j in 5:
 		for i in 5:
@@ -86,8 +90,6 @@ func propogate_resources():
 	resource_icon_layer.update_resource_icons(current_active_tiles)
 	
 	print("stop")
-	
-	
 
 
 func check_if_connected(start_tile : Vector2i, other_tile : Vector2i)->bool:

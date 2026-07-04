@@ -166,12 +166,13 @@ func end_turn():
 func grow_plant():
 	current_plant_size += 1
 	## send signal to add new tile / change tile images
-	print("plant is grown!")
+	SignalBus.grow_plant.emit(plant_id)
+	print("The plant has grown one tile.")
 	
 	if current_plant_size == final_plant_size:
 		## plant grown success!
 		# game win condition
-		print("plant is grown!")
+		print("The plant is fully grown! You win!")
 
 
 func check_if_plant_tile_has_enough_inputs() -> bool:

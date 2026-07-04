@@ -37,6 +37,15 @@ func load_level(level_def : LevelData):
 				#SignalBus.set_plant_id.emit(plant_count)
 				#plant_count = plant_count + 1
 
+
+func grow_plant(plant_id: int):
+	var plant_location = get_node("../machine_scene").get_plant_by_id(plant_id)
+	set_cell(plant_location, 2, Vector2i(0, 1), 0)
+	var second_plant_tile = plant_location + Vector2i.UP
+	set_cell(plant_location, 2, Vector2i(0, 0), 0)
+	pass
+
+
 func rotate_cw():
 	rotate_tile("cw")
 
@@ -61,6 +70,7 @@ func _ready() -> void:
 	SignalBus.connect("enter_rotate_mode", enter_rotate_mode)
 	SignalBus.connect("enter_hand_mode", enter_remove_mode)
 	SignalBus.connect("enter_place_mode", enter_place_mode)
+	SignalBus.connect("grow_plant", grow_plant)
 
 
 # find out if certain tiles connect with each other based on tile colliders
