@@ -24,6 +24,8 @@ enum card_id {
 	lamp = 9,
 	generator = 10,
 	plant = 11,
+	water_elbow = 12,
+	compost_elbow = 13,
 	not_card = 20
 }
 
@@ -39,6 +41,9 @@ var card_weights = [
 	.25, # compost_tee probability
 	.5, # lamp probability
 	0, # generator probability
+	0, # plant probability
+	.25, # water_elbow probability
+	.25, # compost_elbow probability
 	0, # not_card probability
 ]
 
@@ -50,6 +55,76 @@ enum resource {
 	nutrients = 4, 
 }
 
+enum rotation {
+	zero_rot = 0,
+	quarter_cw = 1,
+	half_cw = 2,
+	three_quarter_cw = 3
+}
+
+var tile_card_mapping = {
+	card_id.straight: {
+		"atlas_coords": Vector2i(0,0),
+		"source_id": 1
+	},
+	card_id.elbow: {
+		"atlas_coords": Vector2i(1,0),
+		"source_id": 1
+	},
+	card_id.cross: {
+		"atlas_coords": Vector2i(0,1),
+		"source_id": 1
+	},
+	card_id.tee: {
+		"atlas_coords": Vector2i(1,1),
+		"source_id": 1
+	},
+	card_id.sprinkler: {
+		"atlas_coords": Vector2i(2,1),
+		"source_id": 1
+	},
+	card_id.water_straight: {
+		"atlas_coords": Vector2i(2,2),
+		"source_id": 1
+	},
+	card_id.water_tee: {
+		"atlas_coords": Vector2i(0,2),
+		"source_id": 1
+	},
+	card_id.water_elbow: {
+		"atlas_coords": Vector2i(1,2),
+		"source_id": 1
+	},
+	card_id.compost_straight: {
+		"atlas_coords": Vector2i(2,5),
+		"source_id": 1
+	},
+	card_id.compost_tee: {
+		"atlas_coords": Vector2i(0,5),
+		"source_id": 1
+	},
+	card_id.compost_elbow: {
+		"atlas_coords": Vector2i(1,5),
+		"source_id": 1
+	},
+	card_id.lamp: {
+		"atlas_coords": Vector2i(3,5),
+		"source_id": 1
+	},
+	card_id.generator: {
+		"atlas_coords": Vector2i(3,4),
+		"source_id": 1
+	},
+	card_id.plant : {
+		"atlas_coords": Vector2i(0,2),
+		"source_id": 2
+	},
+	card_id.not_card: {
+		"atlas_coords": null,
+		"source_id": null
+	}
+}
+
 var level_definitions = [
 	LevelData.new(
 		0,
@@ -57,17 +132,14 @@ var level_definitions = [
 			{
 				## generator 1 
 				"tilemap_coords": Vector2i(0,2),
-				"atlas_coords": Vector2i(3,4),
-				"source_id": 1,
-				"alternative_id": 0 
-				## 0 = 0deg; 1 = 90deg; 2 = 180deg; 3 = 270deg  
+				"tile": card_id.generator,
+				"rotation": rotation.zero_rot 
 			},
 			{
 				## plant 1
 				"tilemap_coords": Vector2i(2,4),
-				"atlas_coords": Vector2i(0,2),
-				"source_id": 2,
-				"alternative_id": 0
+				"tile": card_id.plant,
+				"rotation": rotation.zero_rot 
 			}
 		]
 	),
@@ -77,37 +149,33 @@ var level_definitions = [
 			{
 				## generator 1 
 				"tilemap_coords": Vector2i(0,1),
-				"atlas_coords": Vector2i(3,4),
-				"source_id": 1,
-				"alternative_id": 0 
+				"tile": card_id.generator,
+				"rotation": rotation.zero_rot 
 			},
 			{
 				## plant 1
 				"tilemap_coords": Vector2i(2,4),
-				"atlas_coords": Vector2i(0,2),
-				"source_id": 2,
-				"alternative_id": 0
+				"tile": card_id.plant,
+				"rotation": rotation.zero_rot 
 			},
 			{
 				## pipe 1
 				"tilemap_coords": Vector2i(1,1),
-				"atlas_coords": Vector2i(0,1),
-				"source_id": 1,
-				"alternative_id": 0
+				"tile": card_id.cross,
+				"rotation": rotation.zero_rot
 			},
 			{
 				## water 1
 				"tilemap_coords": Vector2i(2,1),
-				"atlas_coords": Vector2i(1,2),
-				"source_id": 1,
-				"alternative_id": 3
+				"tile":card_id.water_elbow,
+				"rotation": rotation.three_quarter_cw
 			},
 			{
 				## dispenser 1
 				"tilemap_coords": Vector2i(2,2),
 				"atlas_coords": Vector2i(2,1),
-				"source_id": 1,
-				"alternative_id": 0
+				"tile": card_id.sprinkler,
+				"rotation": rotation.zero_rot
 			}
 		]
 	)
