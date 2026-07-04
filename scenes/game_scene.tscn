@@ -195,7 +195,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Actions: 2"
 
-[node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
+[node name="hand_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
 position = Vector2(0, 760)
 
 [node name="machine_scene" parent="." unique_id=1380407925 instance=ExtResource("1_mlf6e")]

@@ -50,12 +50,16 @@ func toggle_selection() -> void:
 	is_selected = not is_selected
 	# tell the card how to style itself in its new state 
 	$card.on_selected_changed(is_selected)
-	print("toggle_selection called. new state for %s is %s" % [$card.custom_to_string(), str(is_selected)])
-	if is_selected:
-		activate_place_mode()
-	else:
-		deactivate_place_mode()
-		#lower_card() we do this in entering hand mode
+	print_debug("toggle_selection called. new state for %s is %s" % [$card.custom_to_string(), str(is_selected)])
+	# TO-DO: delete this before merge if it works
+	#if is_selected:
+		##activate_place_mode()
+		#continue
+	#else:
+		##deactivate_place_mode()
+		###lower_card() we do this in entering hand mode
+	if not is_selected:
+		lower_card()
 
 
 func activate_place_mode():

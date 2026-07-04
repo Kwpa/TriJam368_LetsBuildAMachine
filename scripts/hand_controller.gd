@@ -11,6 +11,7 @@ func _ready() -> void:
 	$HandContainer.size.x = 160 * Constants.HAND_SIZE_LIMIT
 	deal_opening_hand()
 	SignalBus.connect("use_card",use_selected_card)
+	SignalBus.connect("enter_hand_mode", _on_card_track_selection_changed)
 
 func deal_opening_hand() -> void:
 	# let the player begin with a hand of cards containing at least one generator of each kind
@@ -29,7 +30,7 @@ func add_card_to_hand(card : CardData) -> void:
 	#TODO: disable the deck until this card is added. Do I have to do it with signals? 
 	
 	var add_tween = create_tween()
-	var draw_interval = 1
+	var draw_interval = .5
 	
 	# create a real card
 	var new_card_track = card_track_scene.instantiate()
@@ -144,12 +145,15 @@ func _on_card_track_selection_changed(track) -> void:
 		selected_card_track = track # I'm not sure we'll need this variable
 		# emit a signal with data from the selected card
 		# the game controller can use this to enter placement mode
-		card_selected.emit(track.get_card_data())
+		#card_selected.emit(track.get_card_data())
+		SignalBus.emit_signal("enter_place_mode",track.get_card_data().coords,0)
+	else:
+		SignalBus.emit_signal("enter_hand_mode")
 		
 	for card_track in $HandContainer.get_children():
 		if card_track != track && card_track.is_selected:
 			card_track.toggle_selection()
-			#print_debug("%s's selected is %s" % [card_track.get_child(0).custom_to_string(), str(card_track.is_selected)])
+			print_debug("%s's selected is %s" % [card_track.get_child(0).custom_to_string(), str(card_track.is_selected)])
 
 func recycle_selected_card() -> void:
 	for track in $HandContainer.get_children():
