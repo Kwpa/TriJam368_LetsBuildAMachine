@@ -13,7 +13,8 @@ class_name VitalTracker
 
 # is level in the optimal range?
 func check_if_level_is_optimal() -> bool:
-	if value >= vital_lower_optimal || value <= vital_upper_optimal:
+	print(value)
+	if value >= vital_lower_optimal && value <= vital_upper_optimal:
 		return true
 	else:
 		return false
