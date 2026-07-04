@@ -76,7 +76,7 @@ func propogate_resources():
 	# now update resource icon layer 
 	resource_icon_layer.update_resource_icons(current_active_tiles)
 	
-	print("stop")
+	print_debug("stop")
 	
 	
 
@@ -98,7 +98,10 @@ func find_generators():
 	for tile in used_cells:
 		var tile_data = layer.get_cell_tile_data(tile)
 		if tile_data != null:
+			
 			var card_id = tile_data.get_custom_data("card_id")
+			
+			#try to update this to use the CardData.resource property
 			match card_id:
 				10:
 					electricity_generators.append(tile)
@@ -133,5 +136,14 @@ func flood_fill(start_pos, resource : int):
 				continue
 			if slow_fill == true:
 				await get_tree().create_timer(0.07).timeout
-			queue.append(next_tile)
-			set_resource(next_tile, resource)
+			
+			if electricity_generators.has(next_tile):
+				continue
+			if water_generators.has(next_tile) and resource == Constants.resource.nutrients:
+				continue
+			if nutrient_generators.has(next_tile) and resource == Constants.resource.water:
+				continue
+			else:
+				#works OK except for if you add the generator later?
+				queue.append(next_tile)
+				set_resource(next_tile, resource)
