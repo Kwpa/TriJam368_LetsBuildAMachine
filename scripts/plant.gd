@@ -151,7 +151,8 @@ func end_turn():
 		warning_queue.append("nutrients levels are out of range")
 	else:
 		vitals_optimal_count += 1
-
+	
+	print(vitals_optimal_count)
 	if vitals_optimal_count == 3:
 		increase_satisfied_count()
 	else:
