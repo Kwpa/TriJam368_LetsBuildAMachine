@@ -29,9 +29,7 @@ var applied_transform : int
 func load_level(level_def : LevelData):
 	var plant_count: int = 0
 	for tile in level_def.tiles:
-		set_cell(tile.tilemap_coords, tile.source_id, tile.atlas_coords, tile.alternative_id)
-		if tile.source_id == 2:
-			plant_location = tile.tilemap_coords
+		set_cell(tile.tilemap_coords, Constants.tile_card_mapping[tile.tile].source_id, Constants.tile_card_mapping[tile.tile].atlas_coords, tile.rotation)
 		#var tile_data = get_cell_tile_data(tile.atlas_coords)
 		#if tile_data != null:
 			#var card_id = tile_data.get_custom_data("card_id")

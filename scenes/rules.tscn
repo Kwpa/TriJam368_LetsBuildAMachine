@@ -32,11 +32,34 @@ offset_top = 33.0
 offset_right = 495.0
 offset_bottom = 472.0
 theme = ExtResource("1_3spy8")
-text = "A plant needs three resources: water, light, and nutrients. Each one has levels from 0 to 10. The resource levels decrease during each turn where the plant's needs are not met. The resource levels increase if the amount of inputs is equal to or greater than the plant's size.
+bbcode_enabled = true
+text = "Build a machine to grow your plant!
 
-The game is turn-based. On each turn, the plant's resource levels change.
+To grow and thrive, a plant needs enough of three resources:
+[ul]
+Light, from a lamp
+Water, from a water reservoir connected to the plant or sprinkled from a sprinkler
+Nutrients, from a compost bin connected to the plant
+[/ul]
 
-Rules need to be written for the player; document only contains rules for development."
+Lamps, water reservoirs and compost bins must all be attached to the generator in order to produce their resource.
+
+You have two actions in each round. Any of these choices will spend an action:
+[ul]
+Draw a card into your hand
+Place a tile in the grid
+[/ul]
+
+You can also do any of these things without spending an action:
+[ul]
+Discard a card from your hand
+Rotate a tile that has already been placed
+Discard a tile that has already been placed
+[/ul]
+
+Every round, your plant will grow or wilt, depending on whether it has enough resources. If any resource is below the plant’s tolerance for three turns, your plant will die. Once all three resources are above the plant’s threshold for three turns, your plant will grow!
+
+A growing plant needs more resources. Keep meeting the new thresholds to grow your plant as big as it can be!"
 
 [node name="close_button" type="Button" parent="." unique_id=1188268794]
 layout_mode = 0

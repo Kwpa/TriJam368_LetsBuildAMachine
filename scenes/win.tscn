@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://cg8f0s5npuhn2"]
+
+[ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="1_iiocm"]
+[ext_resource type="Texture2D" uid="uid://cohjbdwxkhrjq" path="res://textures/large-plant-zoom.png" id="2_yxbqr"]
+[ext_resource type="FontFile" uid="uid://dx211ilryvrk7" path="res://theme/fonts/Philosopher-Regular.ttf" id="3_tylv2"]
+
+[node name="win_screen" type="Control" unique_id=826724394]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="background" type="Panel" parent="." unique_id=957150486]
+layout_mode = 0
+offset_right = 508.0
+offset_bottom = 518.0
+theme = ExtResource("1_iiocm")
+
+[node name="layout" type="VBoxContainer" parent="background" unique_id=1113518943]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="title" type="Label" parent="background/layout" unique_id=230493197]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "You win!"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="background/layout" unique_id=1819167335]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+texture = ExtResource("2_yxbqr")
+expand_mode = 3
+
+[node name="subtitle" type="Label" parent="background/layout" unique_id=1905827752]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_tylv2")
+theme_override_font_sizes/font_size = 18
+text = "The plant is fully grown."
+horizontal_alignment = 1
+
+[node name="close_button" type="Button" parent="background/layout" unique_id=1755945239]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Play again"
