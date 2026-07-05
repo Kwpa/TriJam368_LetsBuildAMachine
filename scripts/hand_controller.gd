@@ -4,6 +4,10 @@ var rng = RandomNumberGenerator.new()
 var card_track_scene = preload("res://scenes/card_track.tscn")
 var selected_card_track
 
+var actions_remaining: int
+var can_act: bool = false
+var initializing: bool
+
 signal card_selected(card_data)
 
 # Called when the node enters the scene tree for the first time.
@@ -11,8 +15,15 @@ func _ready() -> void:
 	$HandContainer.size.x = 160 * Constants.HAND_SIZE_LIMIT
 	deal_opening_hand()
 	SignalBus.connect("use_card",use_selected_card)
+	SignalBus.connect("end_turn", end_turn)
+	SignalBus.connect("non_hand_action", count_action)
 
 func deal_opening_hand() -> void:
+	initializing = true
+	
+	# set actions to default count for one turn
+	actions_remaining = Constants.TURN_ACTION_COUNT
+	
 	# let the player begin with a hand of cards containing at least one generator of each kind
 	for res in [Constants.resource.water, Constants.resource.nutrients]: 
 		add_card_to_hand(get_random_by_resource(res))
@@ -23,10 +34,32 @@ func deal_opening_hand() -> void:
 	await get_tree().create_timer(1.5).timeout
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler))
 	await get_tree().create_timer(1.5).timeout
+	
+	# allow the player to take actions once the cards are all dealt
+	can_act = true
+	
+	initializing = false
 	return
 
+func count_action(spend: bool):
+	# count the action
+	if spend:
+		actions_remaining -= 1
+	else:
+		actions_remaining += 1
+	
+	# send a signal to update the ui
+	SignalBus.count_action.emit(actions_remaining)
+	
+	# show the warning dialogue if actions are all spent
+	# in initial testing i found this obnoxious
+	#if actions_remaining == 0:
+		#$ActionWarning.show()
+
+
 func add_card_to_hand(card : CardData) -> void:
-	#TODO: disable the deck until this card is added. Do I have to do it with signals? 
+	# disable actions until this action is complete
+	can_act = false
 	
 	var add_tween = create_tween()
 	var draw_interval = 1
@@ -63,8 +96,19 @@ func add_card_to_hand(card : CardData) -> void:
 	# add the real card to the hand and delete the dummy at the same time
 	add_tween.chain().tween_callback(new_card_track.reparent.bind($HandContainer))
 	add_tween.parallel().tween_callback(dummy_track.queue_free)
+	
+	
+	
+	# count the action if we're not drawing the initial hand
+	if initializing == false:
+		count_action(true)
+		# enable actions now that this action is complete
+		can_act = true
 
 func remove_card_from_hand(track : CardTrack) -> void:
+	# disable actions until this action is complete
+	can_act = false
+	
 	#TODO: make it take an endpoint so that when you use it card it moves to the clicked tile
 	SignalBus.emit_signal("enter_hand_mode")
 	#this method is called by either placing or recyling a card. We can change it to return a Card if we want to store those
@@ -96,6 +140,9 @@ func remove_card_from_hand(track : CardTrack) -> void:
 	tween.parallel().tween_property(track, "scale", Vector2(0.66, 0.66), discard_interval) #scale it to the discard scale
 	tween.parallel().tween_property(track, "modulate:a", 0, discard_interval) #make it fully transparent
 	tween.tween_callback(track.queue_free) #after everything, delete it
+	
+	# enable actions now that this action is complete
+	can_act = true
 
 func get_random_by_resource(type : int) -> CardData:
 	# returns a random card that generates the specified resource
@@ -129,6 +176,20 @@ func get_random_card_data() -> CardData:
 
 
 func _on_deck_pressed() -> void:
+	# remind the player to spend their turn if they're out of actions
+	if actions_remaining == 0:
+		$ActionWarning.show()
+		return
+	
+	# disable this function if something else is already happening
+	if can_act == false:
+		return
+	
+	# remind the player to spend their turn if they're out of actions
+	if actions_remaining == 0:
+		$ActionWarning.show()
+		return
+	
 	# check whether hand size limit is reached
 	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
 		# if hand is small enough, add a new card to the hand
@@ -152,14 +213,37 @@ func _on_card_track_selection_changed(track) -> void:
 			#print_debug("%s's selected is %s" % [card_track.get_child(0).custom_to_string(), str(card_track.is_selected)])
 
 func recycle_selected_card() -> void:
+	# disable this function if something else is already happening
+	if can_act == false:
+		return
+	
 	for track in $HandContainer.get_children():
 		if track.is_selected:
 			remove_card_from_hand(track)
+			
+			# count the action (false to add an action)
+			count_action(false)
 	return
 
 func use_selected_card() -> void:
+	# remind the player to spend their turn if they're out of actions
+	if actions_remaining == 0:
+		$ActionWarning.show()
+		return
+	
+	# disable this function if something else is already happening
+	if can_act == false:
+		return
+	
 	for track in $HandContainer.get_children():
 		if track.is_selected:
 			remove_card_from_hand(track)
+			
+			# count the action
+			count_action(true)
 	return
-	
+
+func end_turn():
+	# set actions to default count for one turn
+	actions_remaining = Constants.TURN_ACTION_COUNT
+	SignalBus.count_action.emit(actions_remaining)
