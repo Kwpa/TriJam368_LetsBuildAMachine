@@ -139,17 +139,17 @@ func end_turn():
 	var vitals_optimal_count = 0
 	
 	if photosynthesis_vital.check_if_level_is_optimal() == false:
-		warning_queue.append("photosynthesis levels are out of range")
+		warning_queue.append("Photosynthesis levels are out of range.")
 	else:
 		vitals_optimal_count += 1
 		
 	if moisture_vital.check_if_level_is_optimal() == false:
-		warning_queue.append("moisture levels are out of range")
+		warning_queue.append("Moisture levels are out of range.")
 	else:
 		vitals_optimal_count += 1
 	
 	if nutrients_vital.check_if_level_is_optimal() == false:
-		warning_queue.append("nutrients levels are out of range")
+		warning_queue.append("Nutrients levels are out of range.")
 	else:
 		vitals_optimal_count += 1
 	
@@ -197,4 +197,7 @@ func reset_satisfied_count():
 
 
 func send_warning_queue():
+	var warnings: String = " ".join(warning_queue)
+	$warning_dialogue.dialog_text = warnings
+	$warning_dialogue.show()
 	warning_queue.clear()

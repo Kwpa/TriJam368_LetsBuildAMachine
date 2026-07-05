@@ -118,6 +118,7 @@ func _input(event) -> void:
 					if removal_check(card_id):
 						erase_cell(local_to_map(to_local(get_global_mouse_position())))
 						SignalBus.emit_signal("propogate_resources")
+						SignalBus.non_hand_action.emit(false)
 		"hand":
 			currently_selected_alt_id = 0
 			pass
