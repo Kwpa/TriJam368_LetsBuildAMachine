@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://dwwy8fcupdw5i" path="res://scripts/turn_button.gd" id="8_liy57"]
 [ext_resource type="Texture2D" uid="uid://b4ogmvxwo0nna" path="res://textures/atlas_texture_rotate.tres" id="8_tcjrq"]
 [ext_resource type="PackedScene" uid="uid://byh1wumvbepca" path="res://scenes/mode_button.tscn" id="9_mw25s"]
+[ext_resource type="Texture2D" uid="uid://cg1eepy05ghlk" path="res://textures/title.png" id="9_mwyo0"]
 [ext_resource type="Texture2D" uid="uid://cglnpdnmxl8nf" path="res://textures/atlas_texture_turn.tres" id="9_rvs2r"]
 [ext_resource type="PackedScene" uid="uid://bu6qty2on1ff3" path="res://scenes/rules.tscn" id="12_ldkr4"]
 [ext_resource type="PackedScene" uid="uid://cg8f0s5npuhn2" path="res://scenes/win.tscn" id="14_ldkr4"]
@@ -142,7 +143,15 @@ offset_right = 370.0
 offset_bottom = 288.0
 theme_override_constants/separation = 20
 
+[node name="TextureRect" type="TextureRect" parent="ui/summary_layout" unique_id=590597889]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+texture = ExtResource("9_mwyo0")
+expand_mode = 5
+stretch_mode = 5
+
 [node name="title" type="Label" parent="ui/summary_layout" unique_id=1020552753]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "The Growing Machine"
@@ -236,7 +245,7 @@ layout_mode = 1
 [node name="machine_scene" parent="." unique_id=1380407925 instance=ExtResource("1_mlf6e")]
 position = Vector2(650, 21)
 
-[node name="plant_manager" parent="machine_scene" index="5" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
+[node name="plant_manager" parent="machine_scene" index="6" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
 photosynthesis_vital = NodePath("../../ui/vitals/light_tracker")
 moisture_vital = NodePath("../../ui/vitals/water_tracker")
 nutrients_vital = NodePath("../../ui/vitals/nutrients_tracker")

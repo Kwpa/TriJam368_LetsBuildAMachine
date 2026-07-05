@@ -2,12 +2,8 @@
 
 [ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="1_10rtl"]
 [ext_resource type="Script" uid="uid://c3f76gkvgqyvy" path="res://scripts/end_game.gd" id="1_h0cgr"]
-[ext_resource type="Texture2D" uid="uid://fwndbq0smo8" path="res://textures/overlays.png" id="2_10rtl"]
 [ext_resource type="FontFile" uid="uid://dx211ilryvrk7" path="res://theme/fonts/Philosopher-Regular.ttf" id="3_a5bqv"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h0cgr"]
-atlas = ExtResource("2_10rtl")
-region = Rect2(384, 256, 128, 128)
+[ext_resource type="Texture2D" uid="uid://b43a4tmqywcbu" path="res://textures/dead-plant-256.png" id="3_h0cgr"]
 
 [node name="lose_screen" type="Control" unique_id=826724394]
 layout_mode = 3
@@ -53,7 +49,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 size_flags_horizontal = 4
-texture = SubResource("AtlasTexture_h0cgr")
+texture = ExtResource("3_h0cgr")
 expand_mode = 3
 
 [node name="subtitle" type="Label" parent="background/layout" unique_id=1905827752]
