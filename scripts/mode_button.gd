@@ -11,17 +11,17 @@ func _ready()->void:
 
 func enter_hand_mode():
 	if mode == "hand":
-		grab_focus()
+		button_pressed = true
 
 
 func enter_rotate_mode():
 	if mode == "rotate":
-		grab_focus() 
+		button_pressed = true
 
 
 func enter_remove_mode():
 	if mode == "remove":
-		grab_focus()
+		button_pressed = true
 
 
 func _on_pressed() -> void:
