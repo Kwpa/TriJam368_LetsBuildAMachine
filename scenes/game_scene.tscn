@@ -37,6 +37,14 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_rvs2r"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_tqxxy"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_5ay1a"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ldkr4"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_rvs2r"]
 region = Rect2(187, 155, 140, 140)
 
@@ -148,6 +156,7 @@ alignment = 1
 
 [node name="mode_button_hand" parent="ui/modes_layout" unique_id=213637895 instance=ExtResource("9_mw25s")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_rvs2r")
 icon = ExtResource("7_mw25s")
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_hand" index="0" unique_id=665516849]
@@ -155,6 +164,7 @@ text = "Hand Mode"
 
 [node name="mode_button_rotate" parent="ui/modes_layout" unique_id=861217784 instance=ExtResource("9_mw25s")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_tqxxy")
 icon = ExtResource("8_tcjrq")
 mode = "rotate"
 
@@ -163,17 +173,19 @@ text = "Rotate Mode"
 
 [node name="mode_button_remove" parent="ui/modes_layout" unique_id=701026513 instance=ExtResource("9_mw25s")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_5ay1a")
 mode = "remove"
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_remove" index="0" unique_id=665516849]
 text = "Remove Mode"
 
-[node name="mode_button_remove2" parent="ui/modes_layout" unique_id=954324757 instance=ExtResource("9_mw25s")]
+[node name="mode_button_end" parent="ui/modes_layout" unique_id=954324757 instance=ExtResource("9_mw25s")]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_ldkr4")
 icon = SubResource("AtlasTexture_rvs2r")
 mode = "turn"
 
-[node name="mode_label" parent="ui/modes_layout/mode_button_remove2" index="0" unique_id=665516849]
+[node name="mode_label" parent="ui/modes_layout/mode_button_end" index="0" unique_id=665516849]
 text = "End Turn"
 
 [node name="actions_layout" type="HBoxContainer" parent="ui" unique_id=165024751]
@@ -212,5 +224,5 @@ nutrients_vital = NodePath("../../ui/vitals/nutrients_tracker")
 [editable path="ui/modes_layout/mode_button_hand"]
 [editable path="ui/modes_layout/mode_button_rotate"]
 [editable path="ui/modes_layout/mode_button_remove"]
-[editable path="ui/modes_layout/mode_button_remove2"]
+[editable path="ui/modes_layout/mode_button_end"]
 [editable path="machine_scene"]
