@@ -135,6 +135,7 @@ func end_turn():
 		## lose!
 		print("Pass event to gamemanger")
 		SignalBus.end_game.emit(false)
+		return
 	
 	var vitals_optimal_count = 0
 	

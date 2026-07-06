@@ -198,20 +198,26 @@ func _on_deck_pressed() -> void:
 	else:
 		$MaxHandWarning.show()
 
-func _on_card_track_selection_changed(track) -> void:
+func _on_card_track_selection_changed(_track) -> void:
+	if actions_remaining == 0:
+		$ActionWarning.show()
+		for card_track in $HandContainer.get_children():
+			if card_track.is_selected:
+				card_track.toggle_selection()
+		return
 	# TODO: decide if we want to keep handling this in the CardTrack class or move it up to the game controller
 	# this is hooked up to a card track's 'track_selected' signal when the track is created
-	if track.is_selected:
+	if _track.is_selected:
 		# if the selection changed to 'true'
-		selected_card_track = track # I'm not sure we'll need this variable
+		selected_card_track = _track # I'm not sure we'll need this variable
 		# emit a signal with data from the selected card
-		SignalBus.emit_signal("enter_place_mode",track.get_card_data().coords,0)
+		SignalBus.emit_signal("enter_place_mode",_track.get_card_data().coords,0)
 	else:
 		# this should never occur, because we should never have a card selected outside of hand mode that we could deselect
 		SignalBus.emit_signal("enter_hand_mode")
 		
 	for card_track in $HandContainer.get_children():
-		if card_track != track && card_track.is_selected:
+		if card_track != _track && card_track.is_selected:
 			card_track.toggle_selection()
 			#print_debug("%s's selected is %s" % [card_track.get_child(0).custom_to_string(), str(card_track.is_selected)])
 
