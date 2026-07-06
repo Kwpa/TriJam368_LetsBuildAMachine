@@ -13,6 +13,7 @@ var mode = "hand"
 var flip_h = TileSetAtlasSource.TRANSFORM_FLIP_H
 var flip_v = TileSetAtlasSource.TRANSFORM_FLIP_V
 var t_transpose = TileSetAtlasSource.TRANSFORM_TRANSPOSE
+var plant_location : Vector2i
 
 var tile_transformations := {
 	Vector2i(0,-1) : 0,
@@ -26,6 +27,7 @@ var applied_transform : int
 
 
 func load_level(level_def : LevelData):
+	clear()
 	var plant_count: int = 0
 	for tile in level_def.tiles:
 		set_cell(tile.tilemap_coords, Constants.tile_card_mapping[tile.tile].source_id, Constants.tile_card_mapping[tile.tile].atlas_coords, tile.rotation)
@@ -36,14 +38,14 @@ func load_level(level_def : LevelData):
 				#print("that's a plant")
 				#SignalBus.set_plant_id.emit(plant_count)
 				#plant_count = plant_count + 1
+		if tile.tile == Constants.card_id.plant:
+			plant_location = tile.tilemap_coords
 
 
 func grow_plant(plant_id: int):
-	var plant_location = get_node("../machine_scene").get_plant_by_id(plant_id)
 	set_cell(plant_location, 2, Vector2i(0, 1), 0)
 	var second_plant_tile = plant_location + Vector2i.UP
-	set_cell(plant_location, 2, Vector2i(0, 0), 0)
-	pass
+	set_cell(second_plant_tile, 2, Vector2i(0, 0), 0)
 
 
 func rotate_cw():
@@ -123,6 +125,7 @@ func _input(event) -> void:
 					if removal_check(card_id):
 						erase_cell(local_to_map(to_local(get_global_mouse_position())))
 						SignalBus.emit_signal("propogate_resources")
+						SignalBus.non_hand_action.emit(false)
 		"hand":
 			currently_selected_alt_id = 0
 			pass

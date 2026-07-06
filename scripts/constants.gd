@@ -2,6 +2,7 @@ extends Node
 
 var HAND_SIZE_LIMIT = 6
 var OPENING_HAND_SIZE = 4
+var TURN_ACTION_COUNT = 2
 
 # We are not using the two-tile objects.
 # The enum all_cards contains possible cards and the generator.
