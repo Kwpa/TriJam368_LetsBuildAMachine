@@ -207,6 +207,7 @@ func _on_card_track_selection_changed(track) -> void:
 		# emit a signal with data from the selected card
 		SignalBus.emit_signal("enter_place_mode",track.get_card_data().coords,0)
 	else:
+		# this should never occur, because we should never have a card selected outside of hand mode that we could deselect
 		SignalBus.emit_signal("enter_hand_mode")
 		
 	for card_track in $HandContainer.get_children():

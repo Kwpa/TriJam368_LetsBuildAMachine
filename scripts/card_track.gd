@@ -41,7 +41,7 @@ func _card_input_handler(event : InputEvent) -> void:
 	if event is InputEventMouseButton && event.pressed:
 		toggle_selection()
 		track_selected.emit(self)
-		print_debug('card track for %s has been selected' % $card.custom_to_string())
+		#print_debug('card track for %s has been selected' % $card.custom_to_string())
 		
 	# we can expand this for non-mouse inputs
 	
@@ -50,7 +50,7 @@ func toggle_selection() -> void:
 	is_selected = not is_selected
 	# tell the card how to style itself in its new state 
 	$card.on_selected_changed(is_selected)
-	print("toggle_selection called. new state for %s is %s" % [$card.custom_to_string(), str(is_selected)])
+	#print_debug("toggle_selection called. new state for %s is %s" % [$card.custom_to_string(), str(is_selected)])
 	if is_selected:
 		# if we just selected a card, enter place mode
 		SignalBus.emit_signal("enter_place_mode")

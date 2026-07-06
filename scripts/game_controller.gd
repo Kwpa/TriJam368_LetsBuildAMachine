@@ -48,7 +48,7 @@ func _on_card_selected() -> void:
 
 
 func enter_hand_mode():
-	print_debug("entering hand mode")
+	#print_debug("entering hand mode")
 	mode = "hand"
 	$card_scene.modulate = Color(1,1,1,1)
 	$ui/modes_layout/mode_button_hand.button_pressed = true
@@ -56,7 +56,7 @@ func enter_hand_mode():
 	$ui/modes_layout/mode_button_remove.button_pressed = false
 
 func enter_rotate_mode():
-	print_debug("entering rotate mode")
+	#print_debug("entering rotate mode")
 	exit_hand_mode()
 	mode = "rotate"
 	#TODO: why doesn't the button group do this properly?
@@ -65,7 +65,7 @@ func enter_rotate_mode():
 	$ui/modes_layout/mode_button_remove.button_pressed = false
 
 func enter_remove_mode():
-	print_debug("entering remove mode")
+	#print_debug("entering remove mode")
 	exit_hand_mode()
 	mode = "remove"
 	#TODO: why doesn't the button group do this properly?
