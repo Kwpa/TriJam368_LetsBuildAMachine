@@ -2,6 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="1_3t1qo"]
 [ext_resource type="Texture2D" uid="uid://c2bpamkharxpy" path="res://textures/atlas_texture_remove.tres" id="1_xu6lg"]
+[ext_resource type="ButtonGroup" path="res://theme/mode_buttons.tres" id="2_fyasa"]
 [ext_resource type="Script" uid="uid://dajogkh7bk1py" path="res://scripts/mode_button.gd" id="3_nbmg6"]
 
 [node name="mode_button" type="Button" unique_id=213637895]
@@ -9,12 +10,15 @@ custom_minimum_size = Vector2(142, 160)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -3.0
 offset_right = -1778.0
-offset_bottom = -926.0
+offset_bottom = -923.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_3t1qo")
 theme_type_variation = &"ModeButton"
+toggle_mode = true
+button_group = ExtResource("2_fyasa")
 icon = ExtResource("1_xu6lg")
 vertical_icon_alignment = 0
 script = ExtResource("3_nbmg6")

@@ -42,14 +42,21 @@ func _on_card_selected() -> void:
 
 
 func enter_hand_mode():
+	print_debug("entering hand mode")
 	mode = "hand"
 	$hand_scene.modulate = Color(1,1,1,1)
+	$ui/modes_layout/mode_button_hand.button_pressed = true
+	$ui/modes_layout/mode_button_rotate.button_pressed = false
+	$ui/modes_layout/mode_button_remove.button_pressed = false
 
 
 func exit_hand_mode():
+	print_debug("exiting hand mode")
 	mode = "not_hand"
 	$hand_scene.modulate = Color(1,1,1,0.5)
 	$machine_scene/preview_tile_layer.preview_mode = false
+	$ui/modes_layout/mode_button_hand.button_pressed = false
+	#$ui/modes_layout/mode_button_rotate.button_pressed = false
 	for card_track in $hand_scene/HandContainer.get_children():
 		if card_track.is_selected:
 			card_track.toggle_selection()
