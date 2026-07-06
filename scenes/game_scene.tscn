@@ -41,9 +41,6 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rvs2r"]
-region = Rect2(187, 155, 140, 140)
-
 [node name="game_scene" type="Node2D" unique_id=1907655626]
 script = ExtResource("1_po0ka")
 
@@ -209,15 +206,6 @@ mode = "remove"
 [node name="mode_label" parent="ui/modes_layout/mode_button_remove" index="0" unique_id=665516849]
 text = "Remove Mode"
 
-[node name="mode_button_remove2" parent="ui/modes_layout" unique_id=954324757 instance=ExtResource("9_mw25s")]
-visible = false
-layout_mode = 2
-icon = SubResource("AtlasTexture_rvs2r")
-mode = "turn"
-
-[node name="mode_label" parent="ui/modes_layout/mode_button_remove2" index="0" unique_id=665516849]
-text = "End Turn"
-
 [node name="rules" parent="ui" unique_id=1634946171 instance=ExtResource("12_ldkr4")]
 visible = false
 z_index = 10
@@ -253,7 +241,6 @@ position = Vector2(0, 760)
 [editable path="ui/modes_layout/mode_button_hand"]
 [editable path="ui/modes_layout/mode_button_rotate"]
 [editable path="ui/modes_layout/mode_button_remove"]
-[editable path="ui/modes_layout/mode_button_remove2"]
 [editable path="ui/win_screen"]
 [editable path="ui/lose_screen"]
 [editable path="machine_scene"]

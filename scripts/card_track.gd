@@ -52,17 +52,8 @@ func toggle_selection() -> void:
 	$card.on_selected_changed(is_selected)
 	print("toggle_selection called. new state for %s is %s" % [$card.custom_to_string(), str(is_selected)])
 	if is_selected:
-		activate_place_mode()
+		# if we just selected a card, enter place mode
+		SignalBus.emit_signal("enter_place_mode")
 	else:
-		deactivate_place_mode()
-		#lower_card() we do this in entering hand mode
-
-
-func activate_place_mode():
-	var card_data : CardData = $card.card_data
-	SignalBus.emit_signal("enter_place_mode",card_data.coords,0)
-
-func deactivate_place_mode():
-	SignalBus.emit_signal("enter_hand_mode")
-	lower_card()
-	is_selected = false
+		# if we just deselected a card, lower it
+		lower_card()
