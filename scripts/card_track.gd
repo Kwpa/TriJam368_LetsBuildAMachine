@@ -21,6 +21,7 @@ func raise_card() -> void:
 	is_raised = true
 	
 func lower_card() -> void:
+	print_debug("lowering card")
 	var tween = create_tween()
 	tween.tween_property($card, "position:y", 128, .2)
 	await tween.finished
@@ -49,11 +50,19 @@ func toggle_selection() -> void:
 	# toggles whether it's selected
 	is_selected = not is_selected
 	# tell the card how to style itself in its new state 
-	$card.on_selected_changed(is_selected)
 	print_debug("toggle_selection called. new state for %s is %s" % [$card.custom_to_string(), str(is_selected)])
-	# TO-DO: delete this before merge if it works
+	$card.on_selected_changed(is_selected)
 	if is_selected:
 		# if the selection toggle results in a track having a selected card, enter hand mode
 		SignalBus.emit_signal("enter_hand_mode")
 	if not is_selected:
+		lower_card()
+
+func set_selection(selection : bool) -> void:
+	is_selected = selection 
+	print_debug("set_selected called. new state for %s is %s" % [$card.custom_to_string(), str(is_selected)])
+	$card.on_selected_changed(is_selected)
+	if is_selected:
+		SignalBus.emit_signal("enter_hand_mode")
+	else:
 		lower_card()

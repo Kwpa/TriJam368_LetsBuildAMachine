@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="1_3t1qo"]
 [ext_resource type="Texture2D" uid="uid://c2bpamkharxpy" path="res://textures/atlas_texture_remove.tres" id="1_xu6lg"]
-[ext_resource type="ButtonGroup" path="res://theme/mode_buttons.tres" id="2_fyasa"]
+[ext_resource type="ButtonGroup" uid="uid://b1wcye2t53noj" path="res://theme/mode_buttons.tres" id="2_fyasa"]
 [ext_resource type="Script" uid="uid://dajogkh7bk1py" path="res://scripts/mode_button.gd" id="3_nbmg6"]
 
 [node name="mode_button" type="Button" unique_id=213637895]
