@@ -15,8 +15,8 @@ func _ready() -> void:
 	
 	# check resources + update tiles in the machine_scene
 	SignalBus.connect("enter_hand_mode",enter_hand_mode)
-	SignalBus.connect("enter_rotate_mode",exit_hand_mode)
-	SignalBus.connect("enter_remove_mode",exit_hand_mode)
+	SignalBus.connect("enter_rotate_mode",enter_rotate_mode)
+	SignalBus.connect("enter_remove_mode",enter_remove_mode)
 	SignalBus.connect("end_game", end_game)
 	
 	SignalBus.emit_signal("propogate_resources")
@@ -50,18 +50,32 @@ func enter_hand_mode():
 	print_debug("entering hand mode")
 	mode = "hand"
 	$hand_scene.modulate = Color(1,1,1,1)
+	# TODO: figure out why the button group doesn't handle this
 	$ui/modes_layout/mode_button_hand.button_pressed = true
 	$ui/modes_layout/mode_button_rotate.button_pressed = false
 	$ui/modes_layout/mode_button_remove.button_pressed = false
 
+func enter_rotate_mode():
+	print_debug("entering rotate mode")
+	exit_hand_mode()
+	# TODO: figure out why the button group doesn't handle this
+	$ui/modes_layout/mode_button_hand.button_pressed = false
+	$ui/modes_layout/mode_button_rotate.button_pressed = true
+	$ui/modes_layout/mode_button_remove.button_pressed = false
+	
+func enter_remove_mode():
+	print_debug("entering remove mode")
+	exit_hand_mode()
+	# TODO: figure out why the button group doesn't handle this
+	$ui/modes_layout/mode_button_hand.button_pressed = false
+	$ui/modes_layout/mode_button_rotate.button_pressed = false
+	$ui/modes_layout/mode_button_remove.button_pressed = true
 
 func exit_hand_mode():
 	print_debug("exiting hand mode")
 	mode = "not_hand"
 	$hand_scene.modulate = Color(1,1,1,0.5)
 	$machine_scene/preview_tile_layer.preview_mode = false
-	$ui/modes_layout/mode_button_hand.button_pressed = false
-	#$ui/modes_layout/mode_button_rotate.button_pressed = false
 	for card_track in $hand_scene/HandContainer.get_children():
 		if card_track.is_selected:
 			card_track.toggle_selection()
