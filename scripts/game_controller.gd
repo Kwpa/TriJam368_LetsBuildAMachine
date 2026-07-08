@@ -21,7 +21,6 @@ func _ready() -> void:
 	SignalBus.connect("end_game", end_game)
 	
 	SignalBus.emit_signal("propogate_resources")
-	SignalBus.emit_signal("enter_hand_mode")
 
 func initialize(level: int):
 	get_level_def(level)
