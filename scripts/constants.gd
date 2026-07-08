@@ -31,6 +31,7 @@ enum card_id {
 }
 
 var card_weights = [
+	#the index of this array represents the card_id in all_cards, below
 	1, # straight probability
 	.75, # elbow probability
 	.5, # cross probability
@@ -45,7 +46,6 @@ var card_weights = [
 	0, # plant probability
 	.25, # water_elbow probability
 	.25, # compost_elbow probability
-	0, # not_card probability
 ]
 
 enum resource {
@@ -190,16 +190,17 @@ var level_definitions = [
 #var when_receiving_input : Dictionary
 
 var all_cards : Dictionary = { 
-	card_id.elbow: CardData.new(
-		"Elbow",
-		"Connects two adjacent tiles at a right angle.",
-		Vector2i(1, 0),
-		Constants.resource.none
-	),
+	# this dictionary must have an entry for each index in card_weights
 	card_id.straight: CardData.new(
 		"Straight",
 		"Connects two adjacent tiles across from each other.",
 		Vector2i(0, 0),
+		Constants.resource.none
+	),
+	card_id.elbow: CardData.new(
+		"Elbow",
+		"Connects two adjacent tiles at a right angle.",
+		Vector2i(1, 0),
 		Constants.resource.none
 	),
 	card_id.cross: CardData.new(
@@ -268,5 +269,17 @@ var all_cards : Dictionary = {
 		"Needs to receive light, water, and nutrients to grow.",
 		Vector2(0, 2),
 		Constants.resource.none
+	),
+	card_id.water_elbow: CardData.new(
+		"Water (Elbow)",
+		"When attached to electricity, generates water.",
+		Vector2i(1, 2),
+		Constants.resource.water
+	),
+	card_id.compost_elbow: CardData.new(
+		"Compost (Elbow)",
+		"When attached to electricity, generates compost.",
+		Vector2i(1, 5),
+		Constants.resource.nutrients
 	)
 	}
