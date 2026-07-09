@@ -17,6 +17,7 @@ var normal_style : StyleBoxFlat
 
 func _ready():
 	normal_style = get_theme_stylebox("background")
+	SignalBus.connect("restart_level", reset_style)
 
 # is level in the optimal range?
 func check_if_level_is_optimal() -> bool:
@@ -29,6 +30,11 @@ func check_if_level_is_optimal() -> bool:
 		return true
 	else:
 		return false
+
+
+func reset_style(level: int):
+	remove_theme_stylebox_override("background")
+
 
 # is level at zero?
 func check_if_level_is_zero() -> bool:
