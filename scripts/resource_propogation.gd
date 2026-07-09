@@ -48,7 +48,7 @@ func create_blank_grid():
 			queued_active_tiles[coords] = inst_tile_data
 			var inst_tile_data_dispensed = InstantiatedTileData.new()
 			inst_tile_data_dispensed.coords = coords
-			queued_active_dispensed_tiles[coords] = inst_tile_data
+			queued_active_dispensed_tiles[coords] = inst_tile_data_dispensed
 
 
 func update_grid():
@@ -102,7 +102,7 @@ func propogate_resources():
 	
 	prev_dispensed_state_array = current_dispensed_state_array
 	current_dispensed_state_array = get_all_dispensed_resources()
-	compare_dispensed_resource_states()
+	update_dispensed_layer()
 	
 	
 	## plants
@@ -130,7 +130,7 @@ func propogate_resources():
 	
 	# now update resource icon layer 
 	resource_icon_layer.update_resource_icons(current_active_tiles)
-	
+	resource_icon_layer.update_resource_icons(current_active_dispensed_tiles)
 	print_debug("stop")
 	
 	
@@ -141,12 +141,14 @@ func check_if_connected(start_tile : Vector2i, other_tile : Vector2i)->bool:
 
 
 func set_resource(tile_coords, resource_id:int):
-	queued_active_tiles[tile_coords].resources.append(resource_id)
+	if queued_active_dispensed_tiles.has(tile_coords):
+		queued_active_tiles[tile_coords].resources.append(resource_id)
 
 
 func set_dispensed_resource(tile_coords, resource_id:int):
-	queued_active_dispensed_tiles[tile_coords].resources.append(resource_id)
-	queued_active_dispensed_tiles[tile_coords].dispensed = true
+	if queued_active_dispensed_tiles.has(tile_coords):
+		queued_active_dispensed_tiles[tile_coords].resources.append(resource_id)
+		queued_active_dispensed_tiles[tile_coords].dispensed = true
 
 
 func get_all_dispensed_resources() -> Array[InstantiatedTileData]:
@@ -157,17 +159,8 @@ func get_all_dispensed_resources() -> Array[InstantiatedTileData]:
 	return array
 
 
-func compare_dispensed_resource_states():
-	var add_array : Array[InstantiatedTileData]
-	var remove_array : Array[InstantiatedTileData]
-	for instantiated_tile in current_dispensed_state_array:
-		if prev_dispensed_state_array.has(instantiated_tile) == false:
-			add_array.append(instantiated_tile)
-	for instantiated_tile in prev_dispensed_state_array:
-		if current_dispensed_state_array.has(instantiated_tile) == false:
-			remove_array.append(instantiated_tile)
-	
-	SignalBus.emit_signal("update_dispenser_layer", add_array, remove_array)
+func update_dispensed_layer():
+	SignalBus.emit_signal("update_dispenser_layer", current_dispensed_state_array)
 
 
 func find_generators():

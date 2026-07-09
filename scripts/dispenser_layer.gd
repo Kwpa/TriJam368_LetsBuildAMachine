@@ -5,13 +5,14 @@ func _ready() -> void:
 	SignalBus.connect("update_dispenser_layer", update_dispenser_layer)
 
 
-func update_dispenser_layer(add_array: Array[InstantiatedTileData], remove_array:Array[InstantiatedTileData]):
+func update_dispenser_layer(add_array: Array[InstantiatedTileData]):
+	clear()
 	for add_tile in add_array:
 		if add_tile.dispensed:
 			set_cell(add_tile.coords, 5, get_tile_from_resources(add_tile.resources),0)
 	
-	for remove_tile in remove_array:
-		erase_cell(remove_tile.coords)
+	#for remove_tile in remove_array:
+		#erase_cell(remove_tile.coords)
 
 
 func get_tile_from_resources(resources : Array[Constants.resource]):
