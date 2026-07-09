@@ -27,10 +27,22 @@ enum card_id {
 	plant = 11,
 	water_elbow = 12,
 	compost_elbow = 13,
-	not_card = 20
+	not_card = 20,
+	dispensed_light = 14,
+	dispensed_nutrients = 15,
+	dispensed_water = 16,
+	dispensed_nutrients_light = 17,
+	dispensed_water_light = 18,
+	dispensed_water_nutrients = 19,
+	dispensed_all = 21,
+	sprinkler_light = 22,
+	sprinkler_nutrients = 23,
+	sprinkler_water = 24
+
 }
 
 var card_weights = [
+	#the index of this array represents the card_id in all_cards, below
 	1, # straight probability
 	.75, # elbow probability
 	.5, # cross probability
@@ -45,7 +57,6 @@ var card_weights = [
 	0, # plant probability
 	.25, # water_elbow probability
 	.25, # compost_elbow probability
-	0, # not_card probability
 ]
 
 enum resource {
@@ -120,6 +131,46 @@ var tile_card_mapping = {
 		"atlas_coords": Vector2i(0,2),
 		"source_id": 2
 	},
+	card_id.dispensed_light : {
+		"atlas_coords": Vector2i(0,1),
+		"source_id": 5
+	},
+	card_id.dispensed_nutrients : {
+		"atlas_coords": Vector2i(1,0),
+		"source_id": 5
+	},
+	card_id.dispensed_water : {
+		"atlas_coords": Vector2i(2,0),
+		"source_id": 5
+	},
+	card_id.dispensed_nutrients_light : {
+		"atlas_coords": Vector2i(0,1),
+		"source_id": 5
+	},
+	card_id.dispensed_water_light : {
+		"atlas_coords": Vector2i(1,1),
+		"source_id": 5
+	},
+	card_id.dispensed_water_nutrients : {
+		"atlas_coords": Vector2i(2,1),
+		"source_id": 5
+	},
+	card_id.dispensed_all : {
+		"atlas_coords": Vector2i(3,1),
+		"source_id": 5
+	},
+	card_id.sprinkler_light : {
+		"atlas_coords": Vector2i(0,2),
+		"source_id": 5
+	},
+	card_id.sprinkler_nutrients : {
+		"atlas_coords": Vector2i(1,2),
+		"source_id": 5
+	},
+	card_id.sprinkler_water : {
+		"atlas_coords": Vector2i(2,2),
+		"source_id": 5
+	},
 	card_id.not_card: {
 		"atlas_coords": null,
 		"source_id": null
@@ -190,16 +241,17 @@ var level_definitions = [
 #var when_receiving_input : Dictionary
 
 var all_cards : Dictionary = { 
-	card_id.elbow: CardData.new(
-		"Elbow",
-		"Connects two adjacent tiles at a right angle.",
-		Vector2i(1, 0),
-		Constants.resource.none
-	),
+	# this dictionary must have an entry for each index in card_weights
 	card_id.straight: CardData.new(
 		"Straight",
 		"Connects two adjacent tiles across from each other.",
 		Vector2i(0, 0),
+		Constants.resource.none
+	),
+	card_id.elbow: CardData.new(
+		"Elbow",
+		"Connects two adjacent tiles at a right angle.",
+		Vector2i(1, 0),
 		Constants.resource.none
 	),
 	card_id.cross: CardData.new(
@@ -280,5 +332,5 @@ var all_cards : Dictionary = {
 		"When attached to electricity, generates nutrients.",
 		Vector2i(1, 5),
 		Constants.resource.nutrients
-	),
+	)
 	}

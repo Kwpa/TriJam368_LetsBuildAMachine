@@ -98,13 +98,14 @@ func add_card_to_hand(card : CardData) -> void:
 	add_tween.chain().tween_callback(new_card_track.reparent.bind($HandContainer))
 	add_tween.parallel().tween_callback(dummy_track.queue_free)
 	
-	
-	
 	# count the action if we're not drawing the initial hand
 	if initializing == false:
 		count_action(true)
 		# enable actions now that this action is complete
 		can_act = true
+	
+	# enter hand mode	
+	SignalBus.emit_signal("enter_hand_mode")
 
 func remove_card_from_hand(track : CardTrack) -> void:
 	# disable actions until this action is complete

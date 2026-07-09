@@ -17,6 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://bu6qty2on1ff3" path="res://scenes/rules.tscn" id="12_ldkr4"]
 [ext_resource type="PackedScene" uid="uid://cg8f0s5npuhn2" path="res://scenes/win.tscn" id="14_ldkr4"]
 [ext_resource type="PackedScene" uid="uid://dhjoob0tweysx" path="res://scenes/lose.tscn" id="15_liy57"]
+[ext_resource type="TileSet" uid="uid://dli7vlje34tbu" path="res://scenes/machine_tileset.tres" id="16_s76x2"]
+[ext_resource type="Script" uid="uid://c83iagyioueq" path="res://scripts/dispenser_layer.gd" id="17_77hjl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mixcd"]
 bg_color = Color(0.91764706, 0.827451, 0.5529412, 1)
@@ -42,11 +44,11 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_mwyo0"]
-
 [sub_resource type="ButtonGroup" id="ButtonGroup_s76x2"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_77hjl"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_6aqbo"]
 
 [node name="game_scene" type="Node2D" unique_id=1907655626]
 script = ExtResource("1_po0ka")
@@ -55,6 +57,8 @@ script = ExtResource("1_po0ka")
 position = Vector2(960, 539)
 
 [node name="background" type="TextureRect" parent="." unique_id=188767401]
+z_index = -3
+z_as_relative = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -201,7 +205,7 @@ alignment = 1
 
 [node name="mode_button_hand" parent="ui/modes_layout" unique_id=213637895 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_mwyo0")
+button_group = SubResource("ButtonGroup_s76x2")
 icon = ExtResource("7_mw25s")
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_hand" index="0" unique_id=665516849]
@@ -209,7 +213,7 @@ text = "Hand Mode"
 
 [node name="mode_button_rotate" parent="ui/modes_layout" unique_id=861217784 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_s76x2")
+button_group = SubResource("ButtonGroup_77hjl")
 icon = ExtResource("8_tcjrq")
 mode = "rotate"
 
@@ -218,7 +222,7 @@ text = "Rotate Mode"
 
 [node name="mode_button_remove" parent="ui/modes_layout" unique_id=701026513 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_77hjl")
+button_group = SubResource("ButtonGroup_6aqbo")
 mode = "remove"
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_remove" index="0" unique_id=665516849]
@@ -242,10 +246,20 @@ layout_mode = 1
 [node name="machine_scene" parent="." unique_id=1380407925 instance=ExtResource("1_mlf6e")]
 position = Vector2(650, 21)
 
-[node name="plant_manager" parent="machine_scene" index="6" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
+[node name="background" parent="machine_scene" index="0" unique_id=365795777]
+z_index = -2
+z_as_relative = false
+
+[node name="plant_manager" parent="machine_scene" index="5" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
 photosynthesis_vital = NodePath("../../ui/vitals/light_tracker")
 moisture_vital = NodePath("../../ui/vitals/water_tracker")
 nutrients_vital = NodePath("../../ui/vitals/nutrients_tracker")
+
+[node name="dispenser_layer" type="TileMapLayer" parent="machine_scene" unique_id=2001859693]
+z_index = -1
+z_as_relative = false
+tile_set = ExtResource("16_s76x2")
+script = ExtResource("17_77hjl")
 
 [node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
 position = Vector2(0, 760)
@@ -262,3 +276,4 @@ position = Vector2(0, 760)
 [editable path="ui/win_screen"]
 [editable path="ui/lose_screen"]
 [editable path="machine_scene"]
+[editable path="card_scene"]
