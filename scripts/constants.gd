@@ -177,6 +177,8 @@ var tile_card_mapping = {
 	}
 }
 
+var select_level := 0
+
 var level_definitions = [
 	LevelData.new(
 		0,

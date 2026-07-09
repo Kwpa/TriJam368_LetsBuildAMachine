@@ -11,7 +11,7 @@ func _ready() -> void:
 	# create a new plant (it will handle its resource levels)
 	
 	# start the level
-	initialize(1)
+	initialize(0)
 	
 	# check resources + update tiles in the machine_scene
 	SignalBus.connect("enter_hand_mode",enter_hand_mode)
