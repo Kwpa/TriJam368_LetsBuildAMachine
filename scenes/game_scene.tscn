@@ -44,11 +44,11 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_s76x2"]
-
 [sub_resource type="ButtonGroup" id="ButtonGroup_77hjl"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_6aqbo"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ro0ie"]
 
 [node name="game_scene" type="Node2D" unique_id=1907655626]
 script = ExtResource("1_po0ka")
@@ -205,7 +205,7 @@ alignment = 1
 
 [node name="mode_button_hand" parent="ui/modes_layout" unique_id=213637895 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_s76x2")
+button_group = SubResource("ButtonGroup_77hjl")
 icon = ExtResource("7_mw25s")
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_hand" index="0" unique_id=665516849]
@@ -213,7 +213,7 @@ text = "Hand Mode"
 
 [node name="mode_button_rotate" parent="ui/modes_layout" unique_id=861217784 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_77hjl")
+button_group = SubResource("ButtonGroup_6aqbo")
 icon = ExtResource("8_tcjrq")
 mode = "rotate"
 
@@ -222,7 +222,7 @@ text = "Rotate Mode"
 
 [node name="mode_button_remove" parent="ui/modes_layout" unique_id=701026513 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_6aqbo")
+button_group = SubResource("ButtonGroup_ro0ie")
 mode = "remove"
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_remove" index="0" unique_id=665516849]
@@ -250,7 +250,7 @@ position = Vector2(650, 21)
 z_index = -2
 z_as_relative = false
 
-[node name="plant_manager" parent="machine_scene" index="5" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
+[node name="plant_manager" parent="machine_scene" index="6" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
 photosynthesis_vital = NodePath("../../ui/vitals/light_tracker")
 moisture_vital = NodePath("../../ui/vitals/water_tracker")
 nutrients_vital = NodePath("../../ui/vitals/nutrients_tracker")

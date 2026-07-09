@@ -6,16 +6,8 @@
 [ext_resource type="Script" uid="uid://b1rmvdurkcf8o" path="res://scripts/machine_board_controller.gd" id="2_soh53"]
 [ext_resource type="Script" uid="uid://0foxuwia42c8" path="res://scripts/preview_tile_layer.gd" id="3_hx6b6"]
 [ext_resource type="Script" uid="uid://bv6awvop72kht" path="res://scripts/preview_placement_check_layer.gd" id="4_1kqo0"]
-[ext_resource type="Shader" uid="uid://dke2a41uef5ln" path="res://textures/moss.gdshader" id="6_7jg3c"]
-[ext_resource type="Texture2D" uid="uid://of27fa8sgkue" path="res://textures/moss.png" id="7_7jg3c"]
 [ext_resource type="Script" uid="uid://cbjs03nuo30yc" path="res://scripts/resource_icon_layer.gd" id="8_c23yc"]
 [ext_resource type="PackedScene" uid="uid://dp44c2e6hpixq" path="res://scenes/plant_manager.tscn" id="8_sbcyb"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7jg3c"]
-shader = ExtResource("6_7jg3c")
-shader_parameter/noise = ExtResource("7_7jg3c")
-shader_parameter/displayDecal = false
-shader_parameter/noiseOpacity = 0.75
 
 [node name="machine_scene" type="Node2D" unique_id=1759567159]
 script = ExtResource("1_swje1")
@@ -39,7 +31,6 @@ tile_set = ExtResource("1_r258f")
 script = ExtResource("3_hx6b6")
 
 [node name="tile_map" type="TileMapLayer" parent="." unique_id=1811384295]
-material = SubResource("ShaderMaterial_7jg3c")
 tile_set = ExtResource("1_r258f")
 script = ExtResource("2_soh53")
 
