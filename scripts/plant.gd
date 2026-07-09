@@ -4,6 +4,7 @@ extends Node
 @export var photosynthesis_vital : VitalTracker
 @export var moisture_vital : VitalTracker
 @export var nutrients_vital : VitalTracker
+@export var status_label : RichTextLabel
 
 # size variables
 var starting_plant_size : int = 1
@@ -73,7 +74,6 @@ func clear_resource_inputs(_id: int):
 
 ## to hook up to signal for when a tile is placed, moved or rotated, and we need to add or remove resources going into the plant 
 func resource_input(_id: int, input_name:String, action_type: String):
-	print(str("Plant ", _id, ": ", input_name))
 	if _id == plant_id || _id == plant_id + 1:
 		match action_type:
 			"remove": 
@@ -89,7 +89,6 @@ func check_inputs_for_growth():
 	var photosyn_count = 0
 	var moisture_count = 0
 	var nutrients_count = 0
-	print(str("Resources: ", resource_inputs))
 	for input : String in resource_inputs:
 		match input:
 			"light":
@@ -106,16 +105,19 @@ func check_inputs_for_growth():
 		photosynthesis_vital.value += 1
 	else:
 		photosynthesis_vital.value -= 1
+		warning_queue.append("The plant needs more light.")
 		
 	if (moisture_count >= current_plant_size):
 		moisture_vital.value += 1
 	else:
 		moisture_vital.value -= 1
+		warning_queue.append("The plant needs more water.")
 		
 	if (nutrients_count >= current_plant_size):
 		nutrients_vital.value += 1
 	else:
 		nutrients_vital.value -= 1
+		warning_queue.append("The plant needs more compost.")
 	
 	#if photosyn_count >= current_plant_size && moisture_count >= current_plant_size && nutrients_count >= current_plant_size:
 		#return true
@@ -135,25 +137,18 @@ func end_turn():
 	
 	if photosynthesis_vital.check_if_level_is_zero() || moisture_vital.check_if_level_is_zero() || nutrients_vital.check_if_level_is_zero():
 		## lose!
-		print("Pass event to gamemanger")
 		SignalBus.end_game.emit(false)
 		return
 	
 	var vitals_optimal_count = 0
 	
-	if photosynthesis_vital.check_if_level_is_optimal() == false:
-		warning_queue.append("Photosynthesis levels are out of range.")
-	else:
+	if photosynthesis_vital.check_if_level_is_optimal() == true:
 		vitals_optimal_count += 1
 		
-	if moisture_vital.check_if_level_is_optimal() == false:
-		warning_queue.append("Moisture levels are out of range.")
-	else:
+	if moisture_vital.check_if_level_is_optimal() == true:
 		vitals_optimal_count += 1
 	
-	if nutrients_vital.check_if_level_is_optimal() == false:
-		warning_queue.append("Nutrients levels are out of range.")
-	else:
+	if nutrients_vital.check_if_level_is_optimal() == true:
 		vitals_optimal_count += 1
 	
 	print(vitals_optimal_count)
@@ -161,7 +156,8 @@ func end_turn():
 		increase_satisfied_count()
 	else:
 		reset_satisfied_count()
-		send_warning_queue()
+	
+	update_plant_status()
 	
 	if plant_statisfied_round_count == 3:
 		if current_plant_size < final_plant_size:
@@ -195,8 +191,12 @@ func reset_satisfied_count():
 	plant_statisfied_round_count = 0
 
 
-func send_warning_queue():
-	var warnings: String = " ".join(warning_queue)
-	$warning_dialogue.dialog_text = warnings
-	$warning_dialogue.show()
+func update_plant_status():
+	var warnings: String
+	if warning_queue.size() == 0:
+		warnings = "The plant is thriving!"
+	else:
+		warnings = " ".join(warning_queue)
+	
+	status_label.text = warnings
 	warning_queue.clear()
