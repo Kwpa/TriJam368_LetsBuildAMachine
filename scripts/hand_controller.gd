@@ -196,6 +196,7 @@ func _on_deck_pressed() -> void:
 
 func _on_card_track_selection_changed(track) -> void:
 	if actions_remaining == 0:
+		# if the player has no actions remaining, do not emit any signals
 		return
 	elif track.is_selected:
 		# if the selection changed to 'true'
@@ -243,9 +244,11 @@ func use_selected_card() -> void:
 	return
 
 func end_turn():
-	# set actions to default count for one turn
-	actions_remaining = Constants.TURN_ACTION_COUNT
-	SignalBus.count_action.emit(actions_remaining)
+	# deselect any selected cards (this will also exit placement mode)
 	for card_track in $HandContainer.get_children():
 		if card_track.is_selected:
 			card_track.toggle_selection()
+			
+	# set actions to default count for one turn
+	actions_remaining = Constants.TURN_ACTION_COUNT
+	SignalBus.count_action.emit(actions_remaining)
