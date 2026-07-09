@@ -265,14 +265,14 @@ func get_spray_shape_tiles(tile) -> Array[Vector2i]:
 
 func dispense_light(tile : Vector2i):
 	for light_tile in get_spray_shape_tiles(tile):
-		set_resource(light_tile, Constants.resource.light)
+		set_dispensed_resource(light_tile, Constants.resource.light)
 
 
 func dispense_nutrients(tile : Vector2i):
 	for nutrients_tile in get_spray_shape_tiles(tile):
-		set_resource(nutrients_tile, Constants.resource.nutrients)
+		set_dispensed_resource(nutrients_tile, Constants.resource.nutrients)
 
 
 func dispense_water(tile : Vector2i):
 	for water_tile in get_spray_shape_tiles(tile):
-		set_resource(water_tile, Constants.resource.water)
+		set_dispensed_resource(water_tile, Constants.resource.water)

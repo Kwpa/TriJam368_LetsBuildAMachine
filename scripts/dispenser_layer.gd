@@ -7,7 +7,8 @@ func _ready() -> void:
 
 func update_dispenser_layer(add_array: Array[InstantiatedTileData], remove_array:Array[InstantiatedTileData]):
 	for add_tile in add_array:
-		set_cell(add_tile.coords, 5, get_tile_from_resources(add_tile.resources),0)
+		if add_tile.dispensed:
+			set_cell(add_tile.coords, 5, get_tile_from_resources(add_tile.resources),0)
 	
 	for remove_tile in remove_array:
 		erase_cell(remove_tile.coords)
