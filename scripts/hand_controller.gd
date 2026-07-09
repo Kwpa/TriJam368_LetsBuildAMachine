@@ -3,7 +3,7 @@ extends Node2D
 var rng = RandomNumberGenerator.new()
 var card_track_scene = preload("res://scenes/card_track.tscn")
 var selected_card_track
-var draw_interval = 0.5
+var draw_interval = 0.4
 
 var actions_remaining: int
 var can_act: bool = false
@@ -29,13 +29,13 @@ func deal_opening_hand() -> void:
 	# let the player begin with a hand of cards containing at least one generator of each kind
 	for res in [Constants.resource.water, Constants.resource.nutrients]: 
 		add_card_to_hand(get_random_by_resource(res))
-		await get_tree().create_timer(1.5).timeout
+		await get_tree().create_timer(1).timeout
 	
 	# also give them a lamp and a sprinkler for easy testing
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp))
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(1).timeout
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler))
-	await get_tree().create_timer(1.5).timeout
+	await get_tree().create_timer(1).timeout
 	
 	# allow the player to take actions once the cards are all dealt
 	can_act = true
@@ -178,11 +178,6 @@ func get_random_card_data() -> CardData:
 
 
 func _on_deck_pressed() -> void:
-	# remind the player to spend their turn if they're out of actions
-	if actions_remaining == 0:
-		$ActionWarning.show()
-		return
-	
 	# disable this function if something else is already happening
 	if can_act == false:
 		return
@@ -200,9 +195,9 @@ func _on_deck_pressed() -> void:
 		$MaxHandWarning.show()
 
 func _on_card_track_selection_changed(track) -> void:
-	# TODO: decide if we want to keep handling this in the CardTrack class or move it up to the game controller
-	# this is hooked up to a card track's 'track_selected' signal when the track is created
-	if track.is_selected:
+	if actions_remaining == 0:
+		return
+	elif track.is_selected:
 		# if the selection changed to 'true'
 		selected_card_track = track # I'm not sure we'll need this variable
 		# emit a signal with data from the selected card
@@ -214,7 +209,7 @@ func _on_card_track_selection_changed(track) -> void:
 	for card_track in $HandContainer.get_children():
 		if card_track != track && card_track.is_selected:
 			card_track.toggle_selection()
-			#print_debug("%s's selected is %s" % [card_track.get_child(0).custom_to_string(), str(card_track.is_selected)])
+			print_debug("%s's selected is %s" % [card_track.get_child(0).custom_to_string(), str(card_track.is_selected)])
 
 func recycle_selected_card() -> void:
 	# disable this function if something else is already happening
@@ -251,3 +246,6 @@ func end_turn():
 	# set actions to default count for one turn
 	actions_remaining = Constants.TURN_ACTION_COUNT
 	SignalBus.count_action.emit(actions_remaining)
+	for card_track in $HandContainer.get_children():
+		if card_track.is_selected:
+			card_track.toggle_selection()
