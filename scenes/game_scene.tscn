@@ -11,7 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://5c348f7eo4ks" path="res://textures/atlas_texture_soil.tres" id="7_tcjrq"]
 [ext_resource type="Script" uid="uid://dwwy8fcupdw5i" path="res://scripts/turn_button.gd" id="8_liy57"]
 [ext_resource type="Texture2D" uid="uid://b4ogmvxwo0nna" path="res://textures/atlas_texture_rotate.tres" id="8_tcjrq"]
+[ext_resource type="FontFile" uid="uid://dx211ilryvrk7" path="res://theme/fonts/Philosopher-Regular.ttf" id="9_6aqbo"]
 [ext_resource type="PackedScene" uid="uid://byh1wumvbepca" path="res://scenes/mode_button.tscn" id="9_mw25s"]
+[ext_resource type="Texture2D" uid="uid://cg1eepy05ghlk" path="res://textures/title.png" id="9_mwyo0"]
 [ext_resource type="Texture2D" uid="uid://cglnpdnmxl8nf" path="res://textures/atlas_texture_turn.tres" id="9_rvs2r"]
 [ext_resource type="PackedScene" uid="uid://bu6qty2on1ff3" path="res://scenes/rules.tscn" id="12_ldkr4"]
 [ext_resource type="PackedScene" uid="uid://cg8f0s5npuhn2" path="res://scenes/win.tscn" id="14_ldkr4"]
@@ -43,11 +45,11 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_s76x2"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_77hjl"]
-
 [sub_resource type="ButtonGroup" id="ButtonGroup_6aqbo"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_ro0ie"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_103ce"]
 
 [node name="game_scene" type="Node2D" unique_id=1907655626]
 script = ExtResource("1_po0ka")
@@ -67,12 +69,32 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_rvs2r")
 
+[node name="machine_scene" parent="." unique_id=1380407925 instance=ExtResource("1_mlf6e")]
+position = Vector2(650, 21)
+
+[node name="background" parent="machine_scene" index="0" unique_id=365795777]
+z_index = -2
+z_as_relative = false
+
+[node name="plant_manager" parent="machine_scene" index="6" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital", "status_label")]
+photosynthesis_vital = NodePath("../../ui/vitals/light_tracker")
+moisture_vital = NodePath("../../ui/vitals/water_tracker")
+nutrients_vital = NodePath("../../ui/vitals/nutrients_tracker")
+status_label = NodePath("../../ui/plant_status/status_label")
+
+[node name="dispenser_layer" type="TileMapLayer" parent="machine_scene" unique_id=2001859693]
+z_index = -1
+z_as_relative = false
+tile_set = ExtResource("16_s76x2")
+script = ExtResource("17_77hjl")
+
 [node name="ui" type="Control" parent="." unique_id=1629544419]
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
+mouse_filter = 1
 
 [node name="vitals" type="HBoxContainer" parent="ui" unique_id=1895602416]
 layout_mode = 0
@@ -141,6 +163,26 @@ text = "End Turn"
 script = ExtResource("8_liy57")
 actions_label = NodePath("../actions_layout/actions_label")
 
+[node name="plant_status" type="Panel" parent="ui" unique_id=2000249460]
+layout_mode = 0
+offset_left = 1408.0
+offset_top = 372.0
+offset_right = 1730.0
+offset_bottom = 503.0
+
+[node name="status_label" type="RichTextLabel" parent="ui/plant_status" unique_id=962862399]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 11.0
+offset_top = 12.0
+offset_right = -11.0
+offset_bottom = 113.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("9_6aqbo")
+theme_override_font_sizes/normal_font_size = 18
+text = "The plant is thriving!"
+
 [node name="summary_layout" type="VBoxContainer" parent="ui" unique_id=1612679543]
 layout_mode = 0
 offset_left = 58.0
@@ -149,7 +191,15 @@ offset_right = 370.0
 offset_bottom = 288.0
 theme_override_constants/separation = 20
 
+[node name="TextureRect" type="TextureRect" parent="ui/summary_layout" unique_id=590597889]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+texture = ExtResource("9_mwyo0")
+expand_mode = 5
+stretch_mode = 5
+
 [node name="title" type="Label" parent="ui/summary_layout" unique_id=1020552753]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "The Growing Machine"
@@ -196,7 +246,7 @@ alignment = 1
 
 [node name="mode_button_hand" parent="ui/modes_layout" unique_id=213637895 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_s76x2")
+button_group = SubResource("ButtonGroup_6aqbo")
 icon = ExtResource("7_mw25s")
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_hand" index="0" unique_id=665516849]
@@ -204,7 +254,7 @@ text = "Hand Mode"
 
 [node name="mode_button_rotate" parent="ui/modes_layout" unique_id=861217784 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_77hjl")
+button_group = SubResource("ButtonGroup_ro0ie")
 icon = ExtResource("8_tcjrq")
 mode = "rotate"
 
@@ -213,7 +263,7 @@ text = "Rotate Mode"
 
 [node name="mode_button_remove" parent="ui/modes_layout" unique_id=701026513 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_6aqbo")
+button_group = SubResource("ButtonGroup_103ce")
 mode = "remove"
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_remove" index="0" unique_id=665516849]
@@ -228,29 +278,12 @@ layout_mode = 1
 visible = false
 z_index = 10
 layout_mode = 1
+mouse_filter = 1
 
 [node name="lose_screen" parent="ui" unique_id=1495373877 instance=ExtResource("15_liy57")]
 visible = false
 z_index = 10
 layout_mode = 1
-
-[node name="machine_scene" parent="." unique_id=1380407925 instance=ExtResource("1_mlf6e")]
-position = Vector2(650, 21)
-
-[node name="background" parent="machine_scene" index="0" unique_id=365795777]
-z_index = -2
-z_as_relative = false
-
-[node name="plant_manager" parent="machine_scene" index="5" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
-photosynthesis_vital = NodePath("../../ui/vitals/light_tracker")
-moisture_vital = NodePath("../../ui/vitals/water_tracker")
-nutrients_vital = NodePath("../../ui/vitals/nutrients_tracker")
-
-[node name="dispenser_layer" type="TileMapLayer" parent="machine_scene" unique_id=2001859693]
-z_index = -1
-z_as_relative = false
-tile_set = ExtResource("16_s76x2")
-script = ExtResource("17_77hjl")
 
 [node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
 position = Vector2(0, 760)
@@ -258,6 +291,7 @@ position = Vector2(0, 760)
 [connection signal="pressed" from="ui/turn_button" to="ui/turn_button" method="end_turn"]
 [connection signal="pressed" from="ui/summary_layout/rules_button" to="ui/rules" method="on_open"]
 
+[editable path="machine_scene"]
 [editable path="ui/vitals/light_tracker"]
 [editable path="ui/vitals/water_tracker"]
 [editable path="ui/vitals/nutrients_tracker"]
@@ -266,5 +300,4 @@ position = Vector2(0, 760)
 [editable path="ui/modes_layout/mode_button_remove"]
 [editable path="ui/win_screen"]
 [editable path="ui/lose_screen"]
-[editable path="machine_scene"]
 [editable path="card_scene"]

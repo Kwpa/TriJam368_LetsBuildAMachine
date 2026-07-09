@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bxajtku2i544b"]
+
+[ext_resource type="Shader" uid="uid://dke2a41uef5ln" path="res://textures/moss.gdshader" id="1_uo6ti"]
+[ext_resource type="Texture2D" uid="uid://of27fa8sgkue" path="res://textures/moss.png" id="2_ohrdf"]
+
+[resource]
+shader = ExtResource("1_uo6ti")
+shader_parameter/noise = ExtResource("2_ohrdf")
+shader_parameter/displayDecal = false
+shader_parameter/noiseOpacity = 0.75

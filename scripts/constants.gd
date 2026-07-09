@@ -287,7 +287,7 @@ var all_cards : Dictionary = {
 	card_id.water_tee: CardData.new(
 		"Water (Tee)",
 		"When attached to electricity, generates water.",
-		Vector2i(1, 2),
+		Vector2i(0, 2),
 		Constants.resource.water
 	),
 	card_id.compost_straight: CardData.new(
@@ -331,7 +331,7 @@ var all_cards : Dictionary = {
 	),
 	card_id.compost_elbow: CardData.new(
 		"Compost (Elbow)",
-		"When attached to electricity, generates compost.",
+		"When attached to electricity, generates nutrients.",
 		Vector2i(1, 5),
 		Constants.resource.nutrients
 	)
