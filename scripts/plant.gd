@@ -73,7 +73,8 @@ func clear_resource_inputs(_id: int):
 
 ## to hook up to signal for when a tile is placed, moved or rotated, and we need to add or remove resources going into the plant 
 func resource_input(_id: int, input_name:String, action_type: String):
-	if _id == plant_id:
+	print(str("Plant ", _id, ": ", input_name))
+	if _id == plant_id || _id == plant_id + 1:
 		match action_type:
 			"remove": 
 				if resource_inputs.has(input_name):
@@ -88,6 +89,7 @@ func check_inputs_for_growth():
 	var photosyn_count = 0
 	var moisture_count = 0
 	var nutrients_count = 0
+	print(str("Resources: ", resource_inputs))
 	for input : String in resource_inputs:
 		match input:
 			"light":
@@ -170,13 +172,11 @@ func grow_plant():
 	current_plant_size += 1
 	## send signal to add new tile / change tile images
 	SignalBus.grow_plant.emit(plant_id)
-	print("The plant has grown one tile.")
 	
 	if current_plant_size == final_plant_size:
 		## plant grown success!
 		# game win condition
 		SignalBus.end_game.emit(true)
-		print("The plant is fully grown! You win!")
 
 
 func check_if_plant_tile_has_enough_inputs() -> bool:
@@ -189,12 +189,10 @@ func check_if_plant_is_fully_grown() -> bool:
 
 func increase_satisfied_count():
 	plant_statisfied_round_count += 1
-	print("send_signal_to_round_counter")
 
 
 func reset_satisfied_count():
 	plant_statisfied_round_count = 0
-	print("send_signal_to_round_counter")
 
 
 func send_warning_queue():
