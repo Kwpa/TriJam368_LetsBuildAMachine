@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dgusctygfnt5a" path="res://scripts/vital_tracker.gd" id="1_2vyjv"]
 [ext_resource type="Texture2D" uid="uid://bc7on2n2stbip" path="res://textures/atlas_texture_water.tres" id="2_2vyjv"]
+[ext_resource type="StyleBox" uid="uid://djh07ax5vyjb1" path="res://theme/style_box_alert.tres" id="2_p1x54"]
 
 [node name="level" type="ProgressBar" unique_id=1132438125]
 custom_minimum_size = Vector2(40, 240)
@@ -15,8 +16,10 @@ rounded = true
 fill_mode = 3
 show_percentage = false
 script = ExtResource("1_2vyjv")
+concern_threshold = 3
 vital_lower_optimal = 5
 vital_upper_optimal = 10
+alert_style = ExtResource("2_p1x54")
 
 [node name="icon" type="TextureRect" parent="." unique_id=1802059518]
 custom_minimum_size = Vector2(50, 50)

@@ -4,6 +4,7 @@ extends Node
 @export var photosynthesis_vital : VitalTracker
 @export var moisture_vital : VitalTracker
 @export var nutrients_vital : VitalTracker
+@export var status_label : RichTextLabel
 
 # size variables
 var starting_plant_size : int = 1
@@ -61,6 +62,7 @@ func _ready():
 	SignalBus.connect("add_resource_input_to_plant", resource_input)
 	SignalBus.connect("end_turn", end_turn)
 	SignalBus.connect("reset_resource_inputs_on_plant", clear_resource_inputs)
+	SignalBus.connect("restart_level", initialize)
 
 func set_id(_id: int):
 	plant_id = _id
@@ -71,9 +73,19 @@ func clear_resource_inputs(_id: int):
 		resource_inputs.clear()
 
 
+func initialize(level: int):
+	photosynthesis_vital.value = photosynthesis_vital.vital_lower_optimal
+	moisture_vital.value = moisture_vital.vital_lower_optimal
+	nutrients_vital.value = nutrients_vital.vital_lower_optimal
+	current_plant_size = starting_plant_size
+	clear_resource_inputs(plant_id)
+	warning_queue.clear()
+	update_plant_status()
+
+
 ## to hook up to signal for when a tile is placed, moved or rotated, and we need to add or remove resources going into the plant 
 func resource_input(_id: int, input_name:String, action_type: String):
-	if _id == plant_id:
+	if _id == plant_id || _id == plant_id + 1:
 		match action_type:
 			"remove": 
 				if resource_inputs.has(input_name):
@@ -104,16 +116,19 @@ func check_inputs_for_growth():
 		photosynthesis_vital.value += 1
 	else:
 		photosynthesis_vital.value -= 1
+		warning_queue.append("The plant needs more light.")
 		
 	if (moisture_count >= current_plant_size):
 		moisture_vital.value += 1
 	else:
 		moisture_vital.value -= 1
+		warning_queue.append("The plant needs more water.")
 		
 	if (nutrients_count >= current_plant_size):
 		nutrients_vital.value += 1
 	else:
 		nutrients_vital.value -= 1
+		warning_queue.append("The plant needs more compost.")
 	
 	#if photosyn_count >= current_plant_size && moisture_count >= current_plant_size && nutrients_count >= current_plant_size:
 		#return true
@@ -133,24 +148,18 @@ func end_turn():
 	
 	if photosynthesis_vital.check_if_level_is_zero() || moisture_vital.check_if_level_is_zero() || nutrients_vital.check_if_level_is_zero():
 		## lose!
-		print("Pass event to gamemanger")
 		SignalBus.end_game.emit(false)
+		return
 	
 	var vitals_optimal_count = 0
 	
-	if photosynthesis_vital.check_if_level_is_optimal() == false:
-		warning_queue.append("Photosynthesis levels are out of range.")
-	else:
+	if photosynthesis_vital.check_if_level_is_optimal() == true:
 		vitals_optimal_count += 1
 		
-	if moisture_vital.check_if_level_is_optimal() == false:
-		warning_queue.append("Moisture levels are out of range.")
-	else:
+	if moisture_vital.check_if_level_is_optimal() == true:
 		vitals_optimal_count += 1
 	
-	if nutrients_vital.check_if_level_is_optimal() == false:
-		warning_queue.append("Nutrients levels are out of range.")
-	else:
+	if nutrients_vital.check_if_level_is_optimal() == true:
 		vitals_optimal_count += 1
 	
 	print(vitals_optimal_count)
@@ -158,7 +167,8 @@ func end_turn():
 		increase_satisfied_count()
 	else:
 		reset_satisfied_count()
-		send_warning_queue()
+	
+	update_plant_status()
 	
 	if plant_statisfied_round_count == 3:
 		if current_plant_size < final_plant_size:
@@ -169,13 +179,11 @@ func grow_plant():
 	current_plant_size += 1
 	## send signal to add new tile / change tile images
 	SignalBus.grow_plant.emit(plant_id)
-	print("The plant has grown one tile.")
 	
 	if current_plant_size == final_plant_size:
 		## plant grown success!
 		# game win condition
 		SignalBus.end_game.emit(true)
-		print("The plant is fully grown! You win!")
 
 
 func check_if_plant_tile_has_enough_inputs() -> bool:
@@ -188,16 +196,18 @@ func check_if_plant_is_fully_grown() -> bool:
 
 func increase_satisfied_count():
 	plant_statisfied_round_count += 1
-	print("send_signal_to_round_counter")
 
 
 func reset_satisfied_count():
 	plant_statisfied_round_count = 0
-	print("send_signal_to_round_counter")
 
 
-func send_warning_queue():
-	var warnings: String = " ".join(warning_queue)
-	$warning_dialogue.dialog_text = warnings
-	$warning_dialogue.show()
+func update_plant_status():
+	var warnings: String
+	if warning_queue.size() == 0:
+		warnings = "The plant is thriving!"
+	else:
+		warnings = " ".join(warning_queue)
+	
+	status_label.text = warnings
 	warning_queue.clear()
