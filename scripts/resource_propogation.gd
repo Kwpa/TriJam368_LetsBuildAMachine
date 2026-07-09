@@ -8,9 +8,8 @@ extends Node2D
 var electricity_generators : Array[Vector2i] = []
 var water_generators : Array[Vector2i] = []
 var nutrient_generators : Array[Vector2i] = []
-var water_dispenser : Array[Vector2i] = []
-var nutrient_dispenser : Array[Vector2i] = []
-var light_dispenser : Array[Vector2i] = []
+var sprinklers : Array[Vector2i] = []
+var lamps : Array[Vector2i] = []
 var plants : Array[Vector2i] = []
 
 # cells that are being used in the tilemaplayer
@@ -19,6 +18,12 @@ var used_cells = []
 # array of tiles, storing the boardstate here
 var current_active_tiles : Dictionary = {}
 var queued_active_tiles : Dictionary = {}
+
+var current_active_dispensed_tiles : Dictionary = {}
+var queued_active_dispensed_tiles : Dictionary = {}
+
+var prev_dispensed_state_array : Array[InstantiatedTileData]
+var current_dispensed_state_array : Array[InstantiatedTileData]
 
 var slow_fill = false
 
@@ -39,16 +44,24 @@ func create_blank_grid():
 		for i in 5:
 			var coords = Vector2i(i,j)
 			var inst_tile_data = InstantiatedTileData.new()
-			inst_tile_data.coords = coords 
+			inst_tile_data.coords = coords
 			queued_active_tiles[coords] = inst_tile_data
+			var inst_tile_data_dispensed = InstantiatedTileData.new()
+			inst_tile_data_dispensed.coords = coords
+			queued_active_dispensed_tiles[coords] = inst_tile_data
 
 
 func update_grid():
 	current_active_tiles = queued_active_tiles
+	current_active_dispensed_tiles = queued_active_dispensed_tiles
 
 
 func check_tile_has_resource(tile_coordinates : Vector2i, resource : Constants.resource):
 	return queued_active_tiles[tile_coordinates].has_resource(resource)
+	
+
+func check_tile_has_dispensed_resource(tile_coordinates : Vector2i, resource : Constants.resource):
+	return queued_active_dispensed_tiles[tile_coordinates].has_resource(resource)
 
 
 func create_initial_resource_tile_icons():
@@ -71,7 +84,29 @@ func propogate_resources():
 		if check_tile_has_resource(tile, Constants.resource.electricity):
 			flood_fill(tile, Constants.resource.nutrients)
 	
-	# then dispense resources ?
+	find_dispensers()
+	for tile in sprinklers:
+		var nutrient_check = check_tile_has_resource(tile, Constants.resource.nutrients)
+		var water_check = check_tile_has_resource(tile, Constants.resource.water)
+		if nutrient_check:
+			dispense_nutrients(tile)
+		if water_check:
+			dispense_water(tile)
+		
+	for tile in lamps:
+		var electricity_check = check_tile_has_resource(tile, Constants.resource.electricity)
+		if electricity_check:
+			dispense_light(tile)
+	
+	## update visuals using info dispenser_layer
+	
+	prev_dispensed_state_array = current_dispensed_state_array
+	current_dispensed_state_array = get_all_dispensed_resources()
+	compare_dispensed_resource_states()
+	
+	
+	## plants
+
 	print(plants.size())
 	for n in plants.size():
 		SignalBus.reset_resource_inputs_on_plant.emit(n)
@@ -81,6 +116,13 @@ func propogate_resources():
 			SignalBus.add_resource_input_to_plant.emit(n, "light", "add")
 		if check_tile_has_resource(plants[n], Constants.resource.nutrients):
 			SignalBus.add_resource_input_to_plant.emit(n, "fertilizer", "add")
+		if check_tile_has_dispensed_resource(plants[n], Constants.resource.water):
+			SignalBus.add_resource_input_to_plant.emit(n, "water", "add")
+		if check_tile_has_dispensed_resource(plants[n], Constants.resource.light):
+			SignalBus.add_resource_input_to_plant.emit(n, "light", "add")
+		if check_tile_has_dispensed_resource(plants[n], Constants.resource.nutrients):
+			SignalBus.add_resource_input_to_plant.emit(n, "fertilizer", "add")
+		
 	
 	
 	# now update the grid
@@ -100,7 +142,32 @@ func check_if_connected(start_tile : Vector2i, other_tile : Vector2i)->bool:
 
 func set_resource(tile_coords, resource_id:int):
 	queued_active_tiles[tile_coords].resources.append(resource_id)
-	return false
+
+
+func set_dispensed_resource(tile_coords, resource_id:int):
+	queued_active_dispensed_tiles[tile_coords].resources.append(resource_id)
+	queued_active_dispensed_tiles[tile_coords].dispensed = true
+
+
+func get_all_dispensed_resources() -> Array[InstantiatedTileData]:
+	var array : Array[InstantiatedTileData]
+	for instantiated_tile in queued_active_dispensed_tiles.values():
+		if instantiated_tile.resources.size() > 0:
+			array.append(instantiated_tile)
+	return array
+
+
+func compare_dispensed_resource_states():
+	var add_array : Array[InstantiatedTileData]
+	var remove_array : Array[InstantiatedTileData]
+	for instantiated_tile in current_dispensed_state_array:
+		if prev_dispensed_state_array.has(instantiated_tile) == false:
+			add_array.append(instantiated_tile)
+	for instantiated_tile in prev_dispensed_state_array:
+		if current_dispensed_state_array.has(instantiated_tile) == false:
+			remove_array.append(instantiated_tile)
+	
+	SignalBus.emit_signal("update_dispenser_layer", add_array, remove_array)
 
 
 func find_generators():
@@ -124,8 +191,26 @@ func find_generators():
 					nutrient_generators.append(tile)
 				8:
 					nutrient_generators.append(tile)
-				11: 
+				Constants.card_id.plant: 
 					plants.append(tile)
+
+
+func find_dispensers():
+	lamps.clear()
+	sprinklers.clear()
+	
+	for tile in used_cells:
+		var tile_data = layer.get_cell_tile_data(tile)
+		if tile_data != null:
+			
+			var card_id = tile_data.get_custom_data("card_id")
+			
+			match card_id:
+				Constants.card_id.sprinkler:
+					sprinklers.append(tile)
+				Constants.card_id.lamp:
+					lamps.append(tile)
+
 
 func flood_fill(start_pos, resource : int):
 	
@@ -162,3 +247,32 @@ func flood_fill(start_pos, resource : int):
 				#works OK except for if you add the generator later?
 				queue.append(next_tile)
 				set_resource(next_tile, resource)
+
+
+func get_spray_shape_tiles(tile) -> Array[Vector2i]:
+	var tile_rotation = layer.get_cell_alternative_tile(tile)
+	match tile_rotation:
+		Constants.rotation.half_cw: # straght down
+			return [tile + Vector2i(0,-1),tile + Vector2i(-1,-2),tile + Vector2i(0,-2),tile + Vector2i(1,-2)]
+		Constants.rotation.quarter_cw: # spray left
+			return [tile + Vector2i(-1,0),tile + Vector2i(-2,1),tile + Vector2i(2,0),tile + Vector2i(2,-1)]
+		Constants.rotation.zero_rot: # spray up
+			return [tile + Vector2i(0,1),tile + Vector2i(-1,2),tile + Vector2i(0,2),tile + Vector2i(1,2)]
+		Constants.rotation.three_quarter_cw: # spray right
+			return [tile + Vector2i(1,0),tile + Vector2i(2,-1),tile + Vector2i(2,0),tile + Vector2i(2,1)]
+	# else return nothing
+	return []
+
+func dispense_light(tile : Vector2i):
+	for light_tile in get_spray_shape_tiles(tile):
+		set_resource(light_tile, Constants.resource.light)
+
+
+func dispense_nutrients(tile : Vector2i):
+	for nutrients_tile in get_spray_shape_tiles(tile):
+		set_resource(nutrients_tile, Constants.resource.nutrients)
+
+
+func dispense_water(tile : Vector2i):
+	for water_tile in get_spray_shape_tiles(tile):
+		set_resource(water_tile, Constants.resource.water)

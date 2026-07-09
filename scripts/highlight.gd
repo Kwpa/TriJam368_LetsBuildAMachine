@@ -32,3 +32,4 @@ func _input(event: InputEvent) -> void:
 	if mode == "remove" or mode == "rotate":
 		var cell_selected_coords = layer.local_to_map(to_local(get_global_mouse_position()))
 		if cell_selected_coords.x >= 0 and cell_selected_coords.x < 5 and cell_selected_coords.y >= 0 and cell_selected_coords.y < 5:
+			pass
