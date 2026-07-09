@@ -241,16 +241,16 @@ position = Vector2(650, 21)
 z_index = -2
 z_as_relative = false
 
+[node name="plant_manager" parent="machine_scene" index="5" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
+photosynthesis_vital = NodePath("../../ui/vitals/light_tracker")
+moisture_vital = NodePath("../../ui/vitals/water_tracker")
+nutrients_vital = NodePath("../../ui/vitals/nutrients_tracker")
+
 [node name="dispenser_layer" type="TileMapLayer" parent="machine_scene" unique_id=2001859693]
 z_index = -1
 z_as_relative = false
 tile_set = ExtResource("16_s76x2")
 script = ExtResource("17_77hjl")
-
-[node name="plant_manager" parent="machine_scene" index="6" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital")]
-photosynthesis_vital = NodePath("../../ui/vitals/light_tracker")
-moisture_vital = NodePath("../../ui/vitals/water_tracker")
-nutrients_vital = NodePath("../../ui/vitals/nutrients_tracker")
 
 [node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
 position = Vector2(0, 760)

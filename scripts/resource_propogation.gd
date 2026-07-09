@@ -65,7 +65,7 @@ func check_tile_has_dispensed_resource(tile_coordinates : Vector2i, resource : C
 
 
 func create_initial_resource_tile_icons():
-	resource_icon_layer.create_icons(current_active_tiles)
+	resource_icon_layer.create_icons(current_active_tiles,current_active_dispensed_tiles)
 
 
 func propogate_resources():
@@ -129,8 +129,7 @@ func propogate_resources():
 	update_grid()
 	
 	# now update resource icon layer 
-	resource_icon_layer.update_resource_icons(current_active_tiles)
-	resource_icon_layer.update_resource_icons(current_active_dispensed_tiles)
+	resource_icon_layer.update_resource_icons(current_active_tiles, current_active_dispensed_tiles)
 	print_debug("stop")
 	
 	
