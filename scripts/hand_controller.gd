@@ -28,13 +28,13 @@ func deal_opening_hand() -> void:
 	
 	# let the player begin with a hand of cards containing at least one generator of each kind
 	for res in [Constants.resource.water, Constants.resource.nutrients]: 
-		add_card_to_hand(get_random_by_resource(res), deck_pos)
+		add_card_to_hand(get_random_by_resource(res), deck_pos, false)
 		await get_tree().create_timer(1).timeout
 	
 	# also give them a lamp and a sprinkler for easy testing
-	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp), deck_pos)
+	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp), deck_pos, false)
 	await get_tree().create_timer(1).timeout
-	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler), deck_pos)
+	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler), deck_pos, false)
 	await get_tree().create_timer(1).timeout
 	
 	# allow the player to take actions once the cards are all dealt
@@ -45,10 +45,14 @@ func deal_opening_hand() -> void:
 
 func count_action(spend: bool):
 	# count the action
+	print_debug("count_action")
 	if spend:
 		actions_remaining -= 1
+		print_debug("spend is true. there are %s actions left" % actions_remaining)
 	else:
 		actions_remaining += 1
+		print_debug("spend is false. there are %s actions left" % actions_remaining)
+	#print_debug("there are %s actions left" % actions_remaining)
 	
 	# send a signal to update the ui
 	SignalBus.count_action.emit(actions_remaining)
@@ -58,9 +62,9 @@ func count_action(spend: bool):
 	#if actions_remaining == 0:
 		#$ActionWarning.show()
 
-func add_card_to_hand(card : CardData, pos: Vector2) -> void:
+func add_card_to_hand(card : CardData, pos: Vector2, spend: bool) -> void:
 
-	print_debug("adding card to hand %s" % card)
+	print_debug("adding card to hand %s" % card.title)
 	# disable actions until this action is complete
 	can_act = false
 	
@@ -101,7 +105,7 @@ func add_card_to_hand(card : CardData, pos: Vector2) -> void:
 	
 	# count the action if we're not drawing the initial hand
 	if initializing == false:
-		count_action(true)
+		count_action(spend)
 		# enable actions now that this action is complete
 		can_act = true
 
@@ -113,7 +117,6 @@ func remove_card_from_hand(track : CardTrack) -> void:
 	
 	var discard_position = $DiscardParent/Recycle.position #this is a Vector2
 	var discard_interval = .75
-	print_debug("The position of the discard deck is %s" %discard_position)
 	
 	# create a dummy track to take the place of the card we're discarding
 	var track_index = track.get_index() # need this to insert the dummy at the correct place
@@ -173,6 +176,9 @@ func get_random_card_data() -> CardData:
 
 
 func _on_deck_pressed() -> void:
+	
+	SignalBus.emit_signal("enter_hand_mode")
+	
 	# disable this function if something else is already happening
 	if can_act == false:
 		return
@@ -185,7 +191,7 @@ func _on_deck_pressed() -> void:
 	# check whether hand size limit is reached
 	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
 		# if hand is small enough, add a new card to the hand
-		add_card_to_hand(get_random_card_data(), $DeckParent.global_position)
+		add_card_to_hand(get_random_card_data(), $DeckParent.global_position, true)
 	else:
 		$MaxHandWarning.show()
 

@@ -113,7 +113,7 @@ func remove_tile(card_id: int, pos: Vector2) -> void:
 	# get the card data from the ID
 	var card = Constants.all_cards.get(card_id)
 	# emit the card data of the removed card and its position in the tilemap
-	remove_card.emit(card, to_global(map_to_local(pos)))
+	remove_card.emit(card, to_global(map_to_local(pos)), false)
 	#print_debug("emitting remove_card signal with %s" % card)
 	
 	# erase the tile
@@ -121,7 +121,6 @@ func remove_tile(card_id: int, pos: Vector2) -> void:
 	
 	# emit the signals to propagate resources and manage actions
 	SignalBus.emit_signal("propogate_resources")
-	SignalBus.non_hand_action.emit(false)
 
 func _input(event) -> void:
 	
