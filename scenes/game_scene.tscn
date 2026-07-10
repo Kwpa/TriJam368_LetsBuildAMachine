@@ -288,9 +288,9 @@ layout_mode = 1
 [node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
 position = Vector2(0, 760)
 
+[connection signal="remove_card" from="machine_scene/tile_map" to="card_scene" method="add_card_to_hand"]
 [connection signal="pressed" from="ui/turn_button" to="ui/turn_button" method="end_turn"]
 [connection signal="pressed" from="ui/summary_layout/rules_button" to="ui/rules" method="on_open"]
-[connection signal="remove_card" from="machine_scene/tile_map" to="card_scene" method="add_card_to_hand"]
 
 [editable path="machine_scene"]
 [editable path="ui/vitals/light_tracker"]

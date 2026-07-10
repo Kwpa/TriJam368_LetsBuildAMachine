@@ -27,14 +27,10 @@ func enter_remove_mode():
 func _on_pressed() -> void:
 	match mode:
 		"hand":
-			print_debug(mode)
 			SignalBus.emit_signal("enter_hand_mode")
 		"rotate":
-			print_debug(mode)
 			SignalBus.emit_signal("enter_rotate_mode")
 		"remove":
-			print_debug(mode)
 			SignalBus.emit_signal("enter_remove_mode")
 		"turn":
-			print_debug(mode)
 			SignalBus.emit_signal("end_turn")

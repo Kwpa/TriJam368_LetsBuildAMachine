@@ -60,6 +60,7 @@ func enter_rotate_mode():
 
 func enter_remove_mode() -> void:
 	if $card_scene/HandContainer.get_children().size() < Constants.HAND_SIZE_LIMIT:
+		# if the hand is small enough, let the player remove the card
 		#print_debug("entering remove mode")
 		exit_hand_mode()
 		mode = "remove"
@@ -68,9 +69,10 @@ func enter_remove_mode() -> void:
 		$ui/modes_layout/mode_button_rotate.button_pressed = false
 		$ui/modes_layout/mode_button_remove.button_pressed = true
 	else:
+		# otherwise, show the hand size warning and put the player into Hand mode
 		$card_scene/MaxHandWarning.show()
 		SignalBus.emit_signal("enter_hand_mode")
-		print_debug("max hand size limit reached. Now in %s mode" % mode)
+		#print_debug("max hand size limit reached. Now in %s mode" % mode)
 		return
 
 func exit_hand_mode():
