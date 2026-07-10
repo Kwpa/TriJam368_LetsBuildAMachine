@@ -30,6 +30,7 @@ var slow_fill = false
 
 func _ready():
 	SignalBus.connect("propogate_resources", propogate_resources)
+	SignalBus.connect("grow_plant", on_plant_grow)
 	create_blank_grid()
 	update_grid()
 	create_initial_resource_tile_icons()
@@ -38,6 +39,10 @@ func _ready():
 func get_plant_by_id(plant_id: int) -> Vector2i:
 	return plants[plant_id]
 
+func on_plant_grow(plant_id: int):
+	var plant_location = get_plant_by_id(plant_id)
+	var plant_grow_location = plant_location + Vector2i.UP
+	plants.append(plant_grow_location)
 
 func create_blank_grid():
 	for j in 5:
@@ -106,8 +111,6 @@ func propogate_resources():
 	
 	
 	## plants
-
-	print(plants.size())
 	for n in plants.size():
 		SignalBus.reset_resource_inputs_on_plant.emit(n)
 		if check_tile_has_resource(plants[n], Constants.resource.water):
@@ -131,8 +134,6 @@ func propogate_resources():
 	# now update resource icon layer 
 	resource_icon_layer.update_resource_icons(current_active_tiles, current_active_dispensed_tiles)
 	print_debug("stop")
-	
-	
 
 
 func check_if_connected(start_tile : Vector2i, other_tile : Vector2i)->bool:
@@ -183,8 +184,9 @@ func find_generators():
 					nutrient_generators.append(tile)
 				8:
 					nutrient_generators.append(tile)
-				Constants.card_id.plant: 
-					plants.append(tile)
+				Constants.card_id.plant:
+					if (!plants.has(tile)):
+						plants.append(tile)
 
 
 func find_dispensers():

@@ -16,6 +16,9 @@ script = ExtResource("1_swje1")
 position = Vector2(320, 320)
 texture = ExtResource("1_soh53")
 
+[node name="trellis_layer" type="TileMapLayer" parent="." unique_id=2114560880]
+tile_set = ExtResource("1_r258f")
+
 [node name="preview_placement_check_layer" type="TileMapLayer" parent="." unique_id=667509315]
 z_index = 1
 tile_set = ExtResource("1_r258f")

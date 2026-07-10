@@ -6,18 +6,19 @@ var mode := "hand"
 
 func _ready() -> void:
 	# start the level
-	initialize(1)
+	initialize(0)
 	
 	# check resources + update tiles in the machine_scene
 	SignalBus.connect("enter_hand_mode",enter_hand_mode)
 	SignalBus.connect("enter_rotate_mode",enter_rotate_mode)
 	SignalBus.connect("enter_remove_mode",enter_remove_mode)
 	SignalBus.connect("end_game", end_game)
-	
-	SignalBus.emit_signal("propogate_resources")
+	SignalBus.connect("restart_level", initialize)
+
 
 func initialize(level: int):
 	get_level_def(level)
+	SignalBus.emit_signal("propogate_resources")
 
 
 func get_level_def(id : int):
