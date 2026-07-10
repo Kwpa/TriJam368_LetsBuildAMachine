@@ -15,6 +15,6 @@ signal end_turn() # inform the plant and hand that a turn has ended
 signal grow_plant(plant_id: int) # grow the plant
 signal end_game(win: bool) # ends the game, win or lose
 signal count_action(spend: int) # sends a signal to the action count ui label
-signal non_hand_action(spend: int) # informs the hand that an action has been spent or gained elsewhere
+signal non_hand_action(spend: bool) # informs the hand that an action has been spent or gained elsewhere no longer in use for removing a card
 signal update_dispenser_layer(add_array : Array[InstantiatedTileData])
 signal restart_level(level: int)

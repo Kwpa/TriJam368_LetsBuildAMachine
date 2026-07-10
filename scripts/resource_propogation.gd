@@ -74,7 +74,7 @@ func create_initial_resource_tile_icons():
 
 
 func propogate_resources():
-	print("propogating")
+	#print_debug("propogating")
 	create_blank_grid()
 	used_cells = layer.get_used_cells()
 	
@@ -133,7 +133,7 @@ func propogate_resources():
 	
 	# now update resource icon layer 
 	resource_icon_layer.update_resource_icons(current_active_tiles, current_active_dispensed_tiles)
-	print_debug("stop")
+	#print_debug("stop")
 
 
 func check_if_connected(start_tile : Vector2i, other_tile : Vector2i)->bool:
