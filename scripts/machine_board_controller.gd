@@ -25,6 +25,7 @@ var tile_transformations := {
 var tile_direction := Vector2i(0,-1)
 var applied_transform : int
 
+signal remove_card(card: CardData, pos: Vector2)
 
 func load_level(level_def : LevelData):
 	clear()
@@ -63,7 +64,7 @@ func rotate_tile(dir):
 func _ready() -> void:
 	SignalBus.connect("enter_remove_mode", enter_remove_mode)
 	SignalBus.connect("enter_rotate_mode", enter_rotate_mode)
-	SignalBus.connect("enter_hand_mode", enter_remove_mode)
+	SignalBus.connect("enter_hand_mode", enter_hand_mode)
 	SignalBus.connect("enter_place_mode", enter_place_mode)
 	SignalBus.connect("grow_plant", grow_plant)
 
@@ -103,6 +104,19 @@ func removal_check(card_id : int) -> bool:
 	else:
 		return true 
 
+func remove_tile(card_id: int, pos: Vector2) -> void:
+	# get the card data from the ID
+	var card = Constants.all_cards.get(card_id)
+	# emit the card data of the removed card and its position in the tilemap
+	remove_card.emit(card, to_global(map_to_local(pos)))
+	#print_debug("emitting remove_card signal with %s" % card)
+	
+	# erase the tile
+	erase_cell(local_to_map(to_local(get_global_mouse_position())))
+	
+	# emit the signals to propagate resources and manage actions
+	SignalBus.emit_signal("propogate_resources")
+	SignalBus.non_hand_action.emit(false)
 
 func _input(event) -> void:
 	
@@ -116,9 +130,7 @@ func _input(event) -> void:
 				if atlas_coords != Vector2i(-1,-1):
 					var card_id = get_cell_tile_data(pos).get_custom_data("card_id")
 					if removal_check(card_id):
-						erase_cell(local_to_map(to_local(get_global_mouse_position())))
-						SignalBus.emit_signal("propogate_resources")
-						SignalBus.non_hand_action.emit(false)
+						remove_tile(card_id, pos)
 		"hand":
 			currently_selected_alt_id = 0
 			pass
@@ -187,13 +199,6 @@ func _input(event) -> void:
 	# swap to remove mode
 	if event is InputEventKey && event.keycode == KEY_3 && event.pressed:
 		SignalBus.emit_signal("enter_remove_mode")
-
-			
-func remove_tile() -> void:
-	# remove tile by setting its tile source index to -1
-	set_cell(local_to_map(to_local(get_global_mouse_position())), -1)
-	print("Tile was removed")
-	# emit a signal so the hand manager can add the card to the hand
 	
 
 func check_if_tile_is_colliding(layer : int, tile1_coords : Vector2i, tile2_coords : Vector2i) -> bool:

@@ -18,23 +18,23 @@ func _ready() -> void:
 	SignalBus.connect("use_card",use_selected_card)
 	SignalBus.connect("end_turn", end_turn)
 	SignalBus.connect("non_hand_action", count_action)
-	SignalBus.connect("enter_hand_mode", _on_card_track_selection_changed)
 
 func deal_opening_hand() -> void:
 	initializing = true
+	var deck_pos = $DeckParent.global_position
 	
 	# set actions to default count for one turn
 	actions_remaining = Constants.TURN_ACTION_COUNT
 	
 	# let the player begin with a hand of cards containing at least one generator of each kind
 	for res in [Constants.resource.water, Constants.resource.nutrients]: 
-		add_card_to_hand(get_random_by_resource(res))
+		add_card_to_hand(get_random_by_resource(res), deck_pos)
 		await get_tree().create_timer(1).timeout
 	
 	# also give them a lamp and a sprinkler for easy testing
-	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp))
+	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp), deck_pos)
 	await get_tree().create_timer(1).timeout
-	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler))
+	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler), deck_pos)
 	await get_tree().create_timer(1).timeout
 	
 	# allow the player to take actions once the cards are all dealt
@@ -58,8 +58,9 @@ func count_action(spend: bool):
 	#if actions_remaining == 0:
 		#$ActionWarning.show()
 
+func add_card_to_hand(card : CardData, pos: Vector2) -> void:
 
-func add_card_to_hand(card : CardData) -> void:
+	print_debug("adding card to hand %s" % card)
 	# disable actions until this action is complete
 	can_act = false
 	
@@ -67,19 +68,19 @@ func add_card_to_hand(card : CardData) -> void:
 	
 	# create a real card
 	var new_card_track = card_track_scene.instantiate()
+	add_child(new_card_track)
 	new_card_track.connect('track_selected', _on_card_track_selection_changed)
 	new_card_track.set_card_data(card)
 	new_card_track.scale = Vector2(0.25, 0.25)
-	new_card_track.position = Vector2(150,-60)
+	new_card_track.global_position = pos
 	new_card_track.modulate.a = .5
-	$DeckParent.add_child(new_card_track) # add the real card to the deck parent for transform inheritance
 	
 	# create a dummy card track and add it to the hand
 	var dummy_track = card_track_scene.instantiate()
 	dummy_track.modulate.a = 0
 	$HandContainer.add_child(dummy_track)
-	var dummy_pos_x = dummy_track.position.x - 87.25 * $HandContainer.get_child_count() #this is currently approximating a kind of back-transition, but it's an accident
-	var dummy_pos_y = dummy_track.position.y - 120
+	var dummy_pos_x = dummy_track.position.x - 77 * $HandContainer.get_child_count()
+	var dummy_pos_y = dummy_track.position.y - 80
 
 	# grow the dummy to make room 
 	add_tween.tween_property(dummy_track, "custom_minimum_size:x", 160, draw_interval).set_delay(draw_interval/3).set_ease(Tween.EASE_IN)
@@ -103,17 +104,11 @@ func add_card_to_hand(card : CardData) -> void:
 		count_action(true)
 		# enable actions now that this action is complete
 		can_act = true
-	
-	# enter hand mode	
-	SignalBus.emit_signal("enter_hand_mode")
 
 func remove_card_from_hand(track : CardTrack) -> void:
 	# disable actions until this action is complete
 	can_act = false
 	
-	#TODO: make it take an endpoint so that when you use it card it moves to the clicked tile
-	SignalBus.emit_signal("enter_hand_mode")
-	#this method is called by either placing or recyling a card. We can change it to return a Card if we want to store those
 	var tween = get_tree().create_tween()
 	
 	var discard_position = $DiscardParent/Recycle.position #this is a Vector2
@@ -190,11 +185,11 @@ func _on_deck_pressed() -> void:
 	# check whether hand size limit is reached
 	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
 		# if hand is small enough, add a new card to the hand
-		add_card_to_hand(get_random_card_data())
+		add_card_to_hand(get_random_card_data(), $DeckParent.global_position)
 	else:
 		$MaxHandWarning.show()
 
-func _on_card_track_selection_changed(track) -> void:
+func _on_card_track_selection_changed(track: CardTrack) -> void:
 	if actions_remaining == 0:
 		# if the player has no actions remaining, do not emit any signals
 		return
@@ -205,7 +200,7 @@ func _on_card_track_selection_changed(track) -> void:
 		SignalBus.emit_signal("enter_place_mode",track.get_card_data().coords,0)
 	else:
 		# this should never occur, because we should never have a card selected outside of hand mode that we could deselect
-		SignalBus.emit_signal("enter_hand_mode")
+		SignalBus.emit_signal("enter_hand_mode", track)
 		
 	for card_track in $HandContainer.get_children():
 		if card_track != track && card_track.is_selected:

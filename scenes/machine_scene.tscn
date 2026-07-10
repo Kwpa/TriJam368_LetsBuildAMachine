@@ -35,3 +35,11 @@ script = ExtResource("8_c23yc")
 
 [node name="plant_manager" parent="." unique_id=1127051258 instance=ExtResource("8_sbcyb")]
 position = Vector2(320, 576)
+
+[node name="RemovedCardParent" type="Control" parent="." unique_id=583530088]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 317.0
+offset_top = 642.0
+offset_right = 357.0
+offset_bottom = 682.0

@@ -257,6 +257,7 @@ position = Vector2(0, 760)
 
 [connection signal="pressed" from="ui/turn_button" to="ui/turn_button" method="end_turn"]
 [connection signal="pressed" from="ui/summary_layout/rules_button" to="ui/rules" method="on_open"]
+[connection signal="remove_card" from="machine_scene/tile_map" to="card_scene" method="add_card_to_hand"]
 
 [editable path="ui/vitals/light_tracker"]
 [editable path="ui/vitals/water_tracker"]
