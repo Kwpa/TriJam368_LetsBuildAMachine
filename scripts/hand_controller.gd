@@ -17,7 +17,6 @@ func _ready() -> void:
 	deal_opening_hand()
 	SignalBus.connect("use_card",use_selected_card)
 	SignalBus.connect("end_turn", end_turn)
-	SignalBus.connect("non_hand_action", count_action)
 
 func deal_opening_hand() -> void:
 	initializing = true
@@ -108,6 +107,9 @@ func add_card_to_hand(card : CardData, pos: Vector2, spend: bool) -> void:
 		count_action(spend)
 		# enable actions now that this action is complete
 		can_act = true
+
+	# enter hand mode
+	SignalBus.emit_signal("enter_hand_mode")
 
 func remove_card_from_hand(track : CardTrack) -> void:
 	# disable actions until this action is complete
