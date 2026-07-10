@@ -37,7 +37,8 @@ enum card_id {
 	dispensed_all = 21,
 	sprinkler_light = 22,
 	sprinkler_nutrients = 23,
-	sprinkler_water = 24
+	sprinkler_water = 24,
+	trellis_empty = 25
 
 }
 
@@ -171,6 +172,10 @@ var tile_card_mapping = {
 		"atlas_coords": Vector2i(2,2),
 		"source_id": 5
 	},
+	card_id.trellis_empty: {
+		"atlas_coords": Vector2i(0,0),
+		"source_id": 7
+	},
 	card_id.not_card: {
 		"atlas_coords": null,
 		"source_id": null
@@ -193,6 +198,12 @@ var level_definitions = [
 				## plant 1
 				"tilemap_coords": Vector2i(2,4),
 				"tile": card_id.plant,
+				"rotation": rotation.zero_rot 
+			},
+			{
+				## trellis empty
+				"tilemap_coords": Vector2i(2,3),
+				"tile": card_id.trellis_empty,
 				"rotation": rotation.zero_rot 
 			}
 		]
@@ -227,7 +238,6 @@ var level_definitions = [
 			{
 				## dispenser 1
 				"tilemap_coords": Vector2i(2,2),
-				"atlas_coords": Vector2i(2,1),
 				"tile": card_id.sprinkler,
 				"rotation": rotation.zero_rot
 			}

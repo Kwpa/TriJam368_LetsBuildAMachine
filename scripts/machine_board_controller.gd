@@ -30,6 +30,7 @@ func load_level(level_def : LevelData):
 	clear()
 	var plant_count: int = 0
 	for tile in level_def.tiles:
+		print([tile.tilemap_coords, Constants.tile_card_mapping[tile.tile].source_id, Constants.tile_card_mapping[tile.tile].atlas_coords, tile.rotation])
 		set_cell(tile.tilemap_coords, Constants.tile_card_mapping[tile.tile].source_id, Constants.tile_card_mapping[tile.tile].atlas_coords, tile.rotation)
 		if tile.tile == Constants.card_id.plant:
 			plant_location = tile.tilemap_coords
@@ -103,7 +104,7 @@ func enter_hand_mode():
 
 
 func removal_check(card_id : int) -> bool:
-	if card_id == Constants.card_id.plant or card_id == Constants.card_id.generator:
+	if card_id == Constants.card_id.plant or card_id == Constants.card_id.generator or card_id == Constants.card_id.trellis_empty:
 		return false
 	else:
 		return true 

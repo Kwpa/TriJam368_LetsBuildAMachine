@@ -48,6 +48,8 @@ func check_if_tile_is_rotatable() -> bool:
 				return false
 			11:
 				return false
+			25:
+				return false
 		
 		# otherwise
 		return true
@@ -65,6 +67,8 @@ func check_if_tile_is_removeable() -> bool:
 			10:
 				return false	
 			11:
+				return false
+			25:
 				return false
 		
 		# otherwise
