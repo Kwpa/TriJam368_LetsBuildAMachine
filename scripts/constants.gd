@@ -185,7 +185,7 @@ var level_definitions = [
 		[
 			{
 				## generator 1 
-				"tilemap_coords": Vector2i(0,2),
+				"tilemap_coords": Vector2i(0,1),
 				"tile": card_id.generator,
 				"rotation": rotation.zero_rot 
 			},
