@@ -4,6 +4,11 @@ var HAND_SIZE_LIMIT = 6
 var OPENING_HAND_SIZE = 4
 var TURN_ACTION_COUNT = 2
 
+var CARD_WEIGHT_MULTIPLIER = 3
+var CARD_WEIGHT_DECREASE = 0.5
+var CARD_MAX_WEIGHT = 3
+var CARD_MIN_WEIGHT = 0.25
+
 # We are not using the two-tile objects.
 # The enum all_cards contains possible cards and the generator.
 # When the tile played by the card uses a different sprite depending on its input,
@@ -27,19 +32,18 @@ enum card_id {
 	plant = 11,
 	water_elbow = 12,
 	compost_elbow = 13,
-	not_card = 20,
 	dispensed_light = 14,
 	dispensed_nutrients = 15,
 	dispensed_water = 16,
 	dispensed_nutrients_light = 17,
 	dispensed_water_light = 18,
 	dispensed_water_nutrients = 19,
+	not_card = 20,
 	dispensed_all = 21,
 	sprinkler_light = 22,
 	sprinkler_nutrients = 23,
 	sprinkler_water = 24,
 	trellis_empty = 25
-
 }
 
 var card_weights = [
