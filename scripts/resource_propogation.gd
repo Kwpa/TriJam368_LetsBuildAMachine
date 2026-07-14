@@ -176,17 +176,30 @@ func find_generators():
 			
 			#try to update this to use the CardData.resource property
 			match card_id:
-				10:
-					electricity_generators.append(tile)
+				# water
+				5:
+					water_generators.append(tile)
 				6:
 					water_generators.append(tile)
+				12:
+					water_generators.append(tile)
+				# nutrients
 				7:
 					nutrient_generators.append(tile)
 				8:
 					nutrient_generators.append(tile)
+				13:
+					nutrient_generators.append(tile)
+				10:
+					electricity_generators.append(tile)
+					
 				Constants.card_id.plant:
 					if (!plants.has(tile)):
 						plants.append(tile)
+			
+			print("water: %s" % str(water_generators))
+			print("nutrients: %s" % str(nutrient_generators))
+			print_debug("electricity: %s" % str(electricity_generators))
 
 
 func find_dispensers():

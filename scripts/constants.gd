@@ -309,7 +309,7 @@ var all_cards : Dictionary = {
 	card_id.compost_tee: CardData.new(
 		"Compost (Tee)",
 		"When attached to electricity, generates nutrients.",
-		Vector2i(1, 5),
+		Vector2i(0, 5),
 		Constants.resource.nutrients
 	),
 	card_id.lamp: CardData.new(

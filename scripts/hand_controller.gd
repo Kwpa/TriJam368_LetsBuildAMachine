@@ -44,13 +44,10 @@ func deal_opening_hand() -> void:
 
 func count_action(spend: bool):
 	# count the action
-	print_debug("count_action")
 	if spend:
 		actions_remaining -= 1
-		print_debug("spend is true. there are %s actions left" % actions_remaining)
 	else:
 		actions_remaining += 1
-		print_debug("spend is false. there are %s actions left" % actions_remaining)
 	#print_debug("there are %s actions left" % actions_remaining)
 	
 	# send a signal to update the ui
@@ -198,8 +195,12 @@ func _on_deck_pressed() -> void:
 		$MaxHandWarning.show()
 
 func _on_card_track_selection_changed(track: CardTrack) -> void:
+	for card_track in $HandContainer.get_children():
+		if card_track != track && card_track.is_selected:
+			card_track.toggle_selection()
+			#print_debug("%s's selected is %s" % [card_track.get_child(0).custom_to_string(), str(card_track.is_selected)])
+	
 	if actions_remaining == 0:
-		# if the player has no actions remaining, do not emit any signals
 		return
 	elif track.is_selected:
 		# if the selection changed to 'true'
@@ -210,11 +211,7 @@ func _on_card_track_selection_changed(track: CardTrack) -> void:
 		# this should never occur, because we should never have a card selected outside of hand mode that we could deselect
 		SignalBus.emit_signal("enter_hand_mode", track)
 		
-	for card_track in $HandContainer.get_children():
-		if card_track != track && card_track.is_selected:
-			card_track.toggle_selection()
-			print_debug("%s's selected is %s" % [card_track.get_child(0).custom_to_string(), str(card_track.is_selected)])
-
+	
 func recycle_selected_card() -> void:
 	# disable this function if something else is already happening
 	if can_act == false:
