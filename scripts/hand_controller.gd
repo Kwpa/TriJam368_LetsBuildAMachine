@@ -27,13 +27,13 @@ func deal_opening_hand() -> void:
 	
 	# let the player begin with a hand of cards containing at least one generator of each kind
 	for res in [Constants.resource.water, Constants.resource.nutrients]: 
-		add_card_to_hand(get_random_by_resource(res), deck_pos, false)
+		add_card_to_hand(get_random_by_resource(res), deck_pos, 0)
 		await get_tree().create_timer(1).timeout
 	
 	# also give them a lamp and a sprinkler for easy testing
-	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp), deck_pos, false)
+	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp), deck_pos, 0)
 	await get_tree().create_timer(1).timeout
-	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler), deck_pos, false)
+	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler), deck_pos, 0)
 	await get_tree().create_timer(1).timeout
 	
 	# allow the player to take actions once the cards are all dealt
@@ -53,7 +53,7 @@ func count_action(increment: int):
 	# send a signal to update the ui
 	SignalBus.count_action.emit(actions_remaining)
 
-func add_card_to_hand(card : CardData, pos: Vector2, action_cost: int) -> void:
+func add_card_to_hand(card : CardData, pos: Vector2, action_increment: int) -> void:
 
 	print_debug("adding card to hand %s" % card.title)
 	# disable actions until this action is complete
@@ -96,7 +96,7 @@ func add_card_to_hand(card : CardData, pos: Vector2, action_cost: int) -> void:
 	
 	# count the action if we're not drawing the initial hand
 	if initializing == false:
-		count_action(action_cost)
+		count_action(action_increment)
 		# enable actions now that this action is complete
 		can_act = true
 
