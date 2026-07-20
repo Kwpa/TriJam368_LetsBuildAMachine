@@ -42,11 +42,11 @@ func deal_opening_hand() -> void:
 	initializing = false
 	return
 
-func count_action(cost: int):
+func count_action(increment: int):
 	# count the action. 
-	# when 'cost' is +, player loses an action
-	# when cost is -, player gains an action
-	actions_remaining -= cost
+	# when increment is +, player gains an action
+	# when increment is -, player loses an action
+	actions_remaining += increment
 	print_debug("there are %s actions left" % actions_remaining)
 	
 	# send a signal to update the ui
@@ -57,7 +57,7 @@ func count_action(cost: int):
 	#if actions_remaining == 0:
 		#$ActionWarning.show()
 
-func add_card_to_hand(card : CardData, pos: Vector2, action_cost: int) -> void:
+func add_card_to_hand(card : CardData, pos: Vector2, action_increment: int) -> void:
 
 	print_debug("adding card to hand %s" % card.title)
 	# disable actions until this action is complete
@@ -100,7 +100,7 @@ func add_card_to_hand(card : CardData, pos: Vector2, action_cost: int) -> void:
 	
 	# count the action if we're not drawing the initial hand
 	if initializing == false:
-		count_action(action_cost)
+		count_action(action_increment)
 		# enable actions now that this action is complete
 		can_act = true
 
@@ -189,7 +189,7 @@ func _on_deck_pressed() -> void:
 	# check whether hand size limit is reached
 	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
 		# if hand is small enough, add a new card to the hand
-		add_card_to_hand(get_random_card_data(), $DeckParent.global_position, 1)
+		add_card_to_hand(get_random_card_data(), $DeckParent.global_position, -1)
 	else:
 		$MaxHandWarning.show()
 
@@ -237,7 +237,7 @@ func use_selected_card() -> void:
 			remove_card_from_hand(track)
 			
 			# count the action
-			count_action(true)
+			count_action(-1)
 	return
 
 func end_turn():
