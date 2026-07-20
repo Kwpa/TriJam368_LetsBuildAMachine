@@ -100,5 +100,5 @@ text = "Draw
 a card"
 
 [connection signal="pressed" from="DiscardHand" to="." method="recycle_hand"]
-[connection signal="pressed" from="DiscardParent/Recycle" to="." method="recycle_selected_card" binds= [false]]
+[connection signal="pressed" from="DiscardParent/Recycle" to="." method="recycle_selected_card"]
 [connection signal="pressed" from="DeckParent/Deck" to="." method="_on_deck_pressed"]

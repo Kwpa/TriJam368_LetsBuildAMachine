@@ -42,23 +42,18 @@ func deal_opening_hand() -> void:
 	initializing = false
 	return
 
-func count_action(spend: bool):
+func count_action(increment: int):
+	
 	# count the action
-	if spend:
-		actions_remaining -= 1
-	else:
-		actions_remaining += 1
-	#print_debug("there are %s actions left" % actions_remaining)
+	# when increment is +, the player gains an action
+	# when increment is -, the player loses an action
+	actions_remaining += increment
+	print_debug("there are %s actions left" % actions_remaining)
 	
 	# send a signal to update the ui
 	SignalBus.count_action.emit(actions_remaining)
-	
-	# show the warning dialogue if actions are all spent
-	# in initial testing i found this obnoxious
-	#if actions_remaining == 0:
-		#$ActionWarning.show()
 
-func add_card_to_hand(card : CardData, pos: Vector2, spend: bool) -> void:
+func add_card_to_hand(card : CardData, pos: Vector2, action_cost: int) -> void:
 
 	print_debug("adding card to hand %s" % card.title)
 	# disable actions until this action is complete
@@ -101,7 +96,7 @@ func add_card_to_hand(card : CardData, pos: Vector2, spend: bool) -> void:
 	
 	# count the action if we're not drawing the initial hand
 	if initializing == false:
-		count_action(spend)
+		count_action(action_cost)
 		# enable actions now that this action is complete
 		can_act = true
 
@@ -190,7 +185,7 @@ func _on_deck_pressed() -> void:
 	# check whether hand size limit is reached
 	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
 		# if hand is small enough, add a new card to the hand
-		add_card_to_hand(get_random_card_data(), $DeckParent.global_position, true)
+		add_card_to_hand(get_random_card_data(), $DeckParent.global_position, -1)
 	else:
 		$MaxHandWarning.show()
 
@@ -212,7 +207,7 @@ func _on_card_track_selection_changed(track: CardTrack) -> void:
 		SignalBus.emit_signal("enter_hand_mode", track)
 		
 	
-func recycle_selected_card(spend: bool) -> void:
+func recycle_selected_card() -> void:
 	# disable this function if something else is already happening
 	if can_act == false:
 		return
@@ -221,15 +216,13 @@ func recycle_selected_card(spend: bool) -> void:
 		if track.is_selected:
 			remove_card_from_hand(track)
 			
-			# count the action appropriately
-			# to be action-neutral, remove this line
-			count_action(spend)
 	return
 
 func recycle_hand() -> void:
 	# recycles the entire hand for free
 	for track in $HandContainer.get_children():
 		remove_card_from_hand(track)
+	count_action(1)
 	return
 
 func use_selected_card() -> void:
@@ -247,7 +240,7 @@ func use_selected_card() -> void:
 			remove_card_from_hand(track)
 			
 			# count the action
-			count_action(true)
+			count_action(-1)
 	return
 
 func end_turn():
