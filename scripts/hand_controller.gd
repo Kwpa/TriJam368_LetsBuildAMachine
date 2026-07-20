@@ -108,7 +108,7 @@ func add_card_to_hand(card : CardData, pos: Vector2, spend: bool) -> void:
 	# enter hand mode
 	SignalBus.emit_signal("enter_hand_mode")
 
-func remove_card_from_hand(track : CardTrack) -> void:
+func remove_card_from_hand(track: CardTrack) -> void:
 	# disable actions until this action is complete
 	can_act = false
 	
@@ -143,7 +143,7 @@ func remove_card_from_hand(track : CardTrack) -> void:
 	# enable actions now that this action is complete
 	can_act = true
 
-func get_random_by_resource(type : int) -> CardData:
+func get_random_by_resource(type: int) -> CardData:
 	# returns a random card that generates the specified resource
 	# create an array of card_ids whose cards generate that resource
 	var card_ids = []
@@ -212,7 +212,7 @@ func _on_card_track_selection_changed(track: CardTrack) -> void:
 		SignalBus.emit_signal("enter_hand_mode", track)
 		
 	
-func recycle_selected_card() -> void:
+func recycle_selected_card(spend: bool) -> void:
 	# disable this function if something else is already happening
 	if can_act == false:
 		return
@@ -221,8 +221,15 @@ func recycle_selected_card() -> void:
 		if track.is_selected:
 			remove_card_from_hand(track)
 			
-			# if we want discarding to return an action to the player, uncomment below
-			#count_action(false)
+			# count the action appropriately
+			# to be action-neutral, remove this line
+			count_action(spend)
+	return
+
+func recycle_hand() -> void:
+	# recycles the entire hand for free
+	for track in $HandContainer.get_children():
+		remove_card_from_hand(track)
 	return
 
 func use_selected_card() -> void:
