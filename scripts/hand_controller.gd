@@ -221,8 +221,8 @@ func recycle_selected_card() -> void:
 		if track.is_selected:
 			remove_card_from_hand(track)
 			
-			# count the action (false to add an action)
-			count_action(false)
+			# if we want discarding to return an action to the player, uncomment below
+			#count_action(false)
 	return
 
 func use_selected_card() -> void:
