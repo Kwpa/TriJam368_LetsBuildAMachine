@@ -27,13 +27,13 @@ func deal_opening_hand() -> void:
 	
 	# let the player begin with a hand of cards containing at least one generator of each kind
 	for res in [Constants.resource.water, Constants.resource.nutrients]: 
-		add_card_to_hand(get_random_by_resource(res), deck_pos, false)
+		add_card_to_hand(get_random_by_resource(res), deck_pos, 0)
 		await get_tree().create_timer(1).timeout
 	
 	# also give them a lamp and a sprinkler for easy testing
-	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp), deck_pos, false)
+	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp), deck_pos, 0)
 	await get_tree().create_timer(1).timeout
-	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler), deck_pos, false)
+	add_card_to_hand(Constants.all_cards.get(Constants.card_id.sprinkler), deck_pos, 0)
 	await get_tree().create_timer(1).timeout
 	
 	# allow the player to take actions once the cards are all dealt
@@ -42,13 +42,12 @@ func deal_opening_hand() -> void:
 	initializing = false
 	return
 
-func count_action(spend: bool):
-	# count the action
-	if spend:
-		actions_remaining -= 1
-	else:
-		actions_remaining += 1
-	#print_debug("there are %s actions left" % actions_remaining)
+func count_action(increment: int):
+	# count the action. 
+	# when increment is +, player gains an action
+	# when increment is -, player loses an action
+	actions_remaining += increment
+	print_debug("there are %s actions left" % actions_remaining)
 	
 	# send a signal to update the ui
 	SignalBus.count_action.emit(actions_remaining)
@@ -58,7 +57,7 @@ func count_action(spend: bool):
 	#if actions_remaining == 0:
 		#$ActionWarning.show()
 
-func add_card_to_hand(card : CardData, pos: Vector2, spend: bool) -> void:
+func add_card_to_hand(card : CardData, pos: Vector2, action_increment: int) -> void:
 
 	print_debug("adding card to hand %s" % card.title)
 	# disable actions until this action is complete
@@ -101,7 +100,7 @@ func add_card_to_hand(card : CardData, pos: Vector2, spend: bool) -> void:
 	
 	# count the action if we're not drawing the initial hand
 	if initializing == false:
-		count_action(spend)
+		count_action(action_increment)
 		# enable actions now that this action is complete
 		can_act = true
 
@@ -190,7 +189,7 @@ func _on_deck_pressed() -> void:
 	# check whether hand size limit is reached
 	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
 		# if hand is small enough, add a new card to the hand
-		add_card_to_hand(get_random_card_data(), $DeckParent.global_position, true)
+		add_card_to_hand(get_random_card_data(), $DeckParent.global_position, -1)
 	else:
 		$MaxHandWarning.show()
 
@@ -220,9 +219,7 @@ func recycle_selected_card() -> void:
 	for track in $HandContainer.get_children():
 		if track.is_selected:
 			remove_card_from_hand(track)
-			
-			# count the action (false to add an action)
-			count_action(false)
+
 	return
 
 func use_selected_card() -> void:
@@ -240,7 +237,7 @@ func use_selected_card() -> void:
 			remove_card_from_hand(track)
 			
 			# count the action
-			count_action(true)
+			count_action(-1)
 	return
 
 func end_turn():
@@ -252,3 +249,7 @@ func end_turn():
 	# set actions to default count for one turn
 	actions_remaining = Constants.TURN_ACTION_COUNT
 	SignalBus.count_action.emit(actions_remaining)
+	
+	# draw one card for free
+	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
+		add_card_to_hand(get_random_card_data(), $DeckParent.global_position, 0)
