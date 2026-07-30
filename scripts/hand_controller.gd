@@ -43,10 +43,9 @@ func deal_opening_hand() -> void:
 	return
 
 func count_action(increment: int):
-	
-	# count the action
-	# when increment is +, the player gains an action
-	# when increment is -, the player loses an action
+	# count the action. 
+	# when increment is +, player gains an action
+	# when increment is -, player loses an action
 	actions_remaining += increment
 	print_debug("there are %s actions left" % actions_remaining)
 	
@@ -215,7 +214,6 @@ func recycle_selected_card() -> void:
 	for track in $HandContainer.get_children():
 		if track.is_selected:
 			remove_card_from_hand(track)
-			
 	return
 
 func recycle_hand() -> void:
@@ -252,3 +250,7 @@ func end_turn():
 	# set actions to default count for one turn
 	actions_remaining = Constants.TURN_ACTION_COUNT
 	SignalBus.count_action.emit(actions_remaining)
+	
+	# draw one card for free
+	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
+		add_card_to_hand(get_random_card_data(), $DeckParent.global_position, 0)

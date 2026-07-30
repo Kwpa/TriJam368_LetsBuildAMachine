@@ -58,25 +58,27 @@ To grow and thrive, a plant needs enough of three resources:
 [ul]
 Light, from a lamp
 Water, from a water reservoir connected to the plant or sprinkled from a sprinkler
-Nutrients, from a compost bin connected to the plant
+Nutrients, from a compost bin connected to the plant or sprinkled from a sprinkler
 [/ul]
 
 Lamps, water reservoirs and compost bins must all be attached to the generator in order to produce their resource.
 
 You have two actions in each round. Any of these choices will spend an action:
 [ul]
-Draw a card into your hand
-Place a tile in the grid
+Click on the deck to draw a card into your hand
+Click on a card, then on the grid to place a tile in your machine
 [/ul]
 
 You can also do any of these things without spending an action:
 [ul]
-Discard a card from your hand
-Rotate a tile that has already been placed
-Discard a tile that has already been placed
+Click on Recycle a Card to discard a card from your hand
+Click Rotate Mode then on a tile in the machien to rotate a tile that has already been placed
+Click on Remove Mode then on a tile to move a tile from the machine into your hand
 [/ul]
 
-Every round, your plant will grow or wilt, depending on whether it has enough resources. If any resource is below the plant’s tolerance for three turns, your plant will die. Once all three resources are above the plant’s threshold for three turns, your plant will grow!
+Every turn, you'll get a card for free, but only if you have room in your hand. Try to discard down to six cards by the end of your turn to make sure you get your free card!
+
+Every turn, your plant will grow or wilt, depending on whether it has enough resources. If any resource is below the plant’s tolerance for three turns, your plant will die. Once all three resources are above the plant’s threshold for three turns, your plant will grow!
 
 A growing plant needs more resources. Keep meeting the new thresholds to grow your plant as big as it can be!"
 
