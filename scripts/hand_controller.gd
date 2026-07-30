@@ -51,11 +51,6 @@ func count_action(increment: int):
 	
 	# send a signal to update the ui
 	SignalBus.count_action.emit(actions_remaining)
-	
-	# show the warning dialogue if actions are all spent
-	# in initial testing i found this obnoxious
-	#if actions_remaining == 0:
-		#$ActionWarning.show()
 
 func add_card_to_hand(card : CardData, pos: Vector2, action_increment: int) -> void:
 
@@ -107,7 +102,7 @@ func add_card_to_hand(card : CardData, pos: Vector2, action_increment: int) -> v
 	# enter hand mode
 	SignalBus.emit_signal("enter_hand_mode")
 
-func remove_card_from_hand(track : CardTrack) -> void:
+func remove_card_from_hand(track: CardTrack) -> void:
 	# disable actions until this action is complete
 	can_act = false
 	
@@ -142,7 +137,7 @@ func remove_card_from_hand(track : CardTrack) -> void:
 	# enable actions now that this action is complete
 	can_act = true
 
-func get_random_by_resource(type : int) -> CardData:
+func get_random_by_resource(type: int) -> CardData:
 	# returns a random card that generates the specified resource
 	# create an array of card_ids whose cards generate that resource
 	var card_ids = []
@@ -219,7 +214,13 @@ func recycle_selected_card() -> void:
 	for track in $HandContainer.get_children():
 		if track.is_selected:
 			remove_card_from_hand(track)
+	return
 
+func recycle_hand() -> void:
+	# recycles the entire hand for free
+	for track in $HandContainer.get_children():
+		remove_card_from_hand(track)
+	count_action(1)
 	return
 
 func use_selected_card() -> void:

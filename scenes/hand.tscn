@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bs6wntxi4j18q" path="res://scripts/hand_controller.gd" id="1_cmdsa"]
 [ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="2_cmdsa"]
 [ext_resource type="StyleBox" uid="uid://wiwiufph22td" path="res://theme/style_box_action.tres" id="3_k7pjy"]
+[ext_resource type="StyleBox" uid="uid://djh07ax5vyjb1" path="res://theme/style_box_alert.tres" id="3_m1v21"]
 
 [node name="hand" type="Node2D" unique_id=730185003]
 script = ExtResource("1_cmdsa")
@@ -43,6 +44,16 @@ keep_title_visible = false
 theme = ExtResource("2_cmdsa")
 dialog_text = "You are out of actions for this turn.
 Press the End Turn button to progress to the next turn."
+
+[node name="DiscardHand" type="Button" parent="." unique_id=1850641613]
+offset_left = 1661.0001
+offset_right = 1821.0001
+offset_bottom = 150.0
+scale = Vector2(0.66, 0.66)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = ExtResource("3_m1v21")
+text = "Recycle entire hand"
+autowrap_mode = 2
 
 [node name="DiscardParent" type="Control" parent="." unique_id=896565905]
 layout_mode = 3
@@ -88,5 +99,6 @@ theme_override_styles/normal = ExtResource("3_k7pjy")
 text = "Draw
 a card"
 
+[connection signal="pressed" from="DiscardHand" to="." method="recycle_hand"]
 [connection signal="pressed" from="DiscardParent/Recycle" to="." method="recycle_selected_card"]
 [connection signal="pressed" from="DeckParent/Deck" to="." method="_on_deck_pressed"]
