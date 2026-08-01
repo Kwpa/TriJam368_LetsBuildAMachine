@@ -87,7 +87,7 @@ func exit_hand_mode():
 func end_game(win: bool):
 	if win:
 		$ui/win_screen.visible = true
-		$ui/win_screen/background/layout/close_button.pressed.connect(initialize, 1)
+		$ui/win_screen/background/layout/close_button.pressed.connect(initialize, 0)
 	else:
 		$ui/lose_screen.visible = true
-		$ui/lose_screen/background/layout/close_button.pressed.connect(initialize, 1)
+		$ui/lose_screen/background/layout/close_button.pressed.connect(initialize, 0)

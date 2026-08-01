@@ -170,6 +170,8 @@ func end_turn():
 	
 	update_plant_status()
 	
+	print("plant status " + str(plant_statisfied_round_count))
+	
 	if plant_statisfied_round_count == 3:
 		if current_plant_size < final_plant_size:
 			grow_plant()
