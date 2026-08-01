@@ -197,9 +197,9 @@ func find_generators():
 					if (!plants.has(tile)):
 						plants.append(tile)
 			
-			print("water: %s" % str(water_generators))
-			print("nutrients: %s" % str(nutrient_generators))
-			print_debug("electricity: %s" % str(electricity_generators))
+			#print("water: %s" % str(water_generators))
+			#print("nutrients: %s" % str(nutrient_generators))
+			#print_debug("electricity: %s" % str(electricity_generators))
 
 
 func find_dispensers():

@@ -4,6 +4,8 @@
 [ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="2_cmdsa"]
 [ext_resource type="StyleBox" uid="uid://wiwiufph22td" path="res://theme/style_box_action.tres" id="3_k7pjy"]
 [ext_resource type="StyleBox" uid="uid://djh07ax5vyjb1" path="res://theme/style_box_alert.tres" id="3_m1v21"]
+[ext_resource type="StyleBox" uid="uid://cyi2qnvk2qqku" path="res://theme/style_box_warning.tres" id="4_n04oe"]
+[ext_resource type="StyleBox" uid="uid://bwujfpgoh3w8e" path="res://theme/style_box_warning_active.tres" id="5_yinqy"]
 
 [node name="hand" type="Node2D" unique_id=730185003]
 script = ExtResource("1_cmdsa")
@@ -46,6 +48,7 @@ dialog_text = "You are out of actions for this turn.
 Press the End Turn button to progress to the next turn."
 
 [node name="DiscardHand" type="Button" parent="." unique_id=1850641613]
+visible = false
 offset_left = 1661.0001
 offset_right = 1821.0001
 offset_bottom = 150.0
@@ -63,9 +66,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 1659.0
-offset_top = 110.0
+offset_top = 100.0
 offset_right = 1659.0
-offset_bottom = 110.0
+offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -74,9 +77,30 @@ layout_mode = 0
 offset_right = 160.0
 offset_bottom = 300.0
 scale = Vector2(0.66, 0.66)
+theme = ExtResource("2_cmdsa")
 theme_override_font_sizes/font_size = 28
 text = "Recycle
 a card"
+
+[node name="DiscardHand" type="Button" parent="DiscardParent" unique_id=1854387410]
+layout_mode = 0
+offset_left = 130.99998
+offset_right = 291.0
+offset_bottom = 300.0
+scale = Vector2(0.66, 0.66)
+theme_override_colors/font_color = Color(0.97, 0.3783, 0.46705475, 1)
+theme_override_colors/font_focus_color = Color(0.9843137, 0.52156866, 0.57254905, 1)
+theme_override_colors/font_pressed_color = Color(0.9843137, 0.52156866, 0.57254905, 1)
+theme_override_colors/font_hover_color = Color(0.9843137, 0.52156866, 0.57254905, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.9843137, 0.52156866, 0.57254905, 1)
+theme_override_colors/font_disabled_color = Color(0.3882353, 0, 0.1254902, 1)
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = ExtResource("4_n04oe")
+theme_override_styles/pressed = ExtResource("5_yinqy")
+theme_override_styles/hover = ExtResource("5_yinqy")
+theme_override_styles/focus = ExtResource("5_yinqy")
+text = "Recycle
+entire hand"
 
 [node name="DeckParent" type="Control" parent="." unique_id=1932289334]
 layout_mode = 3
@@ -84,9 +108,9 @@ anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 32.0
-offset_top = 97.0
+offset_top = 100.0
 offset_right = 32.0
-offset_bottom = 97.0
+offset_bottom = 100.0
 grow_vertical = 2
 
 [node name="Deck" type="Button" parent="DeckParent" unique_id=280409354]
@@ -101,4 +125,5 @@ a card"
 
 [connection signal="pressed" from="DiscardHand" to="." method="recycle_hand"]
 [connection signal="pressed" from="DiscardParent/Recycle" to="." method="recycle_selected_card"]
+[connection signal="pressed" from="DiscardParent/DiscardHand" to="." method="recycle_hand"]
 [connection signal="pressed" from="DeckParent/Deck" to="." method="_on_deck_pressed"]
