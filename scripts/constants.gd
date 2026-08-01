@@ -284,7 +284,7 @@ var all_cards : Dictionary = {
 	),
 	card_id.sprinkler: CardData.new(
 		"Sprinkler",
-		"When attached to water, distributes it in a cone.",
+		"When attached to water or nutrients, distributes it in a cone.",
 		Vector2i(2, 1),
 		Constants.resource.none,
 		{

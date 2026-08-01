@@ -251,6 +251,8 @@ func recycle_selected_card() -> void:
 	return
 
 func recycle_hand() -> void:
+	if $HandContainer.get_children().size() == 0:
+		return
 	# recycles the entire hand for free
 	for track in $HandContainer.get_children():
 		remove_card_from_hand(track)
