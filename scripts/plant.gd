@@ -162,7 +162,6 @@ func end_turn():
 	if nutrients_vital.check_if_level_is_optimal() == true:
 		vitals_optimal_count += 1
 	
-	print(vitals_optimal_count)
 	if vitals_optimal_count == 3:
 		increase_satisfied_count()
 	else:
@@ -178,9 +177,11 @@ func end_turn():
 
 
 func grow_plant():
+	print("growing plant")
 	current_plant_size += 1
 	## send signal to add new tile / change tile images
 	SignalBus.grow_plant.emit(plant_id)
+	reset_satisfied_count()
 	
 	if current_plant_size == final_plant_size:
 		## plant grown success!

@@ -52,7 +52,7 @@ var card_weights = [
 	.75, # elbow probability
 	.5, # cross probability
 	.75, # tee  probability
-	.5, # sprinkler probability
+	.75, # sprinkler probability
 	.25, # water_straight probability
 	.25, # water_tee probability
 	.25, # compost_straight probability
