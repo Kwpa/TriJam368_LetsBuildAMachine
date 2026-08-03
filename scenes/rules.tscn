@@ -54,7 +54,7 @@ theme = ExtResource("1_3spy8")
 bbcode_enabled = true
 text = "Build a machine to grow your plant!
 
-You have a hand of cards with useful machine parts. Place them on the grid to build a machine that supports your plant. To grow and thrive, a plant needs enough of three resources: light, water and nutrients. 
+You have a hand of cards with useful machine parts. Place them on the grid to build a machine that supports your plant. To grow and thrive, a plant needs enough of three resources: [img=5%]res://textures/icon_light.png[/img]light, [img=5%]res://textures/icon_water.png[/img]water and [img=5%]res://textures/icon_nutrients.png[/img]nutrients. 
 
 [img=8%]res://textures/icon_lamp.png[/img] The lamp provides light.
 [img=8%]res://textures/icon_reservoir.png[/img] The reservoir generates water. 
@@ -62,9 +62,13 @@ You have a hand of cards with useful machine parts. Place them on the grid to bu
 
 Water and nutrients can be connected directly to the plant, or sprinkled from a sprinkler. [img=8%]res://textures/icon_sprinkler.png[/img]
 
-[img=8%]res://textures/icon_generator.png[/img] The electricity generator provides electricity to other tiles when it is connected with a pipe. The lamp, the reservoir and the compost bin all need electricity to produce their resource.
+[img=8%]res://textures/icon_generator.png[/img] The electricity generator provides [img=5%]res://textures/icon_electricity.png[/img]electricity to other tiles when it is connected with a pipe. The lamp, the reservoir and the compost bin all need electricity to produce their resource.
 
-Every turn, your plant will grow or wilt, depending on whether it has enough resources. If any resource is below the plant’s tolerance for three turns, your plant will die. Once all three resources are above the plant’s threshold for three turns, your plant will grow! 
+Every turn, your plant will grow or wilt, depending on whether it has enough resources. 
+If your plant has enough resources, it will progress towards growing! For the plant to thrive, all resources have to be above the green threshold for three turns. A thriving plant will grow to take up two tiles. 
+Once the plant is two tiles large, it will need more resources. Be sure to get light on both of its tiles! Water and nutrient needs can be fulfilled either by sprinkling on both tiles, or by sprinkling on either tile and being piped into the pot.
+One sprinkler can dispnse both water and nutrients, but be careful; 
+If any resource is below the plant’s tolerance for three turns, your plant will die.
 
 You have two actions in each round. Any of these choices will spend an action:
 [ul]
@@ -79,7 +83,6 @@ Click Rotate Mode then click on a tile in the machine to rotate a tile that has 
 Click on Remove Mode then on a tile to move a tile from the machine into your hand
 [/ul]
 
-You can also recycle your entire hand to gain an action.
 
 Every turn, you'll get a card for free, but only if you have room in your hand. Try to discard down to six cards by the end of your turn to make sure you get your free card!
 
