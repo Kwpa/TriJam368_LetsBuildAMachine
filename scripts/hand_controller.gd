@@ -18,11 +18,7 @@ func _ready() -> void:
 	$HandContainer.size.x = 160 * Constants.HAND_SIZE_LIMIT
 	SignalBus.connect("use_card",use_selected_card)
 	SignalBus.connect("end_turn", end_turn)
-	SignalBus.connect("restart_level", start_level)
 
-func start_level(_level: int) -> void:
-	recycle_hand()
-	deal_opening_hand()
 
 func deal_opening_hand() -> void:
 	initializing = true
