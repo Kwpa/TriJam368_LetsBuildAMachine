@@ -187,7 +187,6 @@ var tile_card_mapping = {
 }
 
 var select_level := 0
-
 var level_definitions = [
 	LevelData.new(
 		0,
@@ -217,9 +216,32 @@ var level_definitions = [
 		[
 			{
 				## generator 1 
-				"tilemap_coords": Vector2i(0,1),
+				"tilemap_coords": Vector2i(2,0),
 				"tile": card_id.generator,
+				"rotation": rotation.quarter_cw 
+			},
+			{
+				## plant 1
+				"tilemap_coords": Vector2i(1,4),
+				"tile": card_id.plant,
 				"rotation": rotation.zero_rot 
+			},
+			{
+				## trellis empty
+				"tilemap_coords": Vector2i(1,3),
+				"tile": card_id.trellis_empty,
+				"rotation": rotation.zero_rot 
+			}
+		]
+	),
+	LevelData.new(
+		2,
+		[
+			{
+				## generator 1 
+				"tilemap_coords": Vector2i(2,1),
+				"tile": card_id.generator,
+				"rotation": rotation.three_quarter_cw 
 			},
 			{
 				## plant 1
@@ -228,25 +250,49 @@ var level_definitions = [
 				"rotation": rotation.zero_rot 
 			},
 			{
-				## pipe 1
-				"tilemap_coords": Vector2i(1,1),
-				"tile": card_id.cross,
-				"rotation": rotation.zero_rot
-			},
-			{
-				## water 1
-				"tilemap_coords": Vector2i(2,1),
-				"tile":card_id.water_elbow,
-				"rotation": rotation.three_quarter_cw
-			},
-			{
-				## dispenser 1
-				"tilemap_coords": Vector2i(2,2),
-				"tile": card_id.sprinkler,
-				"rotation": rotation.zero_rot
+				## trellis empty
+				"tilemap_coords": Vector2i(2,3),
+				"tile": card_id.trellis_empty,
+				"rotation": rotation.zero_rot 
 			}
 		]
-	)
+	),
+	#original level 1
+	#LevelData.new(
+		#1,
+		#[
+			#{
+				### generator 1 
+				#"tilemap_coords": Vector2i(0,1),
+				#"tile": card_id.generator,
+				#"rotation": rotation.zero_rot 
+			#},
+			#{
+				### plant 1
+				#"tilemap_coords": Vector2i(2,4),
+				#"tile": card_id.plant,
+				#"rotation": rotation.zero_rot 
+			#},
+			#{
+				### pipe 1
+				#"tilemap_coords": Vector2i(1,1),
+				#"tile": card_id.cross,
+				#"rotation": rotation.zero_rot
+			#},
+			#{
+				### water 1
+				#"tilemap_coords": Vector2i(2,1),
+				#"tile":card_id.water_elbow,
+				#"rotation": rotation.three_quarter_cw
+			#},
+			#{
+				### dispenser 1
+				#"tilemap_coords": Vector2i(2,2),
+				#"tile": card_id.sprinkler,
+				#"rotation": rotation.zero_rot
+			#}
+		#]
+	#)
 ]
 
 #CardData definition repeated for convenience
