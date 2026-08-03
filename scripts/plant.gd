@@ -96,7 +96,7 @@ func resource_input(_id: int, input_name:String, action_type: String):
 
 
 ## check the resource inputs to see if they're enough to make the plant grow 
-func check_inputs_for_growth():
+func check_inputs_for_growth() -> bool:
 	var photosyn_count = 0
 	var moisture_count = 0
 	var nutrients_count = 0
@@ -130,16 +130,16 @@ func check_inputs_for_growth():
 		nutrients_vital.value -= 1
 		warning_queue.append("The plant needs more compost.")
 	
-	#if photosyn_count >= current_plant_size && moisture_count >= current_plant_size && nutrients_count >= current_plant_size:
-		#return true
-	#else:
-		#return false
+	if photosyn_count >= current_plant_size && moisture_count >= current_plant_size && nutrients_count >= current_plant_size:
+		return true
+	else:
+		return false
 
 
 ## called by the game manager, needs a signal
 func end_turn():
 	
-	check_inputs_for_growth()
+	var inputs_met = check_inputs_for_growth()
 	
 	#if check_if_plant_is_fully_grown() == false:
 		#photosynthesis_vital.current_vital_level -= 1
@@ -171,7 +171,7 @@ func end_turn():
 	
 	print("plant status " + str(plant_statisfied_round_count))
 	
-	if plant_statisfied_round_count == 3:
+	if inputs_met && plant_statisfied_round_count == 3:
 		if current_plant_size < final_plant_size:
 			grow_plant()
 
@@ -187,6 +187,21 @@ func grow_plant():
 		## plant grown success!
 		# game win condition
 		SignalBus.end_game.emit(true)
+	else:
+		# set_plant_levels(5)
+		decrease_plant_levels(3)
+
+
+func decrease_plant_levels(amount: int):
+	photosynthesis_vital.value -= amount
+	moisture_vital.value -= amount
+	nutrients_vital.value -= amount
+
+
+func set_plant_levels(value: int):
+	photosynthesis_vital.value = value
+	moisture_vital.value = value
+	nutrients_vital.value = value
 
 
 func check_if_plant_tile_has_enough_inputs() -> bool:
