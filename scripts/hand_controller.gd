@@ -16,12 +16,13 @@ var weights : Array[float]
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$HandContainer.size.x = 160 * Constants.HAND_SIZE_LIMIT
-	deal_opening_hand()
 	SignalBus.connect("use_card",use_selected_card)
 	SignalBus.connect("end_turn", end_turn)
 
 func deal_opening_hand() -> void:
 	initializing = true
+	for child in $HandContainer.get_children():
+		child.free()
 	var deck_pos = $DeckParent.global_position
 	
 	# initialize the card weights
@@ -54,14 +55,14 @@ func count_action(increment: int):
 	# when increment is +, player gains an action
 	# when increment is -, player loses an action
 	actions_remaining += increment
-	print_debug("there are %s actions left" % actions_remaining)
+	#print_debug("there are %s actions left" % actions_remaining)
 	
 	# send a signal to update the ui
 	SignalBus.count_action.emit(actions_remaining)
 
 func add_card_to_hand(card : CardData, pos: Vector2, action_increment: int) -> void:
 
-	print_debug("adding card to hand %s" % card.title)
+	#print_debug("adding card to hand %s" % card.title)
 	# disable actions until this action is complete
 	can_act = false
 	
@@ -181,11 +182,11 @@ func get_random_card_data() -> CardData:
 func change_card_weight(card: CardData, increase: bool = false):
 	# find the card's index
 	var index : int = Constants.all_cards.find_key(card)
-	print(index)
+	#print(index)
 	
 	# if the card's weight is zero, it should stay that way
 	if weights[index] == 0:
-		print("zero")
+		#print("zero")
 		return
 	
 	# if the weight is being decreased, decrease it but not below the min weight
@@ -198,7 +199,7 @@ func change_card_weight(card: CardData, increase: bool = false):
 		weights[index] += Constants.CARD_WEIGHT_DECREASE
 		if weights[index] > Constants.CARD_MAX_WEIGHT:
 			weights[index] = Constants.CARD_MAX_WEIGHT
-	print(card.title, ": ", weights[index])
+	#print(card.title, ": ", weights[index])
 
 
 func _on_deck_pressed() -> void:
