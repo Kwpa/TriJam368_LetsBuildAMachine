@@ -187,6 +187,21 @@ func grow_plant():
 		## plant grown success!
 		# game win condition
 		SignalBus.end_game.emit(true)
+	else:
+		# set_plant_levels(5)
+		decrease_plant_levels(3)
+
+
+func decrease_plant_levels(amount: int):
+	photosynthesis_vital.value -= amount
+	moisture_vital.value -= amount
+	nutrients_vital.value -= amount
+
+
+func set_plant_levels(value: int):
+	photosynthesis_vital.value = value
+	moisture_vital.value = value
+	nutrients_vital.value = value
 
 
 func check_if_plant_tile_has_enough_inputs() -> bool:
