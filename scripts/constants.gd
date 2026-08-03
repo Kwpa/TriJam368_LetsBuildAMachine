@@ -4,6 +4,11 @@ var HAND_SIZE_LIMIT = 6
 var OPENING_HAND_SIZE = 4
 var TURN_ACTION_COUNT = 2
 
+var CARD_WEIGHT_MULTIPLIER = 3
+var CARD_WEIGHT_DECREASE = 0.5
+var CARD_MAX_WEIGHT = 3
+var CARD_MIN_WEIGHT = 0.25
+
 # We are not using the two-tile objects.
 # The enum all_cards contains possible cards and the generator.
 # When the tile played by the card uses a different sprite depending on its input,
@@ -27,19 +32,18 @@ enum card_id {
 	plant = 11,
 	water_elbow = 12,
 	compost_elbow = 13,
-	not_card = 20,
 	dispensed_light = 14,
 	dispensed_nutrients = 15,
 	dispensed_water = 16,
 	dispensed_nutrients_light = 17,
 	dispensed_water_light = 18,
 	dispensed_water_nutrients = 19,
+	not_card = 20,
 	dispensed_all = 21,
 	sprinkler_light = 22,
 	sprinkler_nutrients = 23,
 	sprinkler_water = 24,
 	trellis_empty = 25
-
 }
 
 var card_weights = [
@@ -48,7 +52,7 @@ var card_weights = [
 	.75, # elbow probability
 	.5, # cross probability
 	.75, # tee  probability
-	.5, # sprinkler probability
+	.75, # sprinkler probability
 	.25, # water_straight probability
 	.25, # water_tee probability
 	.25, # compost_straight probability
@@ -183,7 +187,6 @@ var tile_card_mapping = {
 }
 
 var select_level := 0
-
 var level_definitions = [
 	LevelData.new(
 		0,
@@ -213,9 +216,32 @@ var level_definitions = [
 		[
 			{
 				## generator 1 
-				"tilemap_coords": Vector2i(0,1),
+				"tilemap_coords": Vector2i(2,0),
 				"tile": card_id.generator,
+				"rotation": rotation.quarter_cw 
+			},
+			{
+				## plant 1
+				"tilemap_coords": Vector2i(1,4),
+				"tile": card_id.plant,
 				"rotation": rotation.zero_rot 
+			},
+			{
+				## trellis empty
+				"tilemap_coords": Vector2i(1,3),
+				"tile": card_id.trellis_empty,
+				"rotation": rotation.zero_rot 
+			}
+		]
+	),
+	LevelData.new(
+		2,
+		[
+			{
+				## generator 1 
+				"tilemap_coords": Vector2i(2,1),
+				"tile": card_id.generator,
+				"rotation": rotation.three_quarter_cw 
 			},
 			{
 				## plant 1
@@ -224,25 +250,49 @@ var level_definitions = [
 				"rotation": rotation.zero_rot 
 			},
 			{
-				## pipe 1
-				"tilemap_coords": Vector2i(1,1),
-				"tile": card_id.cross,
-				"rotation": rotation.zero_rot
-			},
-			{
-				## water 1
-				"tilemap_coords": Vector2i(2,1),
-				"tile":card_id.water_elbow,
-				"rotation": rotation.three_quarter_cw
-			},
-			{
-				## dispenser 1
-				"tilemap_coords": Vector2i(2,2),
-				"tile": card_id.sprinkler,
-				"rotation": rotation.zero_rot
+				## trellis empty
+				"tilemap_coords": Vector2i(2,3),
+				"tile": card_id.trellis_empty,
+				"rotation": rotation.zero_rot 
 			}
 		]
-	)
+	),
+	#original level 1
+	#LevelData.new(
+		#1,
+		#[
+			#{
+				### generator 1 
+				#"tilemap_coords": Vector2i(0,1),
+				#"tile": card_id.generator,
+				#"rotation": rotation.zero_rot 
+			#},
+			#{
+				### plant 1
+				#"tilemap_coords": Vector2i(2,4),
+				#"tile": card_id.plant,
+				#"rotation": rotation.zero_rot 
+			#},
+			#{
+				### pipe 1
+				#"tilemap_coords": Vector2i(1,1),
+				#"tile": card_id.cross,
+				#"rotation": rotation.zero_rot
+			#},
+			#{
+				### water 1
+				#"tilemap_coords": Vector2i(2,1),
+				#"tile":card_id.water_elbow,
+				#"rotation": rotation.three_quarter_cw
+			#},
+			#{
+				### dispenser 1
+				#"tilemap_coords": Vector2i(2,2),
+				#"tile": card_id.sprinkler,
+				#"rotation": rotation.zero_rot
+			#}
+		#]
+	#)
 ]
 
 #CardData definition repeated for convenience
@@ -280,7 +330,7 @@ var all_cards : Dictionary = {
 	),
 	card_id.sprinkler: CardData.new(
 		"Sprinkler",
-		"When attached to water, distributes it in a cone.",
+		"When attached to water or nutrients, distributes it in a cone.",
 		Vector2i(2, 1),
 		Constants.resource.none,
 		{

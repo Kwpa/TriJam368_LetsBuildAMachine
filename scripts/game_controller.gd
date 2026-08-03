@@ -3,6 +3,7 @@ extends Node2D
 @onready var base_tilemap_layer = $machine_scene/tile_map 
 
 var mode := "hand"
+var current_level: int = 0
 
 func _ready() -> void:
 	# start the level
@@ -17,8 +18,10 @@ func _ready() -> void:
 
 
 func initialize(level: int):
+	current_level = level
 	get_level_def(level)
 	SignalBus.emit_signal("propogate_resources")
+	$card_scene.deal_opening_hand()
 
 
 func get_level_def(id : int):
@@ -87,7 +90,11 @@ func exit_hand_mode():
 func end_game(win: bool):
 	if win:
 		$ui/win_screen.visible = true
-		$ui/win_screen/background/layout/close_button.pressed.connect(initialize, 1)
+		$ui/win_screen/background/layout/close_button.pressed.connect(initialize, 0)
 	else:
 		$ui/lose_screen.visible = true
-		$ui/lose_screen/background/layout/close_button.pressed.connect(initialize, 1)
+		$ui/lose_screen/background/layout/close_button.pressed.connect(initialize, 0)
+
+
+func _on_restart_button_pressed() -> void:
+	initialize(current_level)

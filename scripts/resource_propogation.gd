@@ -197,9 +197,9 @@ func find_generators():
 					if (!plants.has(tile)):
 						plants.append(tile)
 			
-			print("water: %s" % str(water_generators))
-			print("nutrients: %s" % str(nutrient_generators))
-			print_debug("electricity: %s" % str(electricity_generators))
+			#print("water: %s" % str(water_generators))
+			#print("nutrients: %s" % str(nutrient_generators))
+			#print_debug("electricity: %s" % str(electricity_generators))
 
 
 func find_dispensers():
@@ -228,6 +228,8 @@ func flood_fill(start_pos, resource : int):
 	var neighbors = [Vector2i.RIGHT, Vector2i.LEFT, Vector2i.UP, Vector2i.DOWN]
 	var checked = []
 	var queue = [start_pos]
+	if start_pos == Vector2i(1,3):
+		print("")
 	
 	while queue.is_empty() == false:
 		var current = queue.pop_back()
@@ -235,6 +237,8 @@ func flood_fill(start_pos, resource : int):
 		
 		for n in neighbors:
 			var next_tile = current + n
+			if next_tile == Vector2i(2,4):
+				print("")
 			if used_cells.has(next_tile) == false:
 				continue	
 			if checked.has(next_tile):
@@ -243,17 +247,16 @@ func flood_fill(start_pos, resource : int):
 				continue
 			if slow_fill == true:
 				await get_tree().create_timer(0.07).timeout
-			
 			if electricity_generators.has(next_tile):
 				continue
 			if water_generators.has(next_tile) and resource == Constants.resource.nutrients:
 				continue
 			if nutrient_generators.has(next_tile) and resource == Constants.resource.water:
 				continue
-			else:
-				#works OK except for if you add the generator later?
-				queue.append(next_tile)
-				set_resource(next_tile, resource)
+			
+			#works OK except for if you add the generator later?
+			queue.append(next_tile)
+			set_resource(next_tile, resource)
 
 
 func get_spray_shape_tiles(tile) -> Array[Vector2i]:
@@ -262,7 +265,7 @@ func get_spray_shape_tiles(tile) -> Array[Vector2i]:
 		Constants.rotation.half_cw: # straght down
 			return [tile + Vector2i(0,-1),tile + Vector2i(-1,-2),tile + Vector2i(0,-2),tile + Vector2i(1,-2)]
 		Constants.rotation.quarter_cw: # spray left
-			return [tile + Vector2i(-1,0),tile + Vector2i(-2,1),tile + Vector2i(2,0),tile + Vector2i(2,-1)]
+			return [tile + Vector2i(-1,0),tile + Vector2i(-2,1),tile + Vector2i(-2,0),tile + Vector2i(-2,-1)]
 		Constants.rotation.zero_rot: # spray up
 			return [tile + Vector2i(0,1),tile + Vector2i(-1,2),tile + Vector2i(0,2),tile + Vector2i(1,2)]
 		Constants.rotation.three_quarter_cw: # spray right

@@ -11,16 +11,30 @@ var initializing: bool
 
 signal card_selected(card_data)
 
+var weights : Array[float]
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$HandContainer.size.x = 160 * Constants.HAND_SIZE_LIMIT
-	deal_opening_hand()
 	SignalBus.connect("use_card",use_selected_card)
 	SignalBus.connect("end_turn", end_turn)
+	SignalBus.connect("restart_level", start_level)
+
+func start_level(_level: int) -> void:
+	recycle_hand()
+	deal_opening_hand()
+
 
 func deal_opening_hand() -> void:
 	initializing = true
+	for child in $HandContainer.get_children():
+		child.free()
 	var deck_pos = $DeckParent.global_position
+	
+	# initialize the card weights
+	weights.clear()
+	for n in Constants.card_weights:
+		weights.append(n * Constants.CARD_WEIGHT_MULTIPLIER)
 	
 	# set actions to default count for one turn
 	actions_remaining = Constants.TURN_ACTION_COUNT
@@ -47,14 +61,14 @@ func count_action(increment: int):
 	# when increment is +, player gains an action
 	# when increment is -, player loses an action
 	actions_remaining += increment
-	print_debug("there are %s actions left" % actions_remaining)
+	#print_debug("there are %s actions left" % actions_remaining)
 	
 	# send a signal to update the ui
 	SignalBus.count_action.emit(actions_remaining)
 
 func add_card_to_hand(card : CardData, pos: Vector2, action_increment: int) -> void:
 
-	print_debug("adding card to hand %s" % card.title)
+	#print_debug("adding card to hand %s" % card.title)
 	# disable actions until this action is complete
 	can_act = false
 	
@@ -156,7 +170,7 @@ func get_random_by_resource(type: int) -> CardData:
 func get_random_card_data() -> CardData: 
 	# maybe we can refactor this to take an optional param and then we can combine it with get_random_by_resource
 	# get random weighted int
-	var index = rng.rand_weighted(Constants.card_weights)
+	var index = rng.rand_weighted(weights)
 	
 	# get the card_id at that index
 	var card_id_values = Constants.card_id.values() # -> array 
@@ -165,7 +179,33 @@ func get_random_card_data() -> CardData:
 	# get CardData from all_card dict with that card_id
 	var random_card = Constants.all_cards[random_card_id]
 	
+	# decrease the probability of drawing the same card again
+	change_card_weight(random_card, false)
+	
 	return random_card
+
+
+func change_card_weight(card: CardData, increase: bool = false):
+	# find the card's index
+	var index : int = Constants.all_cards.find_key(card)
+	#print(index)
+	
+	# if the card's weight is zero, it should stay that way
+	if weights[index] == 0:
+		#print("zero")
+		return
+	
+	# if the weight is being decreased, decrease it but not below the min weight
+	if (!increase):
+		weights[index] -= Constants.CARD_WEIGHT_DECREASE
+		if weights[index] < Constants.CARD_MIN_WEIGHT:
+			weights[index] = Constants.CARD_MIN_WEIGHT
+	# if the weight is being increased, increase it but not over the max weight
+	else:
+		weights[index] += Constants.CARD_WEIGHT_DECREASE
+		if weights[index] > Constants.CARD_MAX_WEIGHT:
+			weights[index] = Constants.CARD_MAX_WEIGHT
+	#print(card.title, ": ", weights[index])
 
 
 func _on_deck_pressed() -> void:
@@ -211,16 +251,19 @@ func recycle_selected_card() -> void:
 	if can_act == false:
 		return
 	
-	for track in $HandContainer.get_children():
+	for track: CardTrack in $HandContainer.get_children():
 		if track.is_selected:
+			# change_card_weight(track.get_card_data(), true)
 			remove_card_from_hand(track)
 	return
 
 func recycle_hand() -> void:
+	if $HandContainer.get_children().size() == 0:
+		return
 	# recycles the entire hand for free
 	for track in $HandContainer.get_children():
 		remove_card_from_hand(track)
-	count_action(1)
+	count_action(0)
 	return
 
 func use_selected_card() -> void:
@@ -233,8 +276,9 @@ func use_selected_card() -> void:
 	if can_act == false:
 		return
 	
-	for track in $HandContainer.get_children():
+	for track: CardTrack in $HandContainer.get_children():
 		if track.is_selected:
+			# change_card_weight(track.get_card_data(), true)
 			remove_card_from_hand(track)
 			
 			# count the action
