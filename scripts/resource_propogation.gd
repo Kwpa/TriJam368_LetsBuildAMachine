@@ -265,7 +265,7 @@ func get_spray_shape_tiles(tile) -> Array[Vector2i]:
 		Constants.rotation.half_cw: # straght down
 			return [tile + Vector2i(0,-1),tile + Vector2i(-1,-2),tile + Vector2i(0,-2),tile + Vector2i(1,-2)]
 		Constants.rotation.quarter_cw: # spray left
-			return [tile + Vector2i(-1,0),tile + Vector2i(-2,1),tile + Vector2i(2,0),tile + Vector2i(2,-1)]
+			return [tile + Vector2i(-1,0),tile + Vector2i(-2,1),tile + Vector2i(-2,0),tile + Vector2i(-2,-1)]
 		Constants.rotation.zero_rot: # spray up
 			return [tile + Vector2i(0,1),tile + Vector2i(-1,2),tile + Vector2i(0,2),tile + Vector2i(1,2)]
 		Constants.rotation.three_quarter_cw: # spray right

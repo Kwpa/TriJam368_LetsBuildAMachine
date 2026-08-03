@@ -24,6 +24,7 @@ func start_level(_level: int) -> void:
 	recycle_hand()
 	deal_opening_hand()
 
+
 func deal_opening_hand() -> void:
 	initializing = true
 	for child in $HandContainer.get_children():
