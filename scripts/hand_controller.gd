@@ -261,7 +261,7 @@ func recycle_hand() -> void:
 	# recycles the entire hand for free
 	for track in $HandContainer.get_children():
 		remove_card_from_hand(track)
-	count_action(1)
+	count_action(0)
 	return
 
 func use_selected_card() -> void:
