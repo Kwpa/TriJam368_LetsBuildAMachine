@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://dngiuhq5ehbk6"]
+
+[ext_resource type="Script" uid="uid://cx04q44t4hl2w" path="res://addons/any_audio_manager/Scripts/audio_manager.gd" id="1_je6gq"]
+[ext_resource type="Script" uid="uid://c8hltc037dgci" path="res://addons/any_audio_manager/Scripts/Resources/audio_library.gd" id="2_afrak"]
+[ext_resource type="Script" uid="uid://cgcton68ihwfi" path="res://addons/any_audio_manager/Scripts/Resources/audio_entry.gd" id="2_xtu4j"]
+[ext_resource type="Script" uid="uid://be73xmvos8o41" path="res://addons/any_audio_manager/Scripts/Resources/audio_setting.gd" id="4_c50nw"]
+[ext_resource type="Script" uid="uid://ba7om6b5pr0ql" path="res://addons/any_audio_manager/Scripts/audio_setting_library.gd" id="5_snu7c"]
+
+[sub_resource type="Resource" id="Resource_p74pt"]
+resource_name = "audio_game_music_001_2026_07"
+script = ExtResource("2_xtu4j")
+key = &"audio_game_music_001_2026_07"
+path = "res://audio/audio_game_music_001_2026_07.mp3"
+
+[sub_resource type="Resource" id="Resource_xtu4j"]
+script = ExtResource("2_afrak")
+audio_dir = "res://audio"
+entries = [SubResource("Resource_p74pt")]
+metadata/_custom_type_script = "uid://c8hltc037dgci"
+
+[sub_resource type="Resource" id="Resource_5y6jx"]
+script = ExtResource("4_c50nw")
+fade_in = 10.0
+fade_out = 1.0
+
+[sub_resource type="Resource" id="Resource_6cqcw"]
+script = ExtResource("5_snu7c")
+entries = [SubResource("Resource_5y6jx")]
+metadata/_custom_type_script = "uid://ba7om6b5pr0ql"
+
+[node name="AudioManager" type="Node" unique_id=86541453]
+script = ExtResource("1_je6gq")
+audio_library = SubResource("Resource_xtu4j")
+audio_setting_library = SubResource("Resource_6cqcw")

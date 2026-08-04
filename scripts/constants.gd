@@ -396,3 +396,7 @@ var all_cards : Dictionary = {
 		Constants.resource.nutrients
 	)
 	}
+
+var audio_keys = {
+	"main_music":"audio_game_music_001_2026_07"
+}

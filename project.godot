@@ -23,6 +23,7 @@ config/icon="uid://dyypqsedwqutr"
 
 Constants="*uid://bekiir5s2sbg1"
 SignalBus="*uid://cckybqtiytcfr"
+AudioManager="*uid://dngiuhq5ehbk6"
 
 [display]
 
@@ -37,7 +38,7 @@ project/assembly_name="The Growing Machine"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/shipitch/plugin.cfg")
+enabled=PackedStringArray("res://addons/any_audio_manager/plugin.cfg", "res://addons/shipitch/plugin.cfg")
 
 [gui]
 
