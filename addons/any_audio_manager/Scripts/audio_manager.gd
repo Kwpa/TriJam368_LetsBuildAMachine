@@ -78,6 +78,9 @@ func play_sfx_once(key: StringName, volume: float = 0.0, pitch: float = 1.0, aud
 func play_sfx(key: StringName, volume: float = 0.0, pitch: float = 1.0, audio_setting_index: int = -1) -> void:
 	_execute_play(key, AudioType.OMNI, audio_bus[1], null, volume, pitch, false, audio_setting_index)
 
+func play_sfx2(key: StringName, volume: float = 0.0, pitch: float = 1.0, audio_setting_index: int = -1) -> void:
+	_execute_play(key, AudioType.OMNI, audio_bus[2], null, volume, pitch, false, audio_setting_index)
+
 func play_sfx_2d(key: StringName, pos: Vector2, volume: float = 0.0, pitch: float = 1.0, audio_setting_index: int = -1) -> void:
 	_execute_play(key, AudioType.TWO_D, audio_bus[1], pos, volume, pitch, false, audio_setting_index)
 
@@ -127,15 +130,15 @@ func _execute_play(key: StringName, type: AudioType, bus: StringName, pos: Varia
 
 	var settings : AudioSetting = audio_setting_library.entries[audio_setting_index]
 	
-	if settings != null and settings.fade_in > 0:
-		var tween = create_tween()
-		tween.pause()
-		
-		tween.tween_method(set_player_vol_fade, -100, volume, settings.fade_in)
-		tween.play()
-		player.play() 
-	else:
-		player.play() 
+	#if settings != null and settings.fade_in > 0:
+		#var tween = create_tween()
+		#tween.pause()
+		#
+		#tween.tween_method(set_player_vol_fade, -100, volume, settings.fade_in)
+		#tween.play()
+		#player.play() 
+	#else:
+	player.play() 
 
 var select_player : AudioStreamPlayer
 

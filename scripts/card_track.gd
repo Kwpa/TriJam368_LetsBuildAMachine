@@ -54,6 +54,7 @@ func toggle_selection() -> void:
 	if is_selected:
 		# if we just selected a card, enter hand mode
 		SignalBus.emit_signal("enter_hand_mode")
+		
 	else:
 		# if we just deselected a card, lower it
 		lower_card()

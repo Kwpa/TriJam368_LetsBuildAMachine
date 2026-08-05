@@ -111,6 +111,7 @@ func removal_check(card_id : int) -> bool:
 		return true 
 
 func remove_tile(card_id: int, pos: Vector2) -> void:
+	AudioManager.play_sfx2("remove", -9.0)
 	# get the card data from the ID
 	var card = Constants.all_cards.get(card_id)
 	# emit the card data of the removed card and its position in the tilemap
@@ -160,7 +161,7 @@ func _input(event) -> void:
 						currently_selected_alt_id = 3
 					3:
 						currently_selected_alt_id = 0
-						
+				AudioManager.play_sfx_once("rotate",1)		
 				SignalBus.emit_signal("rotate_preview_tile", currently_selected_alt_id)
 				
 				
@@ -185,7 +186,7 @@ func _input(event) -> void:
 								applied_transform = 0
 						
 						selected_tile = cell_coords
-						
+						AudioManager.play_sfx_once("rotate",1)
 						set_cell(pos, 1, selected_tile, applied_transform)
 						SignalBus.emit_signal("propogate_resources")
 

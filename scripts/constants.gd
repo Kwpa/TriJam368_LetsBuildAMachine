@@ -398,5 +398,6 @@ var all_cards : Dictionary = {
 	}
 
 var audio_keys = {
-	"main_music":"audio_game_music_001_2026_07"
+	"main_music":"audio_game_music_001_2026_07",
+	"card_enter":"card"
 }
