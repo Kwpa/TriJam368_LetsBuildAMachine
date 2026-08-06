@@ -36,6 +36,7 @@ func load_level(level_def : LevelData):
 		if tile.tile == Constants.card_id.plant:
 			plant_location = tile.tilemap_coords
 			var trellis_layer : TileMapLayer = get_node("../trellis_layer")
+			trellis_layer.clear()
 			trellis_layer.set_cell(tile.tilemap_coords, 6, Vector2i(0, 1), 0)
 			var second_trellis_cell = tile.tilemap_coords + Vector2i.UP
 			trellis_layer.set_cell(second_trellis_cell, 6, Vector2i(0, 0), 0)
