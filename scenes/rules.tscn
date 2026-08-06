@@ -60,7 +60,7 @@ You have a hand of cards with useful machine parts. Place them on the grid to bu
 [img=8%]res://textures/icon_reservoir.png[/img] The reservoir generates water. 
 [img=8%]res://textures/icon_compost.png[/img] The compost bin generates nutrients. 
 
-Water and nutrients can be connected directly to the plant, or sprinkled from a sprinkler. [img=8%]res://textures/icon_sprinkler.png[/img]
+Water and nutrients can be connected directly to the plant's pot, or sprinkled from a sprinkler. [img=8%]res://textures/icon_sprinkler.png[/img]
 
 [img=8%]res://textures/icon_generator.png[/img] The electricity generator provides [img=5%]res://textures/icon_electricity.png[/img]electricity to other tiles when it is connected with a pipe. The lamp, the reservoir and the compost bin all need electricity to produce their resource.
 
