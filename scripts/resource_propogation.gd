@@ -74,7 +74,7 @@ func create_initial_resource_tile_icons():
 
 
 func propogate_resources():
-	#print_debug("propogating")
+	print_debug("propogating")
 	create_blank_grid()
 	used_cells = layer.get_used_cells()
 	
@@ -89,6 +89,23 @@ func propogate_resources():
 		if check_tile_has_resource(tile, Constants.resource.electricity):
 			flood_fill(tile, Constants.resource.nutrients)
 	
+	# deactivate dispensers that are no longer connected
+	print("sprinklers: %s" % str(sprinklers))
+	print_debug("lamps: %s" % str(lamps))
+	for tile in sprinklers:
+		var nutrient_check = check_tile_has_resource(tile, Constants.resource.nutrients)
+		var water_check = check_tile_has_resource(tile, Constants.resource.water)
+		if not nutrient_check || not water_check:
+			print_debug('deactivating sprinkler %s' % tile)
+			deactivate_dispenser_tile(tile)
+	for tile in lamps:
+		var electricity_check = check_tile_has_resource(tile, Constants.resource.electricity)
+		if not electricity_check:
+			print_debug('deactivating lamp %s' % tile)
+			deactivate_dispenser_tile(tile)
+		
+	
+	# find new dispensers
 	find_dispensers()
 	for tile in sprinklers:
 		var nutrient_check = check_tile_has_resource(tile, Constants.resource.nutrients)
@@ -102,12 +119,14 @@ func propogate_resources():
 		var electricity_check = check_tile_has_resource(tile, Constants.resource.electricity)
 		if electricity_check:
 			dispense_light(tile)
+			
 	
 	## update visuals using info dispenser_layer
 	
 	prev_dispensed_state_array = current_dispensed_state_array
 	current_dispensed_state_array = get_all_dispensed_resources()
 	update_dispensed_layer()
+	#print_debug(current_dispensed_state_array)
 	
 	
 	## plants
@@ -126,7 +145,6 @@ func propogate_resources():
 		if check_tile_has_dispensed_resource(plants[n], Constants.resource.nutrients):
 			SignalBus.add_resource_input_to_plant.emit(n, "fertilizer", "add")
 		
-	
 	
 	# now update the grid
 	update_grid()
@@ -201,6 +219,9 @@ func find_generators():
 			#print("nutrients: %s" % str(nutrient_generators))
 			#print_debug("electricity: %s" % str(electricity_generators))
 
+func clear_dispensers() -> void:
+	lamps.clear()
+	sprinklers.clear()
 
 func find_dispensers():
 	lamps.clear()
@@ -215,8 +236,17 @@ func find_dispensers():
 			match card_id:
 				Constants.card_id.sprinkler:
 					sprinklers.append(tile)
+				Constants.card_id.sprinkler_active_water:
+					sprinklers.append(tile)
+				Constants.card_id.sprinkler_active_nutrients:
+					sprinklers.append(tile)
 				Constants.card_id.lamp:
 					lamps.append(tile)
+				Constants.card_id.lamp_active:
+					lamps.append(tile)
+					
+	print("sprinklers: %s" % str(sprinklers))
+	print_debug("lamps: %s" % str(lamps))
 
 
 func flood_fill(start_pos, resource : int):
@@ -276,13 +306,44 @@ func get_spray_shape_tiles(tile) -> Array[Vector2i]:
 func dispense_light(tile : Vector2i):
 	for light_tile in get_spray_shape_tiles(tile):
 		set_dispensed_resource(light_tile, Constants.resource.light)
+	var lamp_orientation_id = layer.get_cell_alternative_tile(tile)
+	layer.set_cell(tile, 1, Vector2i(3,6), lamp_orientation_id)
 
 
 func dispense_nutrients(tile : Vector2i):
 	for nutrients_tile in get_spray_shape_tiles(tile):
 		set_dispensed_resource(nutrients_tile, Constants.resource.nutrients)
+	var sprinkler_orientation_id = layer.get_cell_alternative_tile(tile)
+	layer.set_cell(tile, 1, Vector2i(3,0), sprinkler_orientation_id)
 
 
 func dispense_water(tile : Vector2i):
 	for water_tile in get_spray_shape_tiles(tile):
 		set_dispensed_resource(water_tile, Constants.resource.water)
+	var sprinkler_orientation_id = layer.get_cell_alternative_tile(tile)
+	layer.set_cell(tile, 1, Vector2i(3,2), sprinkler_orientation_id)
+	
+func deactivate_dispenser_tile(tile: Vector2i) -> void:
+	if layer.get_cell_tile_data(tile) != null:
+		print_debug("tile is: %s" % tile)
+		var dispenser_data = layer.get_cell_tile_data(tile)
+		print_debug('dispenser data is: %s' % dispenser_data)
+		var dispenser_id = dispenser_data.get_custom_data('card_id')
+		var dispenser_orientation_id = layer.get_cell_alternative_tile(tile)
+		var inactive_coords = Vector2i(0,0)
+		#print_debug('deactivating dispenser at %s with ID %s' % [str(tile), str(dispenser_id)])
+		match dispenser_id:
+			9:
+				inactive_coords = Constants.tile_card_mapping[Constants.card_id.lamp]["atlas_coords"]
+			26:
+				inactive_coords = Constants.tile_card_mapping[Constants.card_id.lamp]["atlas_coords"]
+			4:
+				inactive_coords = Constants.tile_card_mapping[Constants.card_id.sprinkler]["atlas_coords"]
+			27:
+				inactive_coords = Constants.tile_card_mapping[Constants.card_id.sprinkler]["atlas_coords"]
+			28:
+				inactive_coords = Constants.tile_card_mapping[Constants.card_id.sprinkler]["atlas_coords"]
+		# reset that tile to use the inactive version of the dispenser
+		layer.set_cell(tile, 1, inactive_coords, dispenser_orientation_id)
+	else:
+		print_debug('tile is null')
