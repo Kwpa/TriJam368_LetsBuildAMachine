@@ -149,7 +149,7 @@ expand_mode = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0.879319, 0.50607336, 0.8120222, 1)
 theme_override_font_sizes/font_size = 32
-text = "Actions: 2"
+text = "Actions: 3"
 
 [node name="turn_button" type="Button" parent="ui" unique_id=208467497 node_paths=PackedStringArray("actions_label")]
 custom_minimum_size = Vector2(200, 40)
