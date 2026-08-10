@@ -74,7 +74,7 @@ func create_initial_resource_tile_icons():
 
 
 func propogate_resources():
-	print_debug("propogating")
+	#print_debug("propogating")
 	create_blank_grid()
 	used_cells = layer.get_used_cells()
 	
@@ -245,8 +245,8 @@ func find_dispensers():
 				Constants.card_id.lamp_active:
 					lamps.append(tile)
 					
-	print("sprinklers: %s" % str(sprinklers))
-	print_debug("lamps: %s" % str(lamps))
+	#print("sprinklers: %s" % str(sprinklers))
+	#print_debug("lamps: %s" % str(lamps))
 
 
 func flood_fill(start_pos, resource : int):
@@ -325,9 +325,9 @@ func dispense_water(tile : Vector2i):
 	
 func deactivate_dispenser_tile(tile: Vector2i) -> void:
 	if layer.get_cell_tile_data(tile) != null:
-		print_debug("tile is: %s" % tile)
+		#print_debug("tile is: %s" % tile)
 		var dispenser_data = layer.get_cell_tile_data(tile)
-		print_debug('dispenser data is: %s' % dispenser_data)
+		#print_debug('dispenser data is: %s' % dispenser_data)
 		var dispenser_id = dispenser_data.get_custom_data('card_id')
 		var dispenser_orientation_id = layer.get_cell_alternative_tile(tile)
 		var inactive_coords = Vector2i(0,0)

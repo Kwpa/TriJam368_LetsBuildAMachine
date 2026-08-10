@@ -117,7 +117,7 @@ func remove_tile(card_id: int, pos: Vector2) -> void:
 	var card = Constants.all_cards.get(card_id)
 	# emit the card data of the removed card and its position in the tilemap
 	remove_card.emit(card, to_global(map_to_local(pos)), 0)
-	print_debug("emitting remove_card signal with %s" % card)
+	#print_debug("emitting remove_card signal with %s" % card)
 	
 	# erase the tile
 	erase_cell(local_to_map(to_local(get_global_mouse_position())))
