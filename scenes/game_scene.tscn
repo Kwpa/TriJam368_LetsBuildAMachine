@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://cg1eepy05ghlk" path="res://textures/title.png" id="9_mwyo0"]
 [ext_resource type="Texture2D" uid="uid://cglnpdnmxl8nf" path="res://textures/atlas_texture_turn.tres" id="9_rvs2r"]
 [ext_resource type="PackedScene" uid="uid://bu6qty2on1ff3" path="res://scenes/rules.tscn" id="12_ldkr4"]
+[ext_resource type="PackedScene" uid="uid://dpl6b3dmrnm5p" path="res://scenes/difficulty_setting.tscn" id="13_103ce"]
 [ext_resource type="PackedScene" uid="uid://cg8f0s5npuhn2" path="res://scenes/win.tscn" id="14_ldkr4"]
 [ext_resource type="PackedScene" uid="uid://dhjoob0tweysx" path="res://scenes/lose.tscn" id="15_liy57"]
 [ext_resource type="TileSet" uid="uid://dli7vlje34tbu" path="res://scenes/machine_tileset.tres" id="16_s76x2"]
@@ -46,11 +47,11 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[sub_resource type="ButtonGroup" id="ButtonGroup_ro0ie"]
-
 [sub_resource type="ButtonGroup" id="ButtonGroup_103ce"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_pb36m"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_85lt4"]
 
 [node name="game_scene" type="Node2D" unique_id=1907655626]
 script = ExtResource("1_po0ka")
@@ -215,6 +216,43 @@ text = "A short summary of the game
 and what you're trying to achieve."
 horizontal_alignment = 1
 
+[node name="title_label" type="RichTextLabel" parent="ui/summary_layout" unique_id=1816021601]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("9_6aqbo")
+theme_override_font_sizes/normal_font_size = 18
+text = "A Machine Level"
+horizontal_alignment = 1
+
+[node name="level" type="Panel" parent="ui/summary_layout" unique_id=1803776942]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="DifficultySetting" parent="ui/summary_layout/level" unique_id=1556147248 instance=ExtResource("13_103ce")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 12.0
+offset_right = 312.0
+offset_bottom = 62.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="title_label2" type="RichTextLabel" parent="ui/summary_layout/level" unique_id=58866232]
+layout_mode = 0
+offset_top = 66.0
+offset_right = 312.0
+offset_bottom = 112.0
+theme_override_fonts/normal_font = ExtResource("9_6aqbo")
+theme_override_font_sizes/normal_font_size = 18
+text = "Changing the actions per turn will
+reset the level."
+horizontal_alignment = 1
+
 [node name="rules_button" type="Button" parent="ui/summary_layout" unique_id=2067589643]
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
@@ -222,7 +260,6 @@ size_flags_horizontal = 4
 text = "View Rules"
 
 [node name="restart_button" type="Button" parent="ui/summary_layout" unique_id=123762772]
-visible = false
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -254,7 +291,7 @@ alignment = 1
 
 [node name="mode_button_hand" parent="ui/modes_layout" unique_id=213637895 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_ro0ie")
+button_group = SubResource("ButtonGroup_103ce")
 icon = ExtResource("7_mw25s")
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_hand" index="0" unique_id=665516849]
@@ -262,7 +299,7 @@ text = "Hand Mode"
 
 [node name="mode_button_rotate" parent="ui/modes_layout" unique_id=861217784 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_103ce")
+button_group = SubResource("ButtonGroup_pb36m")
 icon = ExtResource("8_tcjrq")
 mode = "rotate"
 
@@ -271,7 +308,7 @@ text = "Rotate Mode"
 
 [node name="mode_button_remove" parent="ui/modes_layout" unique_id=701026513 instance=ExtResource("9_mw25s")]
 layout_mode = 2
-button_group = SubResource("ButtonGroup_pb36m")
+button_group = SubResource("ButtonGroup_85lt4")
 mode = "remove"
 
 [node name="mode_label" parent="ui/modes_layout/mode_button_remove" index="0" unique_id=665516849]

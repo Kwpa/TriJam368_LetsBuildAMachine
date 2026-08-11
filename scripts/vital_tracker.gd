@@ -32,7 +32,7 @@ func check_if_level_is_optimal() -> bool:
 		return false
 
 
-func reset_style(level: int):
+func reset_style():
 	remove_theme_stylebox_override("background")
 
 

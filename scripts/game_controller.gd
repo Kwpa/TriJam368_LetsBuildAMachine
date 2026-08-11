@@ -14,7 +14,8 @@ func _ready() -> void:
 	SignalBus.connect("enter_rotate_mode",enter_rotate_mode)
 	SignalBus.connect("enter_remove_mode",enter_remove_mode)
 	SignalBus.connect("end_game", end_game)
-	SignalBus.connect("restart_level", initialize)
+	SignalBus.connect("restart_level", _on_restart_button_pressed)
+	SignalBus.connect("start_level", initialize)
 
 
 func initialize(level: int):
@@ -27,6 +28,7 @@ func initialize(level: int):
 func get_level_def(id : int):
 	for def in Constants.level_definitions:
 		if def.level_id == id:
+			$ui/summary_layout/title_label.text = def.title
 			base_tilemap_layer.load_level(def)
 
 

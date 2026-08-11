@@ -73,7 +73,7 @@ func clear_resource_inputs(_id: int):
 		resource_inputs.clear()
 
 
-func initialize(level: int):
+func initialize():
 	photosynthesis_vital.value = photosynthesis_vital.vital_lower_optimal
 	moisture_vital.value = moisture_vital.vital_lower_optimal
 	nutrients_vital.value = nutrients_vital.vital_lower_optimal

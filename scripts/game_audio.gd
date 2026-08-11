@@ -12,7 +12,7 @@ func _ready():
 	SignalBus.connect("grow_plant", grow_plant)
 	SignalBus.connect("end_game", end_game)
 	
-	initialize(0)
+	initialize()
 
 
 func end_game(win: bool):
@@ -25,7 +25,7 @@ func end_game(win: bool):
 		AudioManager.play_sfx2("beep_1")
 
 
-func initialize(_n):
+func initialize():
 	AudioManager.play_music(Constants.audio_keys["main_music"],true,-5)
 	pass
 
@@ -40,7 +40,7 @@ func end_turn():
 		AudioManager.play_sfx_once("end_turn", 2)
 
 
-func grow_plant(n):
+func grow_plant(_n):
 	AudioManager.stop_all_active()
 	AudioManager.play_sfx_once("growth", 7)
 	await get_tree().create_timer(4).timeout

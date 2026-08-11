@@ -17,4 +17,6 @@ signal end_game(win: bool) # ends the game, win or lose
 signal count_action(increment: int) # sends a signal to the action count ui label
 signal non_hand_action(spend: bool) # informs the hand that an action has been spent or gained elsewhere no longer in use for removing a card
 signal update_dispenser_layer(add_array : Array[InstantiatedTileData])
-signal restart_level(level: int)
+signal restart_level() # restart the current level
+signal start_level(level: int) # start a specific level
+signal set_actions_per_turn(count: int)
