@@ -31,21 +31,6 @@ func get_level_def(id : int):
 			$ui/summary_layout/title_label.text = def.title
 			base_tilemap_layer.load_level(def)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
-func _on_tile_map_changed() -> void:
-	# check for win
-	pass # Replace with function body.
-
-func _on_card_selected() -> void:
-	#$machine_scene/TileMapLayer.selected_tile = Vector2i(1,1)
-	pass
-
-
 func enter_hand_mode():
 	#print_debug("entering hand mode")
 	mode = "hand"

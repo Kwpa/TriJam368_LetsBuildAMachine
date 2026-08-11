@@ -43,7 +43,10 @@ enum card_id {
 	sprinkler_light = 22,
 	sprinkler_nutrients = 23,
 	sprinkler_water = 24,
-	trellis_empty = 25
+	trellis_empty = 25,
+	lamp_active = 26,
+	sprinkler_active_water = 27,
+	sprinkler_active_nutrients = 28
 }
 
 var card_weights = [
@@ -397,6 +400,35 @@ var all_cards : Dictionary = {
 		"When attached to electricity, generates nutrients.",
 		Vector2i(1, 5),
 		Constants.resource.nutrients
+	),
+	card_id.lamp_active: CardData.new(
+		"Lamp",
+		"When attached to electricity, distributes light in a cone.",
+		Vector2i(3, 5),
+		Constants.resource.light,
+		{
+			Constants.resource.electricity: Vector2i(3, 6)
+		}
+	),
+	card_id.sprinkler_active_water: CardData.new(
+		"Sprinkler",
+		"When attached to water or nutrients, distributes it in a cone.",
+		Vector2i(2, 1),
+		Constants.resource.none,
+		{
+			Constants.resource.water: Vector2i(3, 2),
+			Constants.resource.nutrients: Vector2i(3, 0)
+		}
+	),
+	card_id.sprinkler_active_nutrients: CardData.new(
+		"Sprinkler",
+		"When attached to water or nutrients, distributes it in a cone.",
+		Vector2i(2, 1),
+		Constants.resource.none,
+		{
+			Constants.resource.water: Vector2i(3, 2),
+			Constants.resource.nutrients: Vector2i(3, 0)
+		}
 	)
 	}
 
