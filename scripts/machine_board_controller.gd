@@ -26,9 +26,11 @@ var tile_direction := Vector2i(0,-1)
 var applied_transform : int
 
 signal remove_card(card: CardData, pos: Vector2)
+signal clear_dispensers
 
 func load_level(level_def : LevelData):
 	clear()
+	clear_dispensers.emit
 	var plant_count: int = 0
 	for tile in level_def.tiles:
 		print([tile.tilemap_coords, Constants.tile_card_mapping[tile.tile].source_id, Constants.tile_card_mapping[tile.tile].atlas_coords, tile.rotation])

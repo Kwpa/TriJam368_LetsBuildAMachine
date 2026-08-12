@@ -309,6 +309,7 @@ offset_bottom = 97.0
 [node name="game_audio" type="Node2D" parent="." unique_id=326954495]
 script = ExtResource("21_ro0ie")
 
+[connection signal="clear_dispensers" from="machine_scene/tile_map" to="machine_scene" method="clear_dispensers"]
 [connection signal="remove_card" from="machine_scene/tile_map" to="card_scene" method="add_card_to_hand"]
 [connection signal="pressed" from="ui/turn_button" to="ui/turn_button" method="end_turn"]
 [connection signal="pressed" from="ui/summary_layout/rules_button" to="ui/rules" method="on_open"]
