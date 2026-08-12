@@ -224,8 +224,7 @@ func clear_dispensers() -> void:
 	sprinklers.clear()
 
 func find_dispensers():
-	lamps.clear()
-	sprinklers.clear()
+	clear_dispensers()
 	
 	for tile in used_cells:
 		var tile_data = layer.get_cell_tile_data(tile)
