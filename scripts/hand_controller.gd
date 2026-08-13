@@ -5,6 +5,7 @@ var card_track_scene = preload("res://scenes/card_track.tscn")
 var selected_card_track
 var draw_interval = 0.4
 
+var turn_action_count: int
 var actions_remaining: int
 var can_act: bool = false
 var initializing: bool
@@ -15,12 +16,16 @@ var weights : Array[float]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	print("hand ready")
+	turn_action_count = Constants.TURN_ACTION_COUNT
 	$HandContainer.size.x = 160 * Constants.HAND_SIZE_LIMIT
 	SignalBus.connect("use_card",use_selected_card)
 	SignalBus.connect("end_turn", end_turn)
+	SignalBus.connect("set_actions_per_turn", set_turn_action_count)
 
 
 func deal_opening_hand() -> void:
+	
 	initializing = true
 	for child in $HandContainer.get_children():
 		child.free()
@@ -31,15 +36,15 @@ func deal_opening_hand() -> void:
 	for n in Constants.card_weights:
 		weights.append(n * Constants.CARD_WEIGHT_MULTIPLIER)
 	
-	# set actions to default count for one turn
-	actions_remaining = Constants.TURN_ACTION_COUNT
-	
 	# let the player begin with a hand of cards containing at least one generator of each kind
 	for res in [Constants.resource.water, Constants.resource.nutrients]: 
 			# play audio
 		add_card_to_hand(get_random_by_resource(res), deck_pos, 0)
 		await get_tree().create_timer(1).timeout
-
+	
+	# set actions to default count for one turn
+	actions_remaining = turn_action_count
+	SignalBus.count_action.emit(actions_remaining)
 	
 	# also give them a lamp and a sprinkler for easy testing
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp), deck_pos, 0)
@@ -294,9 +299,13 @@ func end_turn():
 			card_track.toggle_selection()
 			
 	# set actions to default count for one turn
-	actions_remaining = Constants.TURN_ACTION_COUNT
+	actions_remaining = turn_action_count
 	SignalBus.count_action.emit(actions_remaining)
 	
 	# draw one card for free
 	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
 		add_card_to_hand(get_random_card_data(), $DeckParent.global_position, 0)
+
+func set_turn_action_count(count: int):
+	print("actions: ", count)
+	turn_action_count = count

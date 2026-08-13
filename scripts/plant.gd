@@ -63,6 +63,8 @@ func _ready():
 	SignalBus.connect("end_turn", end_turn)
 	SignalBus.connect("reset_resource_inputs_on_plant", clear_resource_inputs)
 	SignalBus.connect("restart_level", initialize)
+	SignalBus.connect("start_level", _initialize)
+	
 
 func set_id(_id: int):
 	plant_id = _id
@@ -73,7 +75,12 @@ func clear_resource_inputs(_id: int):
 		resource_inputs.clear()
 
 
-func initialize(level: int):
+func _initialize(level: int):
+	initialize()
+
+
+func initialize():
+	print("initializing")
 	photosynthesis_vital.value = photosynthesis_vital.vital_lower_optimal
 	moisture_vital.value = moisture_vital.vital_lower_optimal
 	nutrients_vital.value = nutrients_vital.vital_lower_optimal
@@ -85,6 +92,7 @@ func initialize(level: int):
 
 ## to hook up to signal for when a tile is placed, moved or rotated, and we need to add or remove resources going into the plant 
 func resource_input(_id: int, input_name:String, action_type: String):
+	print(action_type, " ", input_name, " on plant ", _id)
 	if _id == plant_id || _id == plant_id + 1:
 		match action_type:
 			"remove": 
@@ -171,7 +179,7 @@ func end_turn():
 	
 	print("plant status " + str(plant_statisfied_round_count))
 	
-	if inputs_met && plant_statisfied_round_count == 3:
+	if inputs_met && plant_statisfied_round_count >= 3:
 		if current_plant_size < final_plant_size:
 			grow_plant()
 

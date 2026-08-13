@@ -189,10 +189,11 @@ var tile_card_mapping = {
 	}
 }
 
-var select_level := 0
+var select_level : int = 0
 var level_definitions = [
 	LevelData.new(
 		0,
+		"The First Machine",
 		[
 			{
 				## generator 1 
@@ -216,6 +217,7 @@ var level_definitions = [
 	),
 	LevelData.new(
 		1,
+		"The Second Machine",
 		[
 			{
 				## generator 1 
@@ -239,6 +241,7 @@ var level_definitions = [
 	),
 	LevelData.new(
 		2,
+		"The Third Machine",
 		[
 			{
 				## generator 1 
