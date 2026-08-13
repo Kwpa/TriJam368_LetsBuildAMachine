@@ -131,7 +131,6 @@ func propogate_resources():
 	
 	## plants
 	for n in plants.size():
-		print("tending plant ", n)
 		SignalBus.reset_resource_inputs_on_plant.emit(n)
 		if check_tile_has_resource(plants[n], Constants.resource.water):
 			SignalBus.add_resource_input_to_plant.emit(n, "water", "add")

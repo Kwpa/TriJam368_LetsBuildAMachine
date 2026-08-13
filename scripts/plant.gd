@@ -80,6 +80,7 @@ func _initialize(level: int):
 
 
 func initialize():
+	print("initializing")
 	photosynthesis_vital.value = photosynthesis_vital.vital_lower_optimal
 	moisture_vital.value = moisture_vital.vital_lower_optimal
 	nutrients_vital.value = nutrients_vital.vital_lower_optimal

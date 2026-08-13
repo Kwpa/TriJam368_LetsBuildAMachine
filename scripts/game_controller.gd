@@ -14,8 +14,12 @@ func _ready() -> void:
 	SignalBus.connect("enter_rotate_mode",enter_rotate_mode)
 	SignalBus.connect("enter_remove_mode",enter_remove_mode)
 	SignalBus.connect("end_game", end_game)
-	SignalBus.connect("restart_level", _on_restart_button_pressed)
+	SignalBus.connect("restart_level", _initialize)
 	SignalBus.connect("start_level", initialize)
+
+
+func _initialize():
+	initialize(current_level)
 
 
 func initialize(level: int):
@@ -84,4 +88,4 @@ func end_game(win: bool):
 
 
 func _on_restart_button_pressed() -> void:
-	initialize(current_level)
+	SignalBus.restart_level.emit()
