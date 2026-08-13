@@ -63,6 +63,8 @@ func _ready():
 	SignalBus.connect("end_turn", end_turn)
 	SignalBus.connect("reset_resource_inputs_on_plant", clear_resource_inputs)
 	SignalBus.connect("restart_level", initialize)
+	SignalBus.connect("start_level", _initialize)
+	
 
 func set_id(_id: int):
 	plant_id = _id
@@ -71,6 +73,10 @@ func set_id(_id: int):
 func clear_resource_inputs(_id: int):
 	if _id == plant_id:
 		resource_inputs.clear()
+
+
+func _initialize(level: int):
+	initialize()
 
 
 func initialize():
@@ -172,7 +178,7 @@ func end_turn():
 	
 	print("plant status " + str(plant_statisfied_round_count))
 	
-	if inputs_met && plant_statisfied_round_count == 3:
+	if inputs_met && plant_statisfied_round_count >= 3:
 		if current_plant_size < final_plant_size:
 			grow_plant()
 
