@@ -7,7 +7,7 @@ var current_level: int = 0
 
 func _ready() -> void:
 	# start the level
-	initialize(0)
+	initialize(Constants.select_level)
 	
 	# check resources + update tiles in the machine_scene
 	SignalBus.connect("enter_hand_mode",enter_hand_mode)

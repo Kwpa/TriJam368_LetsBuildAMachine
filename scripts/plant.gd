@@ -85,6 +85,7 @@ func initialize():
 
 ## to hook up to signal for when a tile is placed, moved or rotated, and we need to add or remove resources going into the plant 
 func resource_input(_id: int, input_name:String, action_type: String):
+	print(action_type, " ", input_name, " on plant ", _id)
 	if _id == plant_id || _id == plant_id + 1:
 		match action_type:
 			"remove": 

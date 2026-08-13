@@ -95,7 +95,7 @@ func propogate_resources():
 	for tile in sprinklers:
 		var nutrient_check = check_tile_has_resource(tile, Constants.resource.nutrients)
 		var water_check = check_tile_has_resource(tile, Constants.resource.water)
-		if not nutrient_check || not water_check:
+		if not nutrient_check && not water_check:
 			print_debug('deactivating sprinkler %s' % tile)
 			deactivate_dispenser_tile(tile)
 	for tile in lamps:
@@ -131,6 +131,7 @@ func propogate_resources():
 	
 	## plants
 	for n in plants.size():
+		print("tending plant ", n)
 		SignalBus.reset_resource_inputs_on_plant.emit(n)
 		if check_tile_has_resource(plants[n], Constants.resource.water):
 			SignalBus.add_resource_input_to_plant.emit(n, "water", "add")
@@ -185,6 +186,7 @@ func find_generators():
 	electricity_generators.clear()
 	water_generators.clear()
 	nutrient_generators.clear()
+	plants.clear()
 	
 	for tile in used_cells:
 		var tile_data = layer.get_cell_tile_data(tile)
