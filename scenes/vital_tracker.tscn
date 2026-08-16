@@ -11,7 +11,7 @@ offset_bottom = 200.0
 rotation = 1.5707964
 max_value = 10.0
 step = 1.0
-value = 5.0
+value = 6.0
 rounded = true
 fill_mode = 3
 show_percentage = false
@@ -40,7 +40,8 @@ texture = ExtResource("2_2vyjv")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="outer bar" type="ColorRect" parent="." unique_id=1215479337]
+[node name="bar_5" type="ColorRect" parent="." unique_id=1215479337]
+visible = false
 custom_minimum_size = Vector2(40, 8)
 layout_mode = 1
 anchors_preset = -1
@@ -52,7 +53,93 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.95686275, 0.9019608, 0.7372549, 1)
 
-[node name="inner bar" type="ColorRect" parent="outer bar" unique_id=1509855457]
+[node name="inner_bar" type="ColorRect" parent="bar_5" unique_id=1509855457]
+custom_minimum_size = Vector2(36, 4)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -2.0
+offset_right = 18.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.5647059, 0.6862745, 0.2, 1)
+
+[node name="bar_6" type="ColorRect" parent="." unique_id=1389682926]
+custom_minimum_size = Vector2(40, 8)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 99.0
+offset_bottom = -133.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.95686275, 0.9019608, 0.7372549, 1)
+
+[node name="inner_bar" type="ColorRect" parent="bar_6" unique_id=620089353]
+custom_minimum_size = Vector2(36, 4)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -2.0
+offset_right = 18.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.5647059, 0.6862745, 0.2, 1)
+
+[node name="bar_7" type="ColorRect" parent="." unique_id=1215725385]
+visible = false
+custom_minimum_size = Vector2(40, 8)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 76.0
+offset_bottom = -156.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.95686275, 0.9019608, 0.7372549, 1)
+
+[node name="inner_bar" type="ColorRect" parent="bar_7" unique_id=1167983255]
+custom_minimum_size = Vector2(36, 4)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -2.0
+offset_right = 18.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.5647059, 0.6862745, 0.2, 1)
+
+[node name="bar_8" type="ColorRect" parent="." unique_id=430387953]
+visible = false
+custom_minimum_size = Vector2(40, 8)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 52.0
+offset_bottom = -180.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.95686275, 0.9019608, 0.7372549, 1)
+
+[node name="inner_bar" type="ColorRect" parent="bar_8" unique_id=1476868227]
 custom_minimum_size = Vector2(36, 4)
 layout_mode = 1
 anchors_preset = -1
