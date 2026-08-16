@@ -43,6 +43,7 @@ func on_plant_grow(plant_id: int):
 	var plant_location = get_plant_by_id(plant_id)
 	var plant_grow_location = plant_location + Vector2i.UP
 	plants.append(plant_grow_location)
+	propogate_resources()
 
 func create_blank_grid():
 	for j in 5:

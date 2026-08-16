@@ -12,6 +12,7 @@ var final_plant_size : int = 3
 var current_plant_size : int = 1
 
 var plant_id : int
+var starting_vital_level : int = 5
 
 # for how long has the plant been at optimal levels?
 var plant_statisfied_round_count : int = 0
@@ -81,9 +82,9 @@ func _initialize(level: int):
 
 func initialize():
 	print("initializing")
-	photosynthesis_vital.value = photosynthesis_vital.vital_lower_optimal
-	moisture_vital.value = moisture_vital.vital_lower_optimal
-	nutrients_vital.value = nutrients_vital.vital_lower_optimal
+	photosynthesis_vital.value = starting_vital_level
+	moisture_vital.value = starting_vital_level
+	nutrients_vital.value = starting_vital_level
 	current_plant_size = starting_plant_size
 	clear_resource_inputs(plant_id)
 	warning_queue.clear()
