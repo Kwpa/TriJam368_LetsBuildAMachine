@@ -5,6 +5,7 @@ var card_track_scene = preload("res://scenes/card_track.tscn")
 var selected_card_track
 var draw_interval = 0.4
 
+var turn_action_count: int
 var actions_remaining: int
 var can_act: bool = false
 var initializing: bool
@@ -15,17 +16,16 @@ var weights : Array[float]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	print("hand ready")
+	turn_action_count = Constants.TURN_ACTION_COUNT
 	$HandContainer.size.x = 160 * Constants.HAND_SIZE_LIMIT
 	SignalBus.connect("use_card",use_selected_card)
 	SignalBus.connect("end_turn", end_turn)
-	SignalBus.connect("restart_level", start_level)
-
-func start_level(_level: int) -> void:
-	recycle_hand()
-	deal_opening_hand()
+	SignalBus.connect("set_actions_per_turn", set_turn_action_count)
 
 
 func deal_opening_hand() -> void:
+	
 	initializing = true
 	for child in $HandContainer.get_children():
 		child.free()
@@ -36,13 +36,15 @@ func deal_opening_hand() -> void:
 	for n in Constants.card_weights:
 		weights.append(n * Constants.CARD_WEIGHT_MULTIPLIER)
 	
-	# set actions to default count for one turn
-	actions_remaining = Constants.TURN_ACTION_COUNT
-	
 	# let the player begin with a hand of cards containing at least one generator of each kind
 	for res in [Constants.resource.water, Constants.resource.nutrients]: 
+			# play audio
 		add_card_to_hand(get_random_by_resource(res), deck_pos, 0)
 		await get_tree().create_timer(1).timeout
+	
+	# set actions to default count for one turn
+	actions_remaining = turn_action_count
+	SignalBus.count_action.emit(actions_remaining)
 	
 	# also give them a lamp and a sprinkler for easy testing
 	add_card_to_hand(Constants.all_cards.get(Constants.card_id.lamp), deck_pos, 0)
@@ -67,7 +69,7 @@ func count_action(increment: int):
 	SignalBus.count_action.emit(actions_remaining)
 
 func add_card_to_hand(card : CardData, pos: Vector2, action_increment: int) -> void:
-
+	AudioManager.play_sfx_once("card")
 	#print_debug("adding card to hand %s" % card.title)
 	# disable actions until this action is complete
 	can_act = false
@@ -89,6 +91,8 @@ func add_card_to_hand(card : CardData, pos: Vector2, action_increment: int) -> v
 	$HandContainer.add_child(dummy_track)
 	var dummy_pos_x = dummy_track.position.x - 77 * $HandContainer.get_child_count()
 	var dummy_pos_y = dummy_track.position.y - 80
+	
+
 
 	# grow the dummy to make room 
 	add_tween.tween_property(dummy_track, "custom_minimum_size:x", 160, draw_interval).set_delay(draw_interval/3).set_ease(Tween.EASE_IN)
@@ -254,6 +258,7 @@ func recycle_selected_card() -> void:
 	for track: CardTrack in $HandContainer.get_children():
 		if track.is_selected:
 			# change_card_weight(track.get_card_data(), true)
+			AudioManager.play_sfx2("remove_1")
 			remove_card_from_hand(track)
 	return
 
@@ -261,6 +266,7 @@ func recycle_hand() -> void:
 	if $HandContainer.get_children().size() == 0:
 		return
 	# recycles the entire hand for free
+	AudioManager.play_sfx2("remove_1")
 	for track in $HandContainer.get_children():
 		remove_card_from_hand(track)
 	count_action(0)
@@ -287,14 +293,19 @@ func use_selected_card() -> void:
 
 func end_turn():
 	# deselect any selected cards (this will also exit placement mode)
+	AudioManager.play_sfx2("click")
 	for card_track in $HandContainer.get_children():
 		if card_track.is_selected:
 			card_track.toggle_selection()
 			
 	# set actions to default count for one turn
-	actions_remaining = Constants.TURN_ACTION_COUNT
+	actions_remaining = turn_action_count
 	SignalBus.count_action.emit(actions_remaining)
 	
 	# draw one card for free
 	if $HandContainer.get_child_count() < Constants.HAND_SIZE_LIMIT:
 		add_card_to_hand(get_random_card_data(), $DeckParent.global_position, 0)
+
+func set_turn_action_count(count: int):
+	print("actions: ", count)
+	turn_action_count = count

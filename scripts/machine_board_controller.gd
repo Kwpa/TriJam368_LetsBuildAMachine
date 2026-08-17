@@ -26,9 +26,11 @@ var tile_direction := Vector2i(0,-1)
 var applied_transform : int
 
 signal remove_card(card: CardData, pos: Vector2)
+signal clear_dispensers
 
 func load_level(level_def : LevelData):
 	clear()
+	clear_dispensers.emit()
 	var plant_count: int = 0
 	for tile in level_def.tiles:
 		print([tile.tilemap_coords, Constants.tile_card_mapping[tile.tile].source_id, Constants.tile_card_mapping[tile.tile].atlas_coords, tile.rotation])
@@ -36,6 +38,7 @@ func load_level(level_def : LevelData):
 		if tile.tile == Constants.card_id.plant:
 			plant_location = tile.tilemap_coords
 			var trellis_layer : TileMapLayer = get_node("../trellis_layer")
+			trellis_layer.clear()
 			trellis_layer.set_cell(tile.tilemap_coords, 6, Vector2i(0, 1), 0)
 			var second_trellis_cell = tile.tilemap_coords + Vector2i.UP
 			trellis_layer.set_cell(second_trellis_cell, 6, Vector2i(0, 0), 0)
@@ -111,6 +114,7 @@ func removal_check(card_id : int) -> bool:
 		return true 
 
 func remove_tile(card_id: int, pos: Vector2) -> void:
+	AudioManager.play_sfx2("remove", -9.0)
 	# get the card data from the ID
 	var card = Constants.all_cards.get(card_id)
 	# emit the card data of the removed card and its position in the tilemap
@@ -160,7 +164,7 @@ func _input(event) -> void:
 						currently_selected_alt_id = 3
 					3:
 						currently_selected_alt_id = 0
-						
+				AudioManager.play_sfx_once("rotate",1)		
 				SignalBus.emit_signal("rotate_preview_tile", currently_selected_alt_id)
 				
 				
@@ -185,7 +189,7 @@ func _input(event) -> void:
 								applied_transform = 0
 						
 						selected_tile = cell_coords
-						
+						AudioManager.play_sfx_once("rotate",1)
 						set_cell(pos, 1, selected_tile, applied_transform)
 						SignalBus.emit_signal("propogate_resources")
 

@@ -7,14 +7,19 @@ var current_level: int = 0
 
 func _ready() -> void:
 	# start the level
-	initialize(0)
+	initialize(Constants.select_level)
 	
 	# check resources + update tiles in the machine_scene
 	SignalBus.connect("enter_hand_mode",enter_hand_mode)
 	SignalBus.connect("enter_rotate_mode",enter_rotate_mode)
 	SignalBus.connect("enter_remove_mode",enter_remove_mode)
 	SignalBus.connect("end_game", end_game)
-	SignalBus.connect("restart_level", initialize)
+	SignalBus.connect("restart_level", _initialize)
+	SignalBus.connect("start_level", initialize)
+
+
+func _initialize():
+	initialize(current_level)
 
 
 func initialize(level: int):
@@ -27,22 +32,8 @@ func initialize(level: int):
 func get_level_def(id : int):
 	for def in Constants.level_definitions:
 		if def.level_id == id:
+			$ui/summary_layout/title_label.text = def.title
 			base_tilemap_layer.load_level(def)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
-func _on_tile_map_changed() -> void:
-	# check for win
-	pass # Replace with function body.
-
-func _on_card_selected() -> void:
-	#$machine_scene/TileMapLayer.selected_tile = Vector2i(1,1)
-	pass
-
 
 func enter_hand_mode():
 	#print_debug("entering hand mode")
@@ -97,4 +88,4 @@ func end_game(win: bool):
 
 
 func _on_restart_button_pressed() -> void:
-	initialize(current_level)
+	SignalBus.restart_level.emit()

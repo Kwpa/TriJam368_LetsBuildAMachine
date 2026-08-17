@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://dngiuhq5ehbk6"]
+
+[ext_resource type="Script" uid="uid://cx04q44t4hl2w" path="res://addons/any_audio_manager/Scripts/audio_manager.gd" id="1_je6gq"]
+[ext_resource type="Script" uid="uid://c8hltc037dgci" path="res://addons/any_audio_manager/Scripts/Resources/audio_library.gd" id="2_afrak"]
+[ext_resource type="Script" uid="uid://cgcton68ihwfi" path="res://addons/any_audio_manager/Scripts/Resources/audio_entry.gd" id="2_xtu4j"]
+[ext_resource type="Script" uid="uid://be73xmvos8o41" path="res://addons/any_audio_manager/Scripts/Resources/audio_setting.gd" id="4_c50nw"]
+[ext_resource type="Script" uid="uid://ba7om6b5pr0ql" path="res://addons/any_audio_manager/Scripts/audio_setting_library.gd" id="5_snu7c"]
+
+[sub_resource type="Resource" id="Resource_c50nw"]
+resource_name = "audio_game_music_001_2026_07"
+script = ExtResource("2_xtu4j")
+key = &"audio_game_music_001_2026_07"
+path = "res://audio/audio_game_music_001_2026_07.mp3"
+
+[sub_resource type="Resource" id="Resource_snu7c"]
+resource_name = "beep"
+script = ExtResource("2_xtu4j")
+key = &"beep"
+path = "res://audio/beep.wav"
+
+[sub_resource type="Resource" id="Resource_2kd2v"]
+resource_name = "beep_1"
+script = ExtResource("2_xtu4j")
+key = &"beep_1"
+path = "res://audio/beep_1.wav"
+
+[sub_resource type="Resource" id="Resource_3l0q1"]
+resource_name = "beep_2"
+script = ExtResource("2_xtu4j")
+key = &"beep_2"
+path = "res://audio/beep_2.wav"
+
+[sub_resource type="Resource" id="Resource_t2quw"]
+resource_name = "card"
+script = ExtResource("2_xtu4j")
+key = &"card"
+path = "res://audio/card.mp3"
+
+[sub_resource type="Resource" id="Resource_ye308"]
+resource_name = "card_select"
+script = ExtResource("2_xtu4j")
+key = &"card_select"
+path = "res://audio/card_select.wav"
+
+[sub_resource type="Resource" id="Resource_xbjkw"]
+resource_name = "card_select_1"
+script = ExtResource("2_xtu4j")
+key = &"card_select_1"
+path = "res://audio/card_select_1.wav"
+
+[sub_resource type="Resource" id="Resource_cjps8"]
+resource_name = "click"
+script = ExtResource("2_xtu4j")
+key = &"click"
+path = "res://audio/click.wav"
+
+[sub_resource type="Resource" id="Resource_uqdlb"]
+resource_name = "end_turn"
+script = ExtResource("2_xtu4j")
+key = &"end_turn"
+path = "res://audio/end_turn.wav"
+
+[sub_resource type="Resource" id="Resource_qdxeg"]
+resource_name = "growth"
+script = ExtResource("2_xtu4j")
+key = &"growth"
+path = "res://audio/growth.wav"
+
+[sub_resource type="Resource" id="Resource_ibpcr"]
+resource_name = "place_tile"
+script = ExtResource("2_xtu4j")
+key = &"place_tile"
+path = "res://audio/place_tile.wav"
+
+[sub_resource type="Resource" id="Resource_3turk"]
+resource_name = "remove"
+script = ExtResource("2_xtu4j")
+key = &"remove"
+path = "res://audio/remove.wav"
+
+[sub_resource type="Resource" id="Resource_0tna6"]
+resource_name = "remove_1"
+script = ExtResource("2_xtu4j")
+key = &"remove_1"
+path = "res://audio/remove_1.wav"
+
+[sub_resource type="Resource" id="Resource_xjx2w"]
+resource_name = "remove_2"
+script = ExtResource("2_xtu4j")
+key = &"remove_2"
+path = "res://audio/remove_2.wav"
+
+[sub_resource type="Resource" id="Resource_qmvye"]
+resource_name = "rotate"
+script = ExtResource("2_xtu4j")
+key = &"rotate"
+path = "res://audio/rotate.wav"
+
+[sub_resource type="Resource" id="Resource_xtu4j"]
+script = ExtResource("2_afrak")
+audio_dir = "res://audio"
+entries = [SubResource("Resource_c50nw"), SubResource("Resource_snu7c"), SubResource("Resource_2kd2v"), SubResource("Resource_3l0q1"), SubResource("Resource_t2quw"), SubResource("Resource_ye308"), SubResource("Resource_xbjkw"), SubResource("Resource_cjps8"), SubResource("Resource_uqdlb"), SubResource("Resource_qdxeg"), SubResource("Resource_ibpcr"), SubResource("Resource_3turk"), SubResource("Resource_0tna6"), SubResource("Resource_xjx2w"), SubResource("Resource_qmvye")]
+metadata/_custom_type_script = "uid://c8hltc037dgci"
+
+[sub_resource type="Resource" id="Resource_5y6jx"]
+script = ExtResource("4_c50nw")
+
+[sub_resource type="Resource" id="Resource_yurg4"]
+script = ExtResource("4_c50nw")
+fade_in = 3.0
+
+[sub_resource type="Resource" id="Resource_6cqcw"]
+script = ExtResource("5_snu7c")
+entries = [SubResource("Resource_5y6jx"), SubResource("Resource_yurg4")]
+metadata/_custom_type_script = "uid://ba7om6b5pr0ql"
+
+[node name="AudioManager" type="Node" unique_id=86541453]
+script = ExtResource("1_je6gq")
+audio_library = SubResource("Resource_xtu4j")
+audio_setting_library = SubResource("Resource_6cqcw")
+audio_bus = Array[StringName]([&"Music", &"SFX", &"SFX2"])

@@ -2,7 +2,7 @@ extends Node
 
 var HAND_SIZE_LIMIT = 6
 var OPENING_HAND_SIZE = 4
-var TURN_ACTION_COUNT = 2
+var TURN_ACTION_COUNT = 3
 
 var CARD_WEIGHT_MULTIPLIER = 3
 var CARD_WEIGHT_DECREASE = 0.5
@@ -43,7 +43,10 @@ enum card_id {
 	sprinkler_light = 22,
 	sprinkler_nutrients = 23,
 	sprinkler_water = 24,
-	trellis_empty = 25
+	trellis_empty = 25,
+	lamp_active = 26,
+	sprinkler_active_water = 27,
+	sprinkler_active_nutrients = 28
 }
 
 var card_weights = [
@@ -186,10 +189,11 @@ var tile_card_mapping = {
 	}
 }
 
-var select_level := 0
+var select_level : int = 0
 var level_definitions = [
 	LevelData.new(
 		0,
+		"The First Machine",
 		[
 			{
 				## generator 1 
@@ -213,6 +217,7 @@ var level_definitions = [
 	),
 	LevelData.new(
 		1,
+		"The Second Machine",
 		[
 			{
 				## generator 1 
@@ -236,6 +241,7 @@ var level_definitions = [
 	),
 	LevelData.new(
 		2,
+		"The Third Machine",
 		[
 			{
 				## generator 1 
@@ -394,5 +400,39 @@ var all_cards : Dictionary = {
 		"When attached to electricity, generates nutrients.",
 		Vector2i(1, 5),
 		Constants.resource.nutrients
+	),
+	card_id.lamp_active: CardData.new(
+		"Lamp",
+		"When attached to electricity, distributes light in a cone.",
+		Vector2i(3, 5),
+		Constants.resource.light,
+		{
+			Constants.resource.electricity: Vector2i(3, 6)
+		}
+	),
+	card_id.sprinkler_active_water: CardData.new(
+		"Sprinkler",
+		"When attached to water or nutrients, distributes it in a cone.",
+		Vector2i(2, 1),
+		Constants.resource.none,
+		{
+			Constants.resource.water: Vector2i(3, 2),
+			Constants.resource.nutrients: Vector2i(3, 0)
+		}
+	),
+	card_id.sprinkler_active_nutrients: CardData.new(
+		"Sprinkler",
+		"When attached to water or nutrients, distributes it in a cone.",
+		Vector2i(2, 1),
+		Constants.resource.none,
+		{
+			Constants.resource.water: Vector2i(3, 2),
+			Constants.resource.nutrients: Vector2i(3, 0)
+		}
 	)
 	}
+
+var audio_keys = {
+	"main_music":"audio_game_music_001_2026_07",
+	"card_enter":"card"
+}

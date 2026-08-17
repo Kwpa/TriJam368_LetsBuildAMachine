@@ -25,6 +25,7 @@ func enter_remove_mode():
 
 
 func _on_pressed() -> void:
+	
 	match mode:
 		"hand":
 			SignalBus.emit_signal("enter_hand_mode")

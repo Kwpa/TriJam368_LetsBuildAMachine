@@ -28,5 +28,7 @@ func on_selected_changed(is_selected : bool) -> void:
 	# format the card based on whether it's selected
 	if is_selected:
 		$Container/card_tile_background/card_tile_image.self_modulate = Color(1,1,1,.5)
+		AudioManager.play_sfx_once("card_select_1", 5)
 	else:
 		$Container/card_tile_background/card_tile_image.self_modulate = Color(1,1,1,1)
+		AudioManager.play_sfx_once("card_select", 5)
