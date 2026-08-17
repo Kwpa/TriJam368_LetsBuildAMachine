@@ -165,7 +165,8 @@ text = "Once the plant is two tiles large, it will need more resources. Be sure 
 
 To fulfill water and nutrient needs for a larger plant, sprinkle them on both tiles, or sprinkle on either tile and make a direct connection to the plant's pot.
 
-One sprinkler can dispnse both water and nutrients, but a nutrients can't pass through a resevoir and water won't flow through a compost."
+One sprinkler can dispnse both water and nutrients, but a nutrients can't pass through a resevoir and water won't flow through a compost.
+[center][img=20%]res://textures/generators_block_image.png[/img][/center]"
 vertical_alignment = 1
 
 [node name="close_button" type="Button" parent="Page3/VBoxContainer" unique_id=1649387054]
@@ -317,7 +318,8 @@ theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
 text = "Every turn, you'll get a card for free, but only if you have room in your hand. Try to discard down to six cards by the end of your turn to make sure you get your free card!
 
-A growing plant needs more resources. Keep meeting the new thresholds to grow your plant as big as it can be!"
+A growing plant needs more resources. Keep meeting the new thresholds to grow your plant as big as it can be!
+[center][img=50%]res://textures/large-plant-zoom.png[/img][/center]"
 vertical_alignment = 1
 
 [node name="close_button" type="Button" parent="Page6/VBoxContainer" unique_id=1038586455]

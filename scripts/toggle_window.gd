@@ -1,7 +1,7 @@
 extends Control
 
 var current_index = 0
-@onready var pages = [$Page1, $Page2, $Page3, $Page4, $Page5]
+@onready var pages = [$Page1, $Page2, $Page3, $Page4, $Page5, $Page6]
 @onready var next_button = $NextButton
 @onready var prev_button = $PrevButton
 
