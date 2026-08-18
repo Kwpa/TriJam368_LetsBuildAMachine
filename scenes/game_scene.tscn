@@ -21,7 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://dhjoob0tweysx" path="res://scenes/lose.tscn" id="15_liy57"]
 [ext_resource type="TileSet" uid="uid://dli7vlje34tbu" path="res://scenes/machine_tileset.tres" id="16_s76x2"]
 [ext_resource type="Script" uid="uid://c83iagyioueq" path="res://scripts/dispenser_layer.gd" id="17_77hjl"]
-[ext_resource type="Script" uid="uid://dk4shu0xvxvj8" path="res://scripts/game_audio.gd" id="21_ro0ie"]
+[ext_resource type="Script" path="res://scripts/game_audio.gd" id="21_ro0ie"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mixcd"]
 bg_color = Color(0.91764706, 0.827451, 0.5529412, 1)
@@ -257,7 +257,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "View Rules"
+text = "Rules"
 
 [node name="restart_button" type="Button" parent="ui/summary_layout" unique_id=123762772]
 custom_minimum_size = Vector2(200, 40)
