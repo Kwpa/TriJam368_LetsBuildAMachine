@@ -23,6 +23,7 @@ offset_bottom = 1081.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1m7fe")
 
 [node name="Page1" type="Panel" parent="." unique_id=1622434171]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -51,21 +52,23 @@ offset_right = 29.0
 offset_bottom = 232.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 34
+theme_override_constants/separation = 20
 
 [node name="Text" type="RichTextLabel" parent="Page1/VBoxContainer" unique_id=878142177]
-custom_minimum_size = Vector2(600, 400)
+custom_minimum_size = Vector2(600, 425)
 layout_mode = 2
 theme = ExtResource("1_3spy8")
 theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
 text = "Build a machine to grow your plant!
 
-You have a hand of cards with useful machine parts. Place them on the grid to build a machine that supports your plant. To grow and thrive, a plant needs enough of three resources: [img=5%]res://textures/icon_light.png[/img]light, [img=5%]res://textures/icon_water.png[/img]water and [img=5%]res://textures/icon_nutrients.png[/img]nutrients. 
+You have a hand of cards with useful machine parts. Place them on the grid to build a machine that supports your plant. Every turn, you'll take a limited number of actions to help your plant get resources.
 
-Every turn, if your plant has enough resources, it will progress towards growing! For the plant to thrive, all resources have to be above the threshold line. A thriving plant will grow to take up two tiles.
+To thrive and grow, a plant needs enough of three resources: [img=5%]res://textures/icon_light.png[/img]light, [img=5%]res://textures/icon_water.png[/img]water and [img=5%]res://textures/icon_nutrients.png[/img]nutrients. If your plant has enough of all three, it will thrive! Once all resources are above the threshold level, the plant will grow onto the trellis.
 
-If any resource runs out, your plant will die! A red resource meter means your plant is in danger."
+If any resource runs out, your plant will die! A red resource meter means your plant is in danger.
+
+[center]1/6[/center]"
 vertical_alignment = 1
 
 [node name="close_button" type="Button" parent="Page1/VBoxContainer" unique_id=1188268794]
@@ -102,21 +105,23 @@ offset_right = 29.0
 offset_bottom = 232.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 34
+theme_override_constants/separation = 20
 
 [node name="Text2" type="RichTextLabel" parent="Page2/VBoxContainer" unique_id=2143285530]
-custom_minimum_size = Vector2(600, 400)
+custom_minimum_size = Vector2(600, 425)
 layout_mode = 2
 theme = ExtResource("1_3spy8")
 theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
-text = "[img=8%]res://textures/icon_lamp.png[/img] The lamp provides light.
+text = "Special tiles dispense resources:
+[img=8%]res://textures/icon_lamp.png[/img] The lamp provides light.
 [img=8%]res://textures/icon_reservoir.png[/img] The reservoir generates water. 
 [img=8%]res://textures/icon_compost.png[/img] The compost bin generates nutrients. 
 
-[img=8%]res://textures/icon_generator.png[/img] The electricity generator provides [img=5%]res://textures/icon_electricity.png[/img]electricity to other tiles when it is connected with a pipe. The lamp, the reservoir and the compost bin all need electricity to produce their resource.
+[img=8%]res://textures/icon_generator.png[/img] The electricity generator provides [img=5%]res://textures/icon_electricity.png[/img]electricity to tiles it's connected to. The lamp, the reservoir and the compost bin all need electricity to produce their resource.
 
-Water and nutrients can be connected directly to the plant's pot, or sprinkled from a sprinkler. [img=8%]res://textures/icon_sprinkler.png[/img]"
+Water and nutrients can be connected directly to the plant's pot, or sprinkled from a sprinkler. [img=8%]res://textures/icon_sprinkler.png[/img]
+[center]2/6[/center]"
 vertical_alignment = 1
 
 [node name="close_button" type="Button" parent="Page2/VBoxContainer" unique_id=1305804581]
@@ -153,10 +158,10 @@ offset_right = 29.0
 offset_bottom = 232.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 34
+theme_override_constants/separation = 20
 
 [node name="Text" type="RichTextLabel" parent="Page3/VBoxContainer" unique_id=2115627314]
-custom_minimum_size = Vector2(600, 400)
+custom_minimum_size = Vector2(600, 425)
 layout_mode = 2
 theme = ExtResource("1_3spy8")
 theme_override_font_sizes/normal_font_size = 18
@@ -165,8 +170,9 @@ text = "Once the plant is two tiles large, it will need more resources. Be sure 
 
 To fulfill water and nutrient needs for a larger plant, sprinkle them on both tiles, or sprinkle on either tile and make a direct connection to the plant's pot.
 
-One sprinkler can dispnse both water and nutrients, but a nutrients can't pass through a resevoir and water won't flow through a compost.
-[center][img=20%]res://textures/generators_block_image.png[/img][/center]"
+One sprinkler can dispnse both water and nutrients, but a nutrients can't pass through a resevoir and water won't flow through a compost bin. This sprinkler only dispenses water, not nutrients.
+[center][img=20%]res://textures/generators_block_image.png[/img][/center]
+[center]3/6[/center]"
 vertical_alignment = 1
 
 [node name="close_button" type="Button" parent="Page3/VBoxContainer" unique_id=1649387054]
@@ -203,15 +209,15 @@ offset_right = 29.0
 offset_bottom = 232.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 34
+theme_override_constants/separation = 20
 
 [node name="Text" type="RichTextLabel" parent="Page4/VBoxContainer" unique_id=265352632]
-custom_minimum_size = Vector2(600, 400)
+custom_minimum_size = Vector2(600, 425)
 layout_mode = 2
 theme = ExtResource("1_3spy8")
 theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
-text = "You have limited actions each round. Change the number of actions per turn with the difficulty setting: 
+text = "You have limited actions each turn. Change the number of actions per turn with the difficulty setting: 
 [center][img=40%]res://textures/difficulty_image.png[/img][/center]
 
 Spend your actions by
@@ -219,7 +225,11 @@ Spend your actions by
 Clicking on the deck to draw a card into your hand
 Clicking on a card, then on the grid to add a part to your machine
 [/ul]
-"
+
+
+
+
+[center]4/6[/center]"
 vertical_alignment = 1
 
 [node name="close_button" type="Button" parent="Page4/VBoxContainer" unique_id=1324444757]
@@ -256,10 +266,10 @@ offset_right = 29.0
 offset_bottom = 232.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 34
+theme_override_constants/separation = 20
 
 [node name="Text" type="RichTextLabel" parent="Page5/VBoxContainer" unique_id=408244096]
-custom_minimum_size = Vector2(600, 400)
+custom_minimum_size = Vector2(600, 425)
 layout_mode = 2
 theme = ExtResource("1_3spy8")
 theme_override_font_sizes/normal_font_size = 18
@@ -271,7 +281,11 @@ Click Rotate Mode then click on a tile in the machine to rotate a tile that has 
 Click on Remove Mode then on a tile to move a tile from the machine into your hand
 [/ul]
 
-When you're out of actions, click End Turn. A plant with enough resources will grow! A plant missing resources may wilt."
+When you're out of actions, click End Turn. A plant with enough resources will grow! A plant missing resources may wilt.
+
+
+
+[center]5/6[/center]"
 vertical_alignment = 1
 
 [node name="close_button" type="Button" parent="Page5/VBoxContainer" unique_id=1541109375]
@@ -308,10 +322,10 @@ offset_right = 29.0
 offset_bottom = 232.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 34
+theme_override_constants/separation = 20
 
 [node name="Text" type="RichTextLabel" parent="Page6/VBoxContainer" unique_id=630994014]
-custom_minimum_size = Vector2(600, 400)
+custom_minimum_size = Vector2(600, 425)
 layout_mode = 2
 theme = ExtResource("1_3spy8")
 theme_override_font_sizes/normal_font_size = 18
@@ -319,7 +333,9 @@ bbcode_enabled = true
 text = "Every turn, you'll get a card for free, but only if you have room in your hand. Try to discard down to six cards by the end of your turn to make sure you get your free card!
 
 A growing plant needs more resources. Keep meeting the new thresholds to grow your plant as big as it can be!
-[center][img=50%]res://textures/large-plant-zoom.png[/img][/center]"
+[center][img=50%]res://textures/large-plant-zoom.png[/img]
+[/center]
+[center]6/6[/center]"
 vertical_alignment = 1
 
 [node name="close_button" type="Button" parent="Page6/VBoxContainer" unique_id=1038586455]
