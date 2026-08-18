@@ -51,6 +51,17 @@ func grow_plant(plant_id: int):
 	set_cell(second_plant_tile, 2, Vector2i(0, 0), 0)
 
 
+func plant_end_state(victory: bool):
+	if victory:
+		set_cell(plant_location, 10, Vector2i(0, 1), 0)
+		var second_plant_tile = plant_location + Vector2i.UP
+		set_cell(second_plant_tile, 10, Vector2i(0, 0), 0)
+	else:
+		set_cell(plant_location, 5, Vector2i(3, 2), 0)
+		var second_plant_tile = plant_location + Vector2i.UP
+		set_cell(second_plant_tile, 7, Vector2i(0, 0), 0)
+
+
 func rotate_cw():
 	rotate_tile("cw")
 
@@ -76,6 +87,7 @@ func _ready() -> void:
 	SignalBus.connect("enter_hand_mode", enter_hand_mode)
 	SignalBus.connect("enter_place_mode", enter_place_mode)
 	SignalBus.connect("grow_plant", grow_plant)
+	SignalBus.connect("end_game", plant_end_state)
 
 
 # find out if certain tiles connect with each other based on tile colliders
