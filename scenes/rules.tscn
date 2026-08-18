@@ -23,7 +23,6 @@ offset_bottom = 1081.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_1m7fe")
 
 [node name="Page1" type="Panel" parent="." unique_id=1622434171]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -64,7 +63,7 @@ text = "Build a machine to grow your plant!
 
 You have a hand of cards with useful machine parts. Place them on the grid to build a machine that supports your plant. Every turn, you'll take a limited number of actions to help your plant get resources.
 
-To thrive and grow, a plant needs enough of three resources: [img=5%]res://textures/icon_light.png[/img]light, [img=5%]res://textures/icon_water.png[/img]water and [img=5%]res://textures/icon_nutrients.png[/img]nutrients. If your plant has enough of all three, it will thrive! Once all resources are above the threshold level, the plant will grow onto the trellis.
+To thrive and grow, a plant needs enough of three resources: [img=5%]res://textures/icon_light.png[/img]light, [img=5%]res://textures/icon_water.png[/img]water and [img=5%]res://textures/icon_nutrients.png[/img] nutrients. If your plant has enough of all three, it will thrive! Once all resources are above the threshold level, the plant will grow onto the trellis.
 
 If any resource runs out, your plant will die! A red resource meter means your plant is in danger.
 
@@ -170,7 +169,7 @@ text = "Once the plant is two tiles large, it will need more resources. Be sure 
 
 To fulfill water and nutrient needs for a larger plant, sprinkle them on both tiles, or sprinkle on either tile and make a direct connection to the plant's pot.
 
-One sprinkler can dispnse both water and nutrients, but a nutrients can't pass through a resevoir and water won't flow through a compost bin. This sprinkler only dispenses water, not nutrients.
+One sprinkler can dispnse both water and nutrients, but a nutrients can't pass through a resevoir and water won't flow through a compost bin. This sprinkler only dispenses water, not nutrients:
 [center][img=20%]res://textures/generators_block_image.png[/img][/center]
 [center]3/6[/center]"
 vertical_alignment = 1
@@ -218,6 +217,7 @@ theme = ExtResource("1_3spy8")
 theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
 text = "You have limited actions each turn. Change the number of actions per turn with the difficulty setting: 
+
 [center][img=40%]res://textures/difficulty_image.png[/img][/center]
 
 Spend your actions by
@@ -275,6 +275,7 @@ theme = ExtResource("1_3spy8")
 theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
 text = "You can also do any of these things without spending an action:
+
 [ul]
 Select a card, then click on Recycle a Card to discard a card from your hand
 Click Rotate Mode then click on a tile in the machine to rotate a tile that has already been placed
