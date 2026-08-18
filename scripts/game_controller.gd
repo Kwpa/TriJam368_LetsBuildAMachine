@@ -2,8 +2,18 @@ extends Node2D
 
 @onready var base_tilemap_layer = $machine_scene/tile_map 
 
-var mode := "hand"
+static var mode := "hand"
 var current_level: int = 0
+
+func set_mode(mode_name : String):
+	if mode != mode_name:
+		if mode_name == "place":
+			SignalBus.emit_signal("show_place_halo")
+		if mode == "place":
+			SignalBus.emit_signal("hide_place_halo")
+		
+		mode = mode_name
+
 
 func _ready() -> void:
 	# start the level
@@ -11,6 +21,7 @@ func _ready() -> void:
 	
 	# check resources + update tiles in the machine_scene
 	SignalBus.connect("enter_hand_mode",enter_hand_mode)
+	SignalBus.connect("enter_place_mode",enter_place_mode)
 	SignalBus.connect("enter_rotate_mode",enter_rotate_mode)
 	SignalBus.connect("enter_remove_mode",enter_remove_mode)
 	SignalBus.connect("end_game", end_game)
@@ -37,7 +48,15 @@ func get_level_def(id : int):
 
 func enter_hand_mode():
 	#print_debug("entering hand mode")
-	mode = "hand"
+	set_mode("hand")
+	$card_scene.modulate = Color(1,1,1,1)
+	$ui/modes_layout/mode_button_hand.button_pressed = true
+	$ui/modes_layout/mode_button_rotate.button_pressed = false
+	$ui/modes_layout/mode_button_remove.button_pressed = false
+
+func enter_place_mode(a,b):
+	#print_debug("entering hand mode")
+	set_mode("place")
 	$card_scene.modulate = Color(1,1,1,1)
 	$ui/modes_layout/mode_button_hand.button_pressed = true
 	$ui/modes_layout/mode_button_rotate.button_pressed = false
@@ -46,7 +65,7 @@ func enter_hand_mode():
 func enter_rotate_mode():
 	#print_debug("entering rotate mode")
 	exit_hand_mode()
-	mode = "rotate"
+	set_mode("rotate")
 	#TODO: why doesn't the button group do this properly?
 	$ui/modes_layout/mode_button_hand.button_pressed = false
 	$ui/modes_layout/mode_button_rotate.button_pressed = true
@@ -57,7 +76,7 @@ func enter_remove_mode() -> void:
 		# if the hand is small enough, let the player remove the card
 		#print_debug("entering remove mode")
 		exit_hand_mode()
-		mode = "remove"
+		set_mode("remove")
 		#TODO: why doesn't the button group do this properly?
 		$ui/modes_layout/mode_button_hand.button_pressed = false
 		$ui/modes_layout/mode_button_rotate.button_pressed = false
@@ -70,7 +89,7 @@ func enter_remove_mode() -> void:
 		return
 
 func exit_hand_mode():
-	mode = "not_hand"
+	set_mode("not_hand")
 	$card_scene.modulate = Color(1,1,1,0.5)	
 	$machine_scene/preview_tile_layer.preview_mode = false
 	for card_track in $card_scene/HandContainer.get_children():

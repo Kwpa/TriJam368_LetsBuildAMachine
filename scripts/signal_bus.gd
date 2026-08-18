@@ -20,3 +20,5 @@ signal update_dispenser_layer(add_array : Array[InstantiatedTileData])
 signal restart_level() # restart the current level
 signal start_level(level: int) # start a specific level
 signal set_actions_per_turn(count: int)
+signal show_place_halo()
+signal hide_place_halo()

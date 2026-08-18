@@ -21,7 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://dhjoob0tweysx" path="res://scenes/lose.tscn" id="15_liy57"]
 [ext_resource type="TileSet" uid="uid://dli7vlje34tbu" path="res://scenes/machine_tileset.tres" id="16_s76x2"]
 [ext_resource type="Script" uid="uid://c83iagyioueq" path="res://scripts/dispenser_layer.gd" id="17_77hjl"]
-[ext_resource type="Script" path="res://scripts/game_audio.gd" id="21_ro0ie"]
+[ext_resource type="Script" uid="uid://dk4shu0xvxvj8" path="res://scripts/game_audio.gd" id="21_ro0ie"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mixcd"]
 bg_color = Color(0.91764706, 0.827451, 0.5529412, 1)
