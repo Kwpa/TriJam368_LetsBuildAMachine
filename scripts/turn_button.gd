@@ -7,6 +7,7 @@ func _ready():
 
 func end_turn():
 	SignalBus.emit_signal("end_turn")
+	SignalBus.emit_signal("enter_hand_mode")
 
 func count_action(actions: int):
 	actions_label.text = str("Actions: ", actions)

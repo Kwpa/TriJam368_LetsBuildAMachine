@@ -74,11 +74,11 @@ texture = ExtResource("2_rvs2r")
 [node name="machine_scene" parent="." unique_id=1380407925 instance=ExtResource("1_mlf6e")]
 position = Vector2(650, 21)
 
-[node name="background" parent="machine_scene" index="0" unique_id=365795777]
+[node name="background" parent="machine_scene" index="1" unique_id=365795777]
 z_index = -2
 z_as_relative = false
 
-[node name="plant_manager" parent="machine_scene" index="6" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital", "status_label")]
+[node name="plant_manager" parent="machine_scene" index="7" unique_id=1127051258 node_paths=PackedStringArray("photosynthesis_vital", "moisture_vital", "nutrients_vital", "status_label")]
 photosynthesis_vital = NodePath("../../ui/vitals/light_tracker")
 moisture_vital = NodePath("../../ui/vitals/water_tracker")
 nutrients_vital = NodePath("../../ui/vitals/nutrients_tracker")

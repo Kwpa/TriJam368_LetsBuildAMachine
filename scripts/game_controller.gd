@@ -13,7 +13,8 @@ func set_mode(mode_name : String):
 			SignalBus.emit_signal("hide_place_halo")
 		
 		mode = mode_name
-
+	elif mode_name != "place":
+		SignalBus.emit_signal("hide_place_halo")
 
 func _ready() -> void:
 	# start the level
@@ -107,4 +108,6 @@ func end_game(win: bool):
 
 
 func _on_restart_button_pressed() -> void:
+	if mode == "place":
+		SignalBus.enter_hand_mode.emit()
 	SignalBus.restart_level.emit()
