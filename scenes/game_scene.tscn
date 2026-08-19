@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://byh1wumvbepca" path="res://scenes/mode_button.tscn" id="9_mw25s"]
 [ext_resource type="Texture2D" uid="uid://cg1eepy05ghlk" path="res://textures/title.png" id="9_mwyo0"]
 [ext_resource type="Texture2D" uid="uid://cglnpdnmxl8nf" path="res://textures/atlas_texture_turn.tres" id="9_rvs2r"]
+[ext_resource type="Shader" uid="uid://c7nbkxmgxdwq3" path="res://shaders/shiny.gdshader" id="12_85lt4"]
 [ext_resource type="PackedScene" uid="uid://bu6qty2on1ff3" path="res://scenes/rules.tscn" id="12_ldkr4"]
 [ext_resource type="PackedScene" uid="uid://dpl6b3dmrnm5p" path="res://scenes/difficulty_setting.tscn" id="13_103ce"]
 [ext_resource type="PackedScene" uid="uid://cg8f0s5npuhn2" path="res://scenes/win.tscn" id="14_ldkr4"]
@@ -46,6 +47,15 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xgstd"]
+shader = ExtResource("12_85lt4")
+shader_parameter/glitter_color = Color(1, 1, 1, 0)
+shader_parameter/glitter_size = 0.18999999575312
+shader_parameter/glitter_hardness = 0.22999999485904
+shader_parameter/highlight_speed = -5.0
+shader_parameter/highlight_intensity = 0.20000000298024
+shader_parameter/highlight_band = true
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_103ce"]
 
@@ -164,6 +174,27 @@ theme_override_font_sizes/font_size = 28
 text = "End Turn"
 script = ExtResource("8_liy57")
 actions_label = NodePath("../actions_layout/actions_label")
+
+[node name="turn_button2" type="Button" parent="ui" unique_id=8206813 node_paths=PackedStringArray("actions_label")]
+visible = false
+material = SubResource("ShaderMaterial_xgstd")
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1481.0
+offset_top = 285.0
+offset_right = -199.0
+offset_bottom = -748.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 28
+text = "End Turn"
+script = ExtResource("8_liy57")
+actions_label = NodePath("../actions_layout/actions_label")
+metadata/_edit_use_anchors_ = true
 
 [node name="plant_status" type="Panel" parent="ui" unique_id=2000249460]
 layout_mode = 0
@@ -349,6 +380,7 @@ script = ExtResource("21_ro0ie")
 [connection signal="clear_dispensers" from="machine_scene/tile_map" to="machine_scene" method="clear_dispensers"]
 [connection signal="remove_card" from="machine_scene/tile_map" to="card_scene" method="add_card_to_hand"]
 [connection signal="pressed" from="ui/turn_button" to="ui/turn_button" method="end_turn"]
+[connection signal="pressed" from="ui/turn_button2" to="ui/turn_button2" method="end_turn"]
 [connection signal="pressed" from="ui/summary_layout/rules_button" to="ui/rules" method="on_open"]
 [connection signal="pressed" from="ui/summary_layout/restart_button" to="." method="_on_restart_button_pressed"]
 

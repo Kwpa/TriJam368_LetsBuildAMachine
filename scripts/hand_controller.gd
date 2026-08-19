@@ -68,6 +68,7 @@ func count_action(increment: int):
 	# send a signal to update the ui
 	SignalBus.count_action.emit(actions_remaining)
 
+
 func add_card_to_hand(card : CardData, pos: Vector2, action_increment: int) -> void:
 	AudioManager.play_sfx_once("card")
 	#print_debug("adding card to hand %s" % card.title)
