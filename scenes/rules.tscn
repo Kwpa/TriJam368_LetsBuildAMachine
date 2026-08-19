@@ -2,6 +2,10 @@
 
 [ext_resource type="Theme" uid="uid://bbyi1xd7xlpdw" path="res://theme/theme.tres" id="1_3spy8"]
 [ext_resource type="Script" uid="uid://4n7gue2hbu6t" path="res://scripts/toggle_window.gd" id="1_66h5d"]
+[ext_resource type="Texture2D" uid="uid://diijshtud53mx" path="res://textures/arrow.png" id="3_1m7fe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1m7fe"]
+bg_color = Color(0.13725491, 0.10980392, 0.07450981, 0.64705884)
 
 [node name="rules" type="Control" unique_id=1634946171]
 layout_mode = 3
@@ -12,22 +16,29 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_66h5d")
 
-[node name="background" type="Panel" parent="." unique_id=1622434171]
+[node name="Panel" type="Panel" parent="." unique_id=1882874777]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1081.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1m7fe")
+
+[node name="Page1" type="Panel" parent="." unique_id=1622434171]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -336.0
-offset_top = -507.0
-offset_right = 337.0
-offset_bottom = 300.0
+offset_left = -335.0
+offset_top = -256.0
+offset_right = 340.0
+offset_bottom = 269.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_3spy8")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="background" unique_id=1754609154]
+[node name="VBoxContainer" type="VBoxContainer" parent="Page1" unique_id=1754609154]
+custom_minimum_size = Vector2(600, 465)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -40,50 +51,331 @@ offset_right = 29.0
 offset_bottom = 232.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 20
 
-[node name="title" type="Label" parent="background/VBoxContainer" unique_id=209641859]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Rules"
-horizontal_alignment = 1
-
-[node name="rules" type="RichTextLabel" parent="background/VBoxContainer" unique_id=878142177]
-custom_minimum_size = Vector2(600, 675)
+[node name="Text" type="RichTextLabel" parent="Page1/VBoxContainer" unique_id=878142177]
+custom_minimum_size = Vector2(600, 425)
 layout_mode = 2
 theme = ExtResource("1_3spy8")
+theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
 text = "Build a machine to grow your plant!
 
-To grow and thrive, a plant needs enough of three resources:
-[ul]
-Light, from a lamp
-Water, from a water reservoir connected to the plant or sprinkled from a sprinkler
-Nutrients, from a compost bin connected to the plant or sprinkled from a sprinkler
-[/ul]
+You have a hand of cards with useful machine parts. Place them on the grid to build a machine that supports your plant. Every turn, you'll take a limited number of actions to help your plant get resources.
 
-Lamps, water reservoirs and compost bins must all be attached to the generator in order to produce their resource.
+To thrive and grow, a plant needs enough of three resources: [img=5%]res://textures/icon_light.png[/img]light, [img=5%]res://textures/icon_water.png[/img]water and [img=5%]res://textures/icon_nutrients.png[/img] nutrients. If your plant has enough of all three, it will thrive! Once all resources are above the threshold level, the plant will grow onto the trellis.
 
-You have two actions in each round. Any of these choices will spend an action:
-[ul]
-Click on the deck to draw a card into your hand
-Click on a card, then on the grid to place a tile in your machine
-[/ul]
+If any resource runs out, your plant will die! A red resource meter means your plant is in danger.
 
-You can also do any of these things without spending an action:
-[ul]
-Click on Recycle a Card to discard a card from your hand
-Click Rotate Mode then on a tile in the machien to rotate a tile that has already been placed
-Click on Remove Mode then on a tile to move a tile from the machine into your hand
-[/ul]
+[center]1/6[/center]"
+vertical_alignment = 1
 
-Every turn, you'll get a card for free, but only if you have room in your hand. Try to discard down to six cards by the end of your turn to make sure you get your free card!
-
-Every turn, your plant will grow or wilt, depending on whether it has enough resources. If any resource is below the plant’s tolerance for three turns, your plant will die. Once all three resources are above the plant’s threshold for three turns, your plant will grow!
-
-A growing plant needs more resources. Keep meeting the new thresholds to grow your plant as big as it can be!"
-
-[node name="close_button" type="Button" parent="background/VBoxContainer" unique_id=1188268794]
+[node name="close_button" type="Button" parent="Page1/VBoxContainer" unique_id=1188268794]
 layout_mode = 2
 text = "Close"
 
-[connection signal="pressed" from="background/VBoxContainer/close_button" to="." method="on_close"]
+[node name="Page2" type="Panel" parent="." unique_id=2064829826]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -335.0
+offset_top = -256.0
+offset_right = 340.0
+offset_bottom = 269.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_3spy8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Page2" unique_id=755090178]
+custom_minimum_size = Vector2(600, 465)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -232.5
+offset_right = 29.0
+offset_bottom = 232.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Text2" type="RichTextLabel" parent="Page2/VBoxContainer" unique_id=2143285530]
+custom_minimum_size = Vector2(600, 425)
+layout_mode = 2
+theme = ExtResource("1_3spy8")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "Special tiles dispense resources:
+[img=8%]res://textures/icon_lamp.png[/img] The lamp provides light.
+[img=8%]res://textures/icon_reservoir.png[/img] The reservoir generates water. 
+[img=8%]res://textures/icon_compost.png[/img] The compost bin generates nutrients. 
+
+[img=8%]res://textures/icon_generator.png[/img] The electricity generator provides [img=5%]res://textures/icon_electricity.png[/img]electricity to tiles it's connected to. The lamp, the reservoir and the compost bin all need electricity to produce their resource.
+
+Water and nutrients can be connected directly to the plant's pot, or sprinkled from a sprinkler. [img=8%]res://textures/icon_sprinkler.png[/img]
+[center]2/6[/center]"
+vertical_alignment = 1
+
+[node name="close_button" type="Button" parent="Page2/VBoxContainer" unique_id=1305804581]
+layout_mode = 2
+text = "Close"
+
+[node name="Page3" type="Panel" parent="." unique_id=942061479]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -335.0
+offset_top = -256.0
+offset_right = 340.0
+offset_bottom = 269.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_3spy8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Page3" unique_id=925688244]
+custom_minimum_size = Vector2(600, 465)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -232.5
+offset_right = 29.0
+offset_bottom = 232.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Text" type="RichTextLabel" parent="Page3/VBoxContainer" unique_id=2115627314]
+custom_minimum_size = Vector2(600, 425)
+layout_mode = 2
+theme = ExtResource("1_3spy8")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "Once the plant is two tiles large, it will need more resources. Be sure to get light on both of its tiles! 
+
+To fulfill water and nutrient needs for a larger plant, sprinkle them on both tiles, or sprinkle on either tile and make a direct connection to the plant's pot.
+
+One sprinkler can dispnse both water and nutrients, but a nutrients can't pass through a resevoir and water won't flow through a compost bin. This sprinkler only dispenses water, not nutrients:
+[center][img=20%]res://textures/generators_block_image.png[/img][/center]
+[center]3/6[/center]"
+vertical_alignment = 1
+
+[node name="close_button" type="Button" parent="Page3/VBoxContainer" unique_id=1649387054]
+layout_mode = 2
+text = "Close"
+
+[node name="Page4" type="Panel" parent="." unique_id=1640488638]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -335.0
+offset_top = -256.0
+offset_right = 340.0
+offset_bottom = 269.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_3spy8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Page4" unique_id=810083051]
+custom_minimum_size = Vector2(600, 465)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -232.5
+offset_right = 29.0
+offset_bottom = 232.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Text" type="RichTextLabel" parent="Page4/VBoxContainer" unique_id=265352632]
+custom_minimum_size = Vector2(600, 425)
+layout_mode = 2
+theme = ExtResource("1_3spy8")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "You have limited actions each turn. Change the number of actions per turn with the difficulty setting: 
+
+[center][img=40%]res://textures/difficulty_image.png[/img][/center]
+
+Spend your actions by
+[ul]
+Clicking on the deck to draw a card into your hand
+Clicking on a card, then on the grid to add a part to your machine
+[/ul]
+
+
+
+
+[center]4/6[/center]"
+vertical_alignment = 1
+
+[node name="close_button" type="Button" parent="Page4/VBoxContainer" unique_id=1324444757]
+layout_mode = 2
+text = "Close"
+
+[node name="Page5" type="Panel" parent="." unique_id=743855424]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -335.0
+offset_top = -256.0
+offset_right = 340.0
+offset_bottom = 269.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_3spy8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Page5" unique_id=84175769]
+custom_minimum_size = Vector2(600, 465)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -232.5
+offset_right = 29.0
+offset_bottom = 232.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Text" type="RichTextLabel" parent="Page5/VBoxContainer" unique_id=408244096]
+custom_minimum_size = Vector2(600, 425)
+layout_mode = 2
+theme = ExtResource("1_3spy8")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "You can also do any of these things without spending an action:
+
+[ul]
+Select a card, then click on Recycle a Card to discard a card from your hand
+Click Rotate Mode then click on a tile in the machine to rotate a tile that has already been placed
+Click on Remove Mode then on a tile to move a tile from the machine into your hand
+[/ul]
+
+When you're out of actions, click End Turn. A plant with enough resources will grow! A plant missing resources may wilt.
+
+
+
+[center]5/6[/center]"
+vertical_alignment = 1
+
+[node name="close_button" type="Button" parent="Page5/VBoxContainer" unique_id=1541109375]
+layout_mode = 2
+text = "Close"
+
+[node name="Page6" type="Panel" parent="." unique_id=67007186]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -335.0
+offset_top = -256.0
+offset_right = 340.0
+offset_bottom = 269.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_3spy8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Page6" unique_id=279015839]
+custom_minimum_size = Vector2(600, 465)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -232.5
+offset_right = 29.0
+offset_bottom = 232.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Text" type="RichTextLabel" parent="Page6/VBoxContainer" unique_id=630994014]
+custom_minimum_size = Vector2(600, 425)
+layout_mode = 2
+theme = ExtResource("1_3spy8")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "Every turn, you'll get a card for free, but only if you have room in your hand. Try to discard down to six cards by the end of your turn to make sure you get your free card!
+
+A growing plant needs more resources. Keep meeting the new thresholds to grow your plant as big as it can be!
+[center][img=50%]res://textures/large-plant-zoom.png[/img]
+[/center]
+[center]6/6[/center]"
+vertical_alignment = 1
+
+[node name="close_button" type="Button" parent="Page6/VBoxContainer" unique_id=1038586455]
+layout_mode = 2
+text = "Close"
+
+[node name="NextButton" type="TextureButton" parent="." unique_id=671476794]
+layout_mode = 0
+offset_left = 1350.0
+offset_top = 465.0
+offset_right = 1455.0
+offset_bottom = 623.61707
+texture_normal = ExtResource("3_1m7fe")
+texture_pressed = ExtResource("3_1m7fe")
+texture_hover = ExtResource("3_1m7fe")
+texture_disabled = ExtResource("3_1m7fe")
+texture_focused = ExtResource("3_1m7fe")
+stretch_mode = 0
+
+[node name="PrevButton" type="TextureButton" parent="." unique_id=995944973]
+visible = false
+layout_mode = 0
+offset_left = 470.0
+offset_top = 465.0
+offset_right = 575.0
+offset_bottom = 623.61707
+texture_normal = ExtResource("3_1m7fe")
+texture_pressed = ExtResource("3_1m7fe")
+texture_hover = ExtResource("3_1m7fe")
+texture_disabled = ExtResource("3_1m7fe")
+texture_focused = ExtResource("3_1m7fe")
+stretch_mode = 0
+flip_h = true
+
+[connection signal="pressed" from="Page1/VBoxContainer/close_button" to="." method="on_close"]
+[connection signal="pressed" from="Page2/VBoxContainer/close_button" to="." method="on_close"]
+[connection signal="pressed" from="Page3/VBoxContainer/close_button" to="." method="on_close"]
+[connection signal="pressed" from="Page4/VBoxContainer/close_button" to="." method="on_close"]
+[connection signal="pressed" from="Page5/VBoxContainer/close_button" to="." method="on_close"]
+[connection signal="pressed" from="Page6/VBoxContainer/close_button" to="." method="on_close"]
+[connection signal="pressed" from="NextButton" to="." method="next_page"]
+[connection signal="pressed" from="PrevButton" to="." method="prev_page"]

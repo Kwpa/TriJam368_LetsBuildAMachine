@@ -3,7 +3,9 @@
 [ext_resource type="TileSet" uid="uid://dli7vlje34tbu" path="res://scenes/machine_tileset.tres" id="1_r258f"]
 [ext_resource type="Texture2D" uid="uid://ciepnseh4ap23" path="res://textures/background.png" id="1_soh53"]
 [ext_resource type="Script" uid="uid://cbrsaphe75jjp" path="res://scripts/resource_propogation.gd" id="1_swje1"]
+[ext_resource type="Texture2D" uid="uid://c4ajcs0y37rlq" path="res://textures/place_halo.png" id="2_c23yc"]
 [ext_resource type="Script" uid="uid://b1rmvdurkcf8o" path="res://scripts/machine_board_controller.gd" id="2_soh53"]
+[ext_resource type="Script" uid="uid://dxjn5ic0w0gjc" path="res://scripts/background_halo.gd" id="3_7jg3c"]
 [ext_resource type="Script" uid="uid://0foxuwia42c8" path="res://scripts/preview_tile_layer.gd" id="3_hx6b6"]
 [ext_resource type="Script" uid="uid://bv6awvop72kht" path="res://scripts/preview_placement_check_layer.gd" id="4_1kqo0"]
 [ext_resource type="Script" uid="uid://cbjs03nuo30yc" path="res://scripts/resource_icon_layer.gd" id="8_c23yc"]
@@ -11,6 +13,12 @@
 
 [node name="machine_scene" type="Node2D" unique_id=1759567159]
 script = ExtResource("1_swje1")
+
+[node name="background_halo" type="Sprite2D" parent="." unique_id=917682396]
+visible = false
+position = Vector2(320, 320)
+texture = ExtResource("2_c23yc")
+script = ExtResource("3_7jg3c")
 
 [node name="background" type="Sprite2D" parent="." unique_id=365795777]
 position = Vector2(320, 320)

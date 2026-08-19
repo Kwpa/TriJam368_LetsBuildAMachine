@@ -118,7 +118,7 @@ func add_card_to_hand(card : CardData, pos: Vector2, action_increment: int) -> v
 		can_act = true
 
 	# enter hand mode
-	SignalBus.emit_signal("enter_hand_mode")
+	#SignalBus.emit_signal("enter_hand_mode")
 
 func remove_card_from_hand(track: CardTrack) -> void:
 	# disable actions until this action is complete

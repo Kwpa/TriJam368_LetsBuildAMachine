@@ -39,7 +39,7 @@ func _on_card_mouse_exited() -> void:
 func _card_input_handler(event : InputEvent) -> void:
 	# generic handler for input of the child card
 	if event is InputEventMouseButton && event.pressed:
-		toggle_selection()
+		toggle_selection_click()
 		track_selected.emit(self)
 		#print_debug('card track for %s has been selected' % $card.custom_to_string())
 		
@@ -58,3 +58,19 @@ func toggle_selection() -> void:
 	else:
 		# if we just deselected a card, lower it
 		lower_card()
+
+func toggle_selection_click() -> void:
+	# toggles whether it's selected
+	is_selected = not is_selected
+	# tell the card how to style itself in its new state 
+	$card.on_selected_changed(is_selected)
+	#print_debug("toggle_selection called. new state for %s is %s" % [$card.custom_to_string(), str(is_selected)])
+	if is_selected:
+		# if we just selected a card, enter hand mode
+		SignalBus.emit_signal("enter_hand_mode")
+		
+	else:
+		# if we just deselected a card, lower it
+		lower_card()
+		SignalBus.emit_signal("enter_hand_mode")
+		
