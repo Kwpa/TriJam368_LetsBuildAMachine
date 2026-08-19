@@ -315,7 +315,6 @@ mode = "remove"
 text = "Remove Mode"
 
 [node name="rules" parent="ui" unique_id=1634946171 instance=ExtResource("12_ldkr4")]
-visible = false
 z_index = 10
 layout_mode = 1
 
