@@ -331,7 +331,7 @@ layout_mode = 2
 theme = ExtResource("1_3spy8")
 theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
-text = "Every turn, you'll get a card for free, but only if you have room in your hand. Try to discard down to six cards by the end of your turn to make sure you get your free card!
+text = "Every turn, you'll get a card for free, but only if you have room in your hand. Try to discard down to five cards by the end of your turn to make sure you get your free card!
 
 A growing plant needs more resources. Keep meeting the new thresholds to grow your plant as big as it can be!
 [center][img=50%]res://textures/large-plant-zoom.png[/img]
