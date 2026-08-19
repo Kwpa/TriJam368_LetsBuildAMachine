@@ -145,35 +145,35 @@ var tile_card_mapping = {
 	},
 	card_id.dispensed_nutrients : {
 		"atlas_coords": Vector2i(1,0),
-		"source_id": 5
+		"source_id": 8
 	},
 	card_id.dispensed_water : {
 		"atlas_coords": Vector2i(2,0),
 		"source_id": 5
 	},
 	card_id.dispensed_nutrients_light : {
-		"atlas_coords": Vector2i(0,1),
-		"source_id": 5
+		"atlas_coords": Vector2i(2,0),
+		"source_id": 8
 	},
 	card_id.dispensed_water_light : {
 		"atlas_coords": Vector2i(1,1),
 		"source_id": 5
 	},
 	card_id.dispensed_water_nutrients : {
-		"atlas_coords": Vector2i(2,1),
-		"source_id": 5
+		"atlas_coords": Vector2i(3,0),
+		"source_id": 8
 	},
 	card_id.dispensed_all : {
-		"atlas_coords": Vector2i(3,1),
-		"source_id": 5
+		"atlas_coords": Vector2i(4,0),
+		"source_id": 8
 	},
 	card_id.sprinkler_light : {
 		"atlas_coords": Vector2i(0,2),
 		"source_id": 5
 	},
 	card_id.sprinkler_nutrients : {
-		"atlas_coords": Vector2i(1,2),
-		"source_id": 5
+		"atlas_coords": Vector2i(0,0),
+		"source_id": 8
 	},
 	card_id.sprinkler_water : {
 		"atlas_coords": Vector2i(2,2),

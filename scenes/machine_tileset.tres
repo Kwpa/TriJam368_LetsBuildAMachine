@@ -2,12 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://cxwgcyb12v2mg" path="res://textures/tile_atlas.png" id="1_7qfnh"]
 [ext_resource type="Texture2D" uid="uid://cbp4vyn6806ee" path="res://textures/tile_map_dots.png" id="2_ohasx"]
+[ext_resource type="Texture2D" uid="uid://bjj25ki7pu4pu" path="res://textures/3rd-plant.png" id="3_auec6"]
 [ext_resource type="Texture2D" uid="uid://iecvclpoxfmv" path="res://textures/plant.png" id="3_ohasx"]
 [ext_resource type="Texture2D" uid="uid://e5xn8l7ufy7a" path="res://textures/tile_placement_ui.png" id="4_tduw8"]
 [ext_resource type="Texture2D" uid="uid://drs0q0jh6k1r1" path="res://textures/highlight.png" id="5_sncmt"]
 [ext_resource type="Texture2D" uid="uid://fwndbq0smo8" path="res://textures/overlays.png" id="6_p5joa"]
 [ext_resource type="Texture2D" uid="uid://qero3fl6tefk" path="res://textures/trellis-glass.png" id="7_c464l"]
 [ext_resource type="Texture2D" uid="uid://bunjx30mrxr4j" path="res://textures/trellis_empty.png" id="8_c3hby"]
+[ext_resource type="Texture2D" uid="uid://cepnlq1e08mvv" path="res://textures/overlays-dirt.png" id="9_ybu83"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jgwhv"]
 resource_name = "Fake Tiles"
@@ -552,6 +554,14 @@ texture_region_size = Vector2i(128, 128)
 3:7/0 = 0
 3:7/0/custom_data_0 = 20
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jgo1r"]
+texture = ExtResource("3_auec6")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/custom_data_0 = 11
+0:1/0 = 0
+0:1/0/custom_data_0 = 11
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tduw8"]
 texture = ExtResource("3_ohasx")
 texture_region_size = Vector2i(128, 128)
@@ -614,6 +624,15 @@ texture_region_size = Vector2i(128, 128)
 0:0/0 = 0
 0:0/0/custom_data_0 = 25
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_auec6"]
+texture = ExtResource("9_ybu83")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+
 [resource]
 tile_size = Vector2i(128, 128)
 physics_layer_0/collision_layer = 1
@@ -633,3 +652,5 @@ sources/4 = SubResource("TileSetAtlasSource_p5joa")
 sources/5 = SubResource("TileSetAtlasSource_c464l")
 sources/6 = SubResource("TileSetAtlasSource_c3hby")
 sources/7 = SubResource("TileSetAtlasSource_ybu83")
+sources/8 = SubResource("TileSetAtlasSource_auec6")
+sources/10 = SubResource("TileSetAtlasSource_jgo1r")

@@ -22,7 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://dhjoob0tweysx" path="res://scenes/lose.tscn" id="15_liy57"]
 [ext_resource type="TileSet" uid="uid://dli7vlje34tbu" path="res://scenes/machine_tileset.tres" id="16_s76x2"]
 [ext_resource type="Script" uid="uid://c83iagyioueq" path="res://scripts/dispenser_layer.gd" id="17_77hjl"]
-[ext_resource type="Script" uid="uid://dk4shu0xvxvj8" path="res://scripts/game_audio.gd" id="21_ro0ie"]
+[ext_resource type="Script" path="res://scripts/game_audio.gd" id="21_ro0ie"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mixcd"]
 bg_color = Color(0.91764706, 0.827451, 0.5529412, 1)
@@ -37,7 +37,7 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mj2jn"]
-bg_color = Color(0.50980395, 0.3647059, 0.28235295, 1)
+bg_color = Color(0.46666667, 0.32941177, 0.4, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -346,7 +346,6 @@ mode = "remove"
 text = "Remove Mode"
 
 [node name="rules" parent="ui" unique_id=1634946171 instance=ExtResource("12_ldkr4")]
-visible = false
 z_index = 10
 layout_mode = 1
 
@@ -356,10 +355,18 @@ z_index = 10
 layout_mode = 1
 mouse_filter = 1
 
+[node name="background" parent="ui/win_screen" index="0" unique_id=1331835567]
+offset_left = 396.0
+offset_right = 904.0
+
 [node name="lose_screen" parent="ui" unique_id=1495373877 instance=ExtResource("15_liy57")]
 visible = false
 z_index = 10
 layout_mode = 1
+
+[node name="background" parent="ui/lose_screen" index="0" unique_id=957150486]
+offset_left = 396.0
+offset_right = 904.0
 
 [node name="card_scene" parent="." unique_id=730185003 instance=ExtResource("5_y3j0m")]
 position = Vector2(0, 760)

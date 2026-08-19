@@ -9,7 +9,8 @@ func update_dispenser_layer(add_array: Array[InstantiatedTileData]):
 	clear()
 	for add_tile in add_array:
 		if add_tile.dispensed:
-			set_cell(add_tile.coords, 5, get_tile_from_resources(add_tile.resources),0)
+			var tile_info = get_tile_from_resources(add_tile.resources)
+			set_cell(add_tile.coords, tile_info.source_id, tile_info.atlas_coords, 0)
 	
 	#for remove_tile in remove_array:
 		#erase_cell(remove_tile.coords)
@@ -21,25 +22,25 @@ func get_tile_from_resources(resources : Array[Constants.resource]):
 	var water_check = resources.has(Constants.resource.water)
 	
 	if light_check and nutrients_check and water_check:
-		return Constants.tile_card_mapping[Constants.card_id.dispensed_all].atlas_coords
+		return Constants.tile_card_mapping[Constants.card_id.dispensed_all]
 
 	if light_check == false and nutrients_check and water_check:
-		return Constants.tile_card_mapping[Constants.card_id.dispensed_water_nutrients].atlas_coords
+		return Constants.tile_card_mapping[Constants.card_id.dispensed_water_nutrients]
 	
 	if light_check and nutrients_check == false and water_check:
-		return Constants.tile_card_mapping[Constants.card_id.dispensed_water_light].atlas_coords
+		return Constants.tile_card_mapping[Constants.card_id.dispensed_water_light]
 	
 	if light_check and nutrients_check and water_check == false:
-		return Constants.tile_card_mapping[Constants.card_id.dispensed_nutrients_light].atlas_coords
+		return Constants.tile_card_mapping[Constants.card_id.dispensed_nutrients_light]
 	
 	if light_check and nutrients_check == false and water_check == false:
-		return Constants.tile_card_mapping[Constants.card_id.dispensed_light].atlas_coords	
+		return Constants.tile_card_mapping[Constants.card_id.dispensed_light]
 	
 	if light_check == false and nutrients_check and water_check == false:
-		return Constants.tile_card_mapping[Constants.card_id.dispensed_nutrients].atlas_coords
+		return Constants.tile_card_mapping[Constants.card_id.dispensed_nutrients]
 	
 	if light_check == false and nutrients_check == false and water_check:
-		return Constants.tile_card_mapping[Constants.card_id.dispensed_water].atlas_coords
+		return Constants.tile_card_mapping[Constants.card_id.dispensed_water]
 	
 	return null
 	
